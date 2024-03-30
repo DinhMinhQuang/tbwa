@@ -117,6 +117,14 @@ function tbwa_scripts()
         '1.0',
         true
     );
+    wp_enqueue_script(
+        'homepage-min-js',
+        get_template_directory_uri() .
+        '/assets/js/homepage.min.js',
+        array(),
+        '1.0',
+        true
+    );
 
 }
 
@@ -154,3 +162,37 @@ class Custom_Walker_Nav_Menu extends Walker_Nav_Menu
         $output .= apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
     }
 }
+
+add_theme_support('custom-logo');
+
+function theme_customizer_settings($wp_customize)
+{
+    // White Logo
+    $wp_customize->add_setting('white_logo_setting', array(
+        'default' => '',
+        'type' => 'theme_mod',
+        'sanitize_callback' => 'esc_url_raw',
+    )
+    );
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'white_logo_control', array(
+        'label' => __('White Logo', 'theme'),
+        'section' => 'title_tagline', // Customize this section according to your needs
+        'settings' => 'white_logo_setting',
+    )
+    ));
+
+    // Black Logo
+    $wp_customize->add_setting('black_logo_setting', array(
+        'default' => '',
+        'type' => 'theme_mod',
+        'sanitize_callback' => 'esc_url_raw',
+    )
+    );
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'black_logo_control', array(
+        'label' => __('Black Logo', 'theme'),
+        'section' => 'title_tagline', // Customize this section according to your needs
+        'settings' => 'black_logo_setting',
+    )
+    ));
+}
+add_action('customize_register', 'theme_customizer_settings');
