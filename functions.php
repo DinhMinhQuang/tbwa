@@ -19,14 +19,14 @@ function tbwa_styles()
 {
     wp_enqueue_style(
         'tbwa-video-js',
-        get_template_directory_uri() . '/Tequila_Vietnam_files/video-js.css',
+        get_template_directory_uri() . '/assets/css/video-js.css',
         array(),
         '1.0',
         'all'
     );
     wp_enqueue_style(
         'videojs-playlist-ui.vertical',
-        get_template_directory_uri() . '/Tequila_Vietnam_files/videojs-playlist-ui.vertical.css',
+        get_template_directory_uri() . '/assets/css/videojs-playlist-ui.vertical.css',
         array(),
         '1.0',
         'all'
@@ -34,7 +34,7 @@ function tbwa_styles()
     wp_enqueue_style(
         'tbwa-main-min',
         get_template_directory_uri() .
-        '/Tequila_Vietnam_files/main.min.css',
+        '/assets/css/main.min.css',
         array(),
         '1.0',
         'all'
@@ -87,6 +87,14 @@ function tbwa_scripts()
         'video-min-js',
         get_template_directory_uri() .
         '/assets/js/videojs.min.js',
+        array(),
+        '1.0',
+        true
+    );
+    wp_enqueue_script(
+        'videomin-js',
+        get_template_directory_uri() .
+        '/assets/js/video.min.js',
         array(),
         '1.0',
         true

@@ -1,3 +1,65 @@
+#logo.white-logo a {
+    background: url(https://www.tbwa.com.vn/assets/about/TBWA-Logo-Black.png) 0 0/contain no-repeat;
+}
+
+#logo.black-logo a {
+    background: url(https://www.tbwa.com.vn/assets/about/TBWA-TDC-Horizontal-Yellow.png) 0 0/contain no-repeat;
+}
+#logo a img {
+  height: 30px;
+  width: auto;
+  opacity: 0;
+}
+@media screen and (max-width: 64em) {
+    #logo.black-logo a {
+      height: 20px;
+    }
+    #logo.white-logo a {
+      height: 20px;
+      background: url(https://www.tbwa.com.vn/assets/about/TBWA-TDC-Horizontal-Yellow.png) 0 0/contain no-repeat;
+    }
+    #logo a img {
+      height: 20px;
+    }
+}
+.cookieNotice {
+    background: #000;
+    display: none;
+    font-family: "Averta Bold", Open Sans Bold, Open Sans Hebrew Semibold, Helvetica Neue, sans-serif;
+    font-weight: 400;
+    font-size: 1em;
+    line-height: 120%;
+    left: 0;
+    padding: 30px 60px 30px 0;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    color: #fff;
+    z-index: 100;
+  }
+
+  .cookieNotice__container {
+    margin: 0 auto;
+    width: 90%;
+  }
+
+  .cookieNotice__container * {
+    margin: 0 1em;
+    float: left;
+  }
+
+  .cookieNotice__container a {
+    color: #fecc00;
+  }
+
+  .cookieNotice__container a h4 {
+    font-size: 1.2rem;
+  }
+
+  .cookieNotice p {
+    color: #fff;
+  }
 .switch input:checked~.switch-paddle,
 .switch.alert input:checked~.switch-paddle,
 .switch.primary input:checked~.switch-paddle,
@@ -3631,8 +3693,8 @@ input:checked+label>.switch-inactive {
 
 @font-face {
     font-family: "Averta Bold";
-    src: url(/fonts/92537ead-514e-49af-a8ec-c81cccdc2de0.eot?#iefix);
-    src: url(/fonts/92537ead-514e-49af-a8ec-c81cccdc2de0.eot?#iefix) format("eot"), url(/fonts/ad18f39f-4a3c-4c5a-9f84-5667cb693d85.woff2) format("woff2"), url(/fonts/e15f48dd-c518-4d2e-ac1e-2fe9e0866a18.woff) format("woff"), url(/fonts/51a79f53-5a9e-4c30-be9a-166991a6f681.ttf) format("truetype"), url(/fonts/9335b62b-523f-4087-b0d0-1efb1ef44f67.svg#9335b62b-523f-4087-b0d0-1efb1ef44f67) format("svg");
+    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/Averta-Bold.woff2);
+    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/Averta-Bold.woff2) format("woff2");
     font-display: block
 }
 
@@ -3650,15 +3712,15 @@ input:checked+label>.switch-inactive {
 
 @font-face {
     font-family: "Averta Regular";
-    src: url(/fonts/b7364286-73e9-452f-b37f-666c23f9f117.eot?#iefix);
-    src: url(/fonts/b7364286-73e9-452f-b37f-666c23f9f117.eot?#iefix) format("eot"), url(/fonts/7efb0f58-2547-4648-8a8b-8d9e2d432f91.woff2) format("woff2"), url(/fonts/908e37c8-30de-4ac2-9831-60cc0cca4586.woff) format("woff"), url(/fonts/853340ee-4991-42f6-91a5-948421c99a57.ttf) format("truetype"), url(/fonts/22fd511a-33c8-466d-b26a-d0c1af38a503.svg#22fd511a-33c8-466d-b26a-d0c1af38a503) format("svg");
+    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/Averta-Regular.woff2);
+    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/Averta-Regular.woff2) format("woff2");
     font-display: block
 }
 
 @font-face {
     font-family: "Averta Semibold";
-    src: url(/fonts/8035f087-ade6-48dc-9342-7f3e045c25d6.eot?#iefix);
-    src: url(/fonts/8035f087-ade6-48dc-9342-7f3e045c25d6.eot?#iefix) format("eot"), url(/fonts/060a6bbd-6995-48bf-917d-5083172c0b42.woff2) format("woff2"), url(/fonts/24d961f5-491a-4fe1-a001-873ec9b53c76.woff) format("woff"), url(/fonts/f699da5f-31c2-4811-9d23-e93351a2a738.ttf) format("truetype"), url(/fonts/8030daf5-e70a-4c9e-a390-50afaacb1aee.svg#8030daf5-e70a-4c9e-a390-50afaacb1aee) format("svg");
+    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/Averta-Semibold.woff2);
+    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/Averta-Semibold.woff2) format("woff2");
     font-display: block
 }
 
@@ -7923,32 +7985,32 @@ a.share-btn {
 
 a.share-btn#twitter {
     background-color: #000;
-    -webkit-mask-image: url(/img/Twitter.svg);
-    mask-image: url(/img/Twitter.svg);
+    -webkit-mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/Twitter.svg);
+    mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/Twitter.svg);
     -webkit-mask-size: contain;
     mask-size: contain
 }
 
 a.share-btn#facebook {
     background-color: #000;
-    -webkit-mask-image: url(/img/Facebook.svg);
-    mask-image: url(/img/Facebook.svg);
+    -webkit-mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/Facebook.svg);
+    mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/Facebook.svg);
     -webkit-mask-size: contain;
     mask-size: contain
 }
 
 a.share-btn#linkedin {
     background-color: #000;
-    -webkit-mask-image: url(/img/LinkedIn.svg);
-    mask-image: url(/img/LinkedIn.svg);
+    -webkit-mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/LinkedIn.svg);
+    mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/LinkedIn.svg);
     -webkit-mask-size: contain;
     mask-size: contain
 }
 
 a.share-btn#instagram {
     background-color: #000;
-    -webkit-mask-image: url(/img/Instagram.svg);
-    mask-image: url(/img/Instagram.svg);
+    -webkit-mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/Instagram.svg);
+    mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/Instagram.svg);
     -webkit-mask-size: contain;
     mask-size: contain
 }
@@ -9724,7 +9786,7 @@ section#featured-media div.vid-container .vid-controls .vid-fullscreen a#fullscr
     display: inline-block;
     width: 32px;
     height: 32px;
-    background: url(/img/fullscreen.svg) no-repeat;
+    background: url(/wordpress/wp-content/themes/tbwa/assets/images/fullscreen.svg) no-repeat;
     text-indent: -99999px
 }
 
@@ -9917,7 +9979,7 @@ section#article-content #awards-share p.award-desc {
 }
 
 section#article-content #awards-share .fb-share {
-    background: url(/img/Facebook.svg) 0 0/contain no-repeat !important;
+    background: url(/wordpress/wp-content/themes/tbwa/assets/images/Facebook.svg) 0 0/contain no-repeat !important;
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -9928,7 +9990,7 @@ section#article-content #awards-share .fb-share {
 }
 
 section#article-content #awards-share .twitter-share {
-    background: url(/img/Twitter.svg) 0 0/contain no-repeat !important;
+    background: url(/wordpress/wp-content/themes/tbwa/assets/images/Twitter.svg) 0 0/contain no-repeat !important;
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -11585,7 +11647,7 @@ screen and (max-width:47.99875em) {
 article#pirates-quote {
     width: 100%;
     height: 100%;
-    background: url(/img/piratesBG.jpg);
+    background: url(/wordpress/wp-content/themes/tbwa/assets/images/piratesBG.jpg);
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
@@ -12352,20 +12414,20 @@ article#leader-container .leadership-headline div.social-handles a svg {
 
 article#leader-container .leadership-headline div.social-handles a.social-linkedin {
     background-color: #fff;
-    -webkit-mask: url(/img/LinkedIn.svg) no-repeat 50% 50%;
-    mask: url(/img/LinkedIn.svg) no-repeat 50% 50%
+    -webkit-mask: url(/wordpress/wp-content/themes/tbwa/assets/images/LinkedIn.svg) no-repeat 50% 50%;
+    mask: url(/wordpress/wp-content/themes/tbwa/assets/images/LinkedIn.svg) no-repeat 50% 50%
 }
 
 article#leader-container .leadership-headline div.social-handles a.social-twitter {
     background-color: #fff;
-    -webkit-mask: url(/img/Twitter.svg) no-repeat 50% 50%;
-    mask: url(/img/Twitter.svg) no-repeat 50% 50%
+    -webkit-mask: url(/wordpress/wp-content/themes/tbwa/assets/images/Twitter.svg) no-repeat 50% 50%;
+    mask: url(/wordpress/wp-content/themes/tbwa/assets/images/Twitter.svg) no-repeat 50% 50%
 }
 
 article#leader-container .leadership-headline div.social-handles a.social-instagram {
     background-color: #fff;
-    -webkit-mask: url(/img/Instagram.svg) no-repeat 50% 50%;
-    mask: url(/img/Instagram.svg) no-repeat 50% 50%
+    -webkit-mask: url(/wordpress/wp-content/themes/tbwa/assets/images/Instagram.svg) no-repeat 50% 50%;
+    mask: url(/wordpress/wp-content/themes/tbwa/assets/images/Instagram.svg) no-repeat 50% 50%
 }
 
 article#leader-container .leadership-bio {
@@ -12473,7 +12535,7 @@ screen and (max-width:47.99875em) {
     height: 100vh;
     overflow: hidden;
     color: #000;
-    background-image: url(../img/disruption_splash.jpg);
+    background-image: url(../wordpress/wp-content/themes/tbwa/assets/images/disruption_splash.jpg);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -13023,7 +13085,7 @@ screen and (max-width:47.99875em) {
     height: 100vh;
     background-size: cover;
     background-position: center;
-    background-image: url(../img/work_splash.png);
+    background-image: url(../wordpress/wp-content/themes/tbwa/assets/images/work_splash.png);
     background-attachment: fixed;
     text-align: center;
     direction: ltr;
