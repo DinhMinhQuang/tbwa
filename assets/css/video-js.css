@@ -95,8 +95,8 @@
   /*custom edits here*/
   .vjs-icon-fullscreen-enter:before, .video-js .vjs-fullscreen-control:before {
     /*content: "\f108";*/
-    content:"";
-    background:url(/img/fullscreen.svg) no-repeat;
+    content:""; 
+    background:url(/wordpress/wp-content/themes/tbwa/assets/images/fullscreen.svg) no-repeat;
     background-position: center 2px;
   }
 
@@ -419,7 +419,7 @@ body.vjs-full-window {
   padding: 0;
   cursor: pointer;
   opacity: 1;
-  border: none
+  border: none;
   background-color: #fff;
   -webkit-border-radius: 0.3em;
   -moz-border-radius: 0.3em;

@@ -1,11 +1,11 @@
 <section id="landing-container" class="row collapse">
    <article id="landing-video" class="full-width-video">
-      <video poster="" id="landing-vid" playsinline="" autoplay="" muted="" loop="">
-         <source src="/wordpress/wp-content/themes/tbwa/assets/videos/home.mp4" type="video/mp4">
+      <video poster="" id="landing-vid" playsinline autoplay muted loop>
+         <source src="http://localhost/wordpress/wp-content/uploads/2024/03/home.mp4" type="video/mp4">
       </video>
       <article class="video-overlay" id="homepage">
          <div class="vertical-align">
-            <h1 class="font-light">
+            <h1 class="font-light"> 
                <p>We Are</p>
                <p>The<br></p>
                <p>Disruption<sup>®</sup></p>
