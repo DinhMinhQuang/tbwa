@@ -1,5 +1,5 @@
 <script>
-    var siteUrl = "https://www.tequila.com.vn/";
+    var siteUrl = "/";
   </script>
 
   <script>
@@ -14,8 +14,6 @@
       peopleAndPlacesVideo = "https://d2rijh2vqznvtd.cloudfront.net/assets/videos/peopleandplaces.mp4",
       peopleAndPlacesVideoTitle = "Our Culture";
   </script>
-  <script type="text/javascript" src="/wordpress/wp-content/themes/tbwa/Tequila_Vietnam_files/video.min.js"></script>
-  <script type="text/javascript" src="/wordpress/wp-content/themes/tbwa/Tequila_Vietnam_files/homepage.min.js"></script>
   <script type="text/javascript">
     function facebookLogout() {
       FB.getLoginStatus(function (response) {
@@ -182,9 +180,13 @@
           return t;
         }(document, "script", "twitter-wjs"));
         //end twitter
-
-
+        
+        
         //load article-video
+        if (typeof articleVideo !== 'undefined' && typeof articleVideo.init === 'function') {
+            // Call the init() method
+            articleVideo.init();
+        }
 
         //end vimeo
 

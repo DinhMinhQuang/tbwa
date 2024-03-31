@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <style class="vjs-styles-defaults">
@@ -57,6 +56,7 @@
   </div>
   <?php get_header(); ?>
   <?php get_template_part( 'index' ); ?>
+  
   <!--/#main-container-->
   <?php get_footer(); ?>
 

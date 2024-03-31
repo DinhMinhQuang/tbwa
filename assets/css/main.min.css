@@ -3709,8 +3709,8 @@ input:checked+label>.switch-inactive {
 
 @font-face {
     font-family: "Averta Extrabold";
-    src: url(/fonts/8aeeaecc-a51a-40c0-90d4-5c0f093b169c.eot?#iefix);
-    src: url(/fonts/8aeeaecc-a51a-40c0-90d4-5c0f093b169c.eot?#iefix) format("eot"), url(/fonts/2cb2c4db-ce35-4809-9725-38a9f4f33efc.woff2) format("woff2"), url(/fonts/b7b18b1d-6fbe-447a-add7-c9772259bff0.woff) format("woff"), url(/fonts/cce77f3a-8093-4825-903e-be21c212e799.ttf) format("truetype"), url(/fonts/4711109d-a3b5-48b3-acfa-8407d8965915.svg#4711109d-a3b5-48b3-acfa-8407d8965915) format("svg");
+    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/Averta-Extrabold.woff2);
+    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/Averta-Extrabold.woff2) format("woff2");
     font-display: block
 }
 
@@ -9757,13 +9757,16 @@ section#featured-media div.vid-container .vid-controls .vid-fullscreen {
     text-align: center;
     left: 1%
 }
-
+ 
 section#featured-media div.vid-container .vid-controls .vid-fullscreen a#fullscreen {
     display: inline-block;
     width: 32px;
-    height: 32px;
+    height: 32px; 
     background: url(/wordpress/wp-content/themes/tbwa/assets/images/fullscreen.svg) no-repeat;
     text-indent: -99999px
+}
+.vjs-icon-fullscreen-enter:before, .video-js .vjs-fullscreen-control:before { 
+    background: url(/wordpress/wp-content/themes/tbwa/assets/images/fullscreen.svg) no-repeat;
 }
 
 section#featured-media div.vid-container .vid-controls .vid-close {
@@ -12506,12 +12509,12 @@ screen and (max-width:47.99875em) {
     padding-bottom: 100px
 }
 
-#disruption #disruption-splash {
+#disruption #disruption-splash{
     width: 100%;
     height: 100vh;
     overflow: hidden;
     color: #000;
-    background-image: url(../wordpress/wp-content/themes/tbwa/assets/images/disruption_splash.jpg);
+    background-image: url(/wordpress/wp-content/themes/tbwa/assets/images/disruption_splash.jpg);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -13061,7 +13064,7 @@ screen and (max-width:47.99875em) {
     height: 100vh;
     background-size: cover;
     background-position: center;
-    background-image: url(../wordpress/wp-content/themes/tbwa/assets/images/work_splash.png);
+    background-image: url(/wordpress/wp-content/themes/tbwa/assets/images/work_splash.png);
     background-attachment: fixed;
     text-align: center;
     direction: ltr;

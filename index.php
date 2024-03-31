@@ -1,6 +1,6 @@
 <section id="landing-container" class="row collapse">
    <article id="landing-video" class="full-width-video">
-      <video poster="" id="landing-vid" playsinline="" autoplay="" muted="" loop="">
+      <video poster="" id="landing-vid" playsinline autoplay muted loop>
          <source src="<?php echo wp_get_attachment_url(get_theme_mod('banner_video')) ?>" type="video/mp4">
       </video>
       <article class="video-overlay" id="homepage">
