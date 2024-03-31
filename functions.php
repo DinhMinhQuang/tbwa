@@ -5,14 +5,12 @@ function theme_supports()
 }
 add_action('after_setup_theme', 'theme_supports');
 
-function tbwa_menus()
+function tbwa_menus($locations = array())
 {
-    $location = array(
-        'primary' => "Desktop Primary"
-    );
-    register_nav_menus($location);
+    add_theme_support('menus');
 }
 ;
+
 add_action('init', 'tbwa_menus');
 
 function tbwa_styles()
@@ -176,31 +174,46 @@ add_theme_support('custom-logo');
 function theme_customizer_settings($wp_customize)
 {
     // White Logo
-    $wp_customize->add_setting('white_logo_setting', array(
-        'default' => '',
-        'type' => 'theme_mod',
-        'sanitize_callback' => 'esc_url_raw',
-    )
+    $wp_customize->add_setting(
+        'white_logo_setting',
+        array(
+            'default' => '',
+            'type' => 'theme_mod',
+            'sanitize_callback' => 'esc_url_raw',
+        )
     );
-    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'white_logo_control', array(
-        'label' => __('White Logo', 'theme'),
-        'section' => 'title_tagline', // Customize this section according to your needs
-        'settings' => 'white_logo_setting',
-    )
-    ));
+    $wp_customize->add_control(
+        new WP_Customize_Image_Control(
+            $wp_customize,
+            'white_logo_control',
+            array(
+                'label' => __('White Logo', 'theme'),
+                'section' => 'title_tagline', // Customize this section according to your needs
+                'settings' => 'white_logo_setting',
+            )
+        )
+    );
 
     // Black Logo
-    $wp_customize->add_setting('black_logo_setting', array(
-        'default' => '',
-        'type' => 'theme_mod',
-        'sanitize_callback' => 'esc_url_raw',
-    )
+    $wp_customize->add_setting(
+        'black_logo_setting',
+        array(
+            'default' => '',
+            'type' => 'theme_mod',
+            'sanitize_callback' => 'esc_url_raw',
+        )
     );
-    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'black_logo_control', array(
-        'label' => __('Black Logo', 'theme'),
-        'section' => 'title_tagline', // Customize this section according to your needs
-        'settings' => 'black_logo_setting',
-    )
-    ));
+    $wp_customize->add_control(
+        new WP_Customize_Image_Control(
+            $wp_customize,
+            'black_logo_control',
+            array(
+                'label' => __('Black Logo', 'theme'),
+                'section' => 'title_tagline', // Customize this section according to your needs
+                'settings' => 'black_logo_setting',
+            )
+        )
+    );
 }
 add_action('customize_register', 'theme_customizer_settings');
+
