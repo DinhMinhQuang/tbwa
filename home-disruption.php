@@ -1,46 +1,14 @@
-<?php
-/*
-Template Name: Home Disruption
-*/
-?>
 <article id="home-disruption" class="bg-dark grid-container">
     <div class="row collapse">
         <div class="columns large-7 large-offset-3 medium-8 medium-offset-3 small-12 small-offset-1  end">
             <div class="slanted-container small-no-slant">
                 <h2>
-                    <?php $page = get_page_by_path('home-disruption');
-
-                    // Kiểm tra xem trang có tồn tại không
-                    if ($page) {
-                        // Lấy nội dung của trang
-                        echo get_post_field('post_title', $page->ID);
-                    } ?>
+                    <?php echo get_theme_mod('home_disruption_first_title', ''); ?>
                 </h2>
                 <div class="slanted-block">
-                    <?php $page = get_page_by_path('home-disruption');
-
-                    // Kiểm tra xem trang có tồn tại không
-                    if ($page) {
-                        // Lấy nội dung của trang
-                        $content = get_post_field('post_content', $page->ID);
-
-                        // Hiển thị nội dung trang
-                        echo wp_strip_all_tags($content);
-                    } ?>
+                    <?php echo get_theme_mod('home_disruption_first_content', ''); ?>
                 </div>
-                <a href="<?php
-                $page = get_page_by_path('home-disruption');
-                if ($page) {
-                    $redirect_url = get_post_meta($page->ID, 'redirectUrl', true);
-                    if ($redirect_url) {
-                        echo esc_url($redirect_url);
-                    } else {
-                        echo get_permalink($page->ID);
-                    }
-                } else {
-                    echo '#'; // Default URL or handle error when page is not found
-                }
-                ?>">More on Disruption</a>
+                <?php echo wp_kses_post(get_theme_mod('home_disruption_first_link', '')); ?>
             </div>
         </div>
         <!--/.columns-->
@@ -124,42 +92,12 @@ Template Name: Home Disruption
             class="columns xlarge-5 xlarge-offset-7 medium-7 large-offset-4 medium-offset-3 small-12 small-offset-1 end">
             <div class="slanted-container small-no-slant">
                 <h2>
-                    <?php $page = get_page_by_path('home-bottom-disruption');
-
-                    // Kiểm tra xem trang có tồn tại không
-                    if ($page) {
-                        // Lấy nội dung của trang
-                        echo get_post_field('post_title', $page->ID);
-                    } ?>
+                    <?php echo get_theme_mod('home_disruption_second_title', ''); ?>
                 </h2>
                 <div class="slanted-block">
-                    <?php $page = get_page_by_path('home-bottom-disruption');
-
-                    // Kiểm tra xem trang có tồn tại không
-                    if ($page) {
-                        // Lấy nội dung của trang
-                        echo wp_strip_all_tags(get_post_field('post_content', $page->ID));
-                    } ?>
+                    <?php echo get_theme_mod('home_disruption_second_content', ''); ?>
                 </div>
-                <a href="<?php
-                $page = get_page_by_path('home-bottom-disruption');
-                if ($page) {
-                    $redirect_url = get_post_meta($page->ID, 'redirectUrl', true);
-                    if ($redirect_url) {
-                        echo esc_url($redirect_url);
-                    } else {
-                        echo get_permalink($page->ID);
-                    }
-                } else {
-                    echo '#'; // Default URL or handle error when page is not found
-                }
-                ?>">
-                    <?php
-                    $page = get_page_by_path('home-bottom-disruption');
-                    if ($page) {
-                        echo get_post_meta($page->ID, 'text_link', true);
-                    }
-                    ?>
+                <?php echo wp_kses_post(get_theme_mod('home_disruption_second_link', '')); ?>
                 </a>
             </div>
         </div>

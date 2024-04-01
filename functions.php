@@ -429,3 +429,334 @@ function custom_postimage_meta_box_save($post_id)
         }
     }
 }
+
+function customizer_settings($wp_customize)
+{
+    // Thêm thiết lập cho đoạn văn bản trên trang chủ
+    $wp_customize->add_setting(
+        'homepage_text_line_1',
+        array(
+            'default' => 'We Are',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Hiển thị control cho đoạn văn bản trên trang chủ
+    $wp_customize->add_control(
+        'homepage_text_line_1',
+        array(
+            'label' => 'Text on Banner Line 1',
+            'section' => 'title_tagline', // Chọn phần của Customizer để hiển thị control
+            'type' => 'text',
+        )
+    );
+    $wp_customize->add_setting(
+        'homepage_text_line_2',
+        array(
+            'default' => 'The',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'homepage_text_line_2',
+        array(
+            'label' => 'Text on Banner Line 2',
+            'section' => 'title_tagline', // Chọn phần của Customizer để hiển thị control
+            'type' => 'text',
+        )
+    );
+    $wp_customize->add_setting(
+        'homepage_text_line_3',
+        array(
+            'default' => 'Disruption®',
+            'sanitize_callback' => 'wp_kses_post',
+        )
+    );
+    $wp_customize->add_control(
+        'homepage_text_line_3',
+        array(
+            'label' => 'Text on Banner Line 3',
+            'section' => 'title_tagline', // Chọn phần của Customizer để hiển thị control
+            'type' => 'text',
+        )
+    );
+    $wp_customize->add_setting(
+        'homepage_text_line_4',
+        array(
+            'default' => 'Company',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'homepage_text_line_4',
+        array(
+            'label' => 'Text on Banner Line 4',
+            'section' => 'title_tagline', // Chọn phần của Customizer để hiển thị control
+            'type' => 'text',
+        )
+    );
+}
+add_action('customize_register', 'customizer_settings');
+function customizer_settings_disruption($wp_customize)
+{
+    // Thêm section mới cho nội dung "Home Disruption"
+    $wp_customize->add_section(
+        'home_disruption_section',
+        array(
+            'title' => 'Home Disruption', // Tiêu đề của section
+            'priority' => 30,
+        )
+    );
+
+    // Thêm thiết lập cho nội dung "Home Disruption"
+    $wp_customize->add_setting(
+        'home_disruption_first_title',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_disruption_first_title',
+        array(
+            'label' => 'Home Disruption First Title',
+            'section' => 'home_disruption_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'home_disruption_first_content',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_disruption_first_content',
+        array(
+            'label' => 'Home Disruption First Content',
+            'section' => 'home_disruption_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+
+    $wp_customize->add_setting(
+        'home_disruption_first_link',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'wp_kses_post',
+        )
+    );
+
+    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_disruption_first_link',
+        array(
+            'label' => 'Home Disruption First Link',
+            'section' => 'home_disruption_section', // Chọn section mới
+            'type' => 'textarea',
+        )
+    );
+
+
+    $wp_customize->add_setting(
+        'home_disruption_second_title',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_disruption_second_title',
+        array(
+            'label' => 'Home Disruption Second Title',
+            'section' => 'home_disruption_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'home_disruption_second_content',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_disruption_second_content',
+        array(
+            'label' => 'Home Disruption Second Content',
+            'section' => 'home_disruption_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+    // Control cho content thứ 2 
+    $wp_customize->add_setting(
+        'home_disruption_second_link',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'wp_kses_post',
+        )
+    );
+
+    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_disruption_second_link',
+        array(
+            'label' => 'Home Disruption Second Link',
+            'section' => 'home_disruption_section', // Chọn section mới
+            'type' => 'textarea',
+        )
+    );
+}
+add_action('customize_register', 'customizer_settings_disruption');
+
+function customizer_settings_pirates($wp_customize)
+{
+    // Thêm section mới cho nội dung "Home Disruption"
+    $wp_customize->add_section(
+        'home_pirates_section',
+        array(
+            'title' => 'Home Pirates', // Tiêu đề của section
+            'priority' => 30,
+        )
+    );
+
+    // Thêm thiết lập cho nội dung "Home Disruption"
+    $wp_customize->add_setting(
+        'home_pirates_title',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_pirates_section'
+    $wp_customize->add_control(
+        'home_pirates_title',
+        array(
+            'label' => 'Home Disruption First Title',
+            'section' => 'home_pirates_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'home_pirates_content',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    $wp_customize->add_control(
+        'home_pirates_content',
+        array(
+            'label' => 'Home Disruption First Content',
+            'section' => 'home_pirates_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+
+    $wp_customize->add_setting(
+        'home_pirates_link',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'wp_kses_post',
+        )
+    );
+
+    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_pirates_link',
+        array(
+            'label' => 'Home Pirates Link',
+            'section' => 'home_pirates_section', // Chọn section mới
+            'type' => 'textarea',
+        )
+    );
+
+    // Black Logo
+    $wp_customize->add_setting(
+        'home_pirates_banner',
+        array(
+            'default' => '',
+            'type' => 'theme_mod',
+            'sanitize_callback' => 'esc_url_raw',
+        )
+    );
+    $wp_customize->add_control(
+        new WP_Customize_Image_Control(
+            $wp_customize,
+            'home_pirates_banner_control',
+            array(
+                'label' => __('Pirates Banner', 'theme'),
+                'section' => 'home_pirates_section', // Customize this section according to your needs
+                'settings' => 'home_pirates_banner',
+            )
+        )
+    );
+}
+add_action('customize_register', 'customizer_settings_pirates');
+
+function customizer_settings_work($wp_customize)
+{
+    $wp_customize->add_section(
+        'home_work_section',
+        array(
+            'title' => 'Home Work', // Tiêu đề của section
+            'priority' => 30,
+        )
+    );
+
+    // Thêm thiết lập cho nội dung "Home Disruption"
+    $wp_customize->add_setting(
+        'home_work_title',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_pirates_section'
+    $wp_customize->add_control(
+        'home_work_title',
+        array(
+            'label' => 'Home Work Title',
+            'section' => 'home_work_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+    // Thêm thiết lập cho nội dung "Home Disruption"
+    $wp_customize->add_setting(
+        'home_work_content',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_pirates_section'
+    $wp_customize->add_control(
+        'home_work_content',
+        array(
+            'label' => 'Home Work Content',
+            'section' => 'home_work_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+}
+add_action('customize_register', 'customizer_settings_work');

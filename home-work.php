@@ -1,33 +1,12 @@
-<?php
-/*
-Template Name: Home Work
-*/
-?>
-
 <article id="home-work" class="bg-light grid-container">
     <div class="row collapse">
         <div class="columns large-5 large-offset-5 medium-11 small-12 small-offset-1 end">
             <div class="slanted-container small-no-slant">
                 <h2>
-                    <?php $page = get_page_by_path('home-work');
-
-                    // Kiểm tra xem trang có tồn tại không
-                    if ($page) {
-                        // Lấy nội dung của trang
-                        echo get_post_field('post_title', $page->ID);
-                    } ?>
+                    <?php echo get_theme_mod('home_work_title', ''); ?>
                 </h2>
                 <div class="slanted-block">
-                    <?php $page = get_page_by_path('home-work');
-
-                    // Kiểm tra xem trang có tồn tại không
-                    if ($page) {
-                        // Lấy nội dung của trang
-                        $content = get_post_field('post_content', $page->ID);
-
-                        // Hiển thị nội dung trang
-                        echo wp_strip_all_tags($content);
-                    } ?>
+                    <?php echo get_theme_mod('home_work_content', ''); ?>
                 </div>
             </div>
             <!--/.slanted-container-->

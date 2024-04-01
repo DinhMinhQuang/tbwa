@@ -6,10 +6,15 @@
       <article class="video-overlay" id="homepage">
          <div class="vertical-align">
             <h1 class="font-light">
-               <p>We Are</p>
-               <p>The<br></p>
-               <p>Disruption<sup>®</sup></p>
-               <p>Company</p>
+               <?php $homepage_text_1 = get_theme_mod('homepage_text_line_1', '');
+               $homepage_text_2 = get_theme_mod('homepage_text_line_2', '');
+               $homepage_text_3 = get_theme_mod('homepage_text_line_3', '');
+               $homepage_text_4 = get_theme_mod('homepage_text_line_4', '');
+
+               echo '<p>' . esc_html($homepage_text_1) . '</p>';
+               echo '<p>' . esc_html($homepage_text_2) . '</p>';
+               echo '<p>' . wp_kses_post($homepage_text_3) . '</p>';
+               echo '<p>' . esc_html($homepage_text_4) . '</p>'; ?>
             </h1>
             <a href="/#" class="slanted-button bg-light" id="tbwa-videos">
                <h4>Watch</h4>
@@ -36,31 +41,7 @@
    <!--/#home-disruption-->
    <?php get_template_part("home-work") ?>
    <!--/#home-work-->
-   <article id="home-pirates" class="bg-dark">
-      <div class="row collapse">
-         <div class="columns large-5 large-offset-5 medium-8 medium-offset-3 small-12 small-offset-1 end">
-            <div class="slanted-container small-no-slant">
-               <h2>Meet the Pirates</h2>
-               <div class="slanted-block">
-                  We are creative renegades. We take risks. We rewrite rules. We come up with brave ideas that take on
-                  conventionally-steered ships.
-               </div>
-               <a href="/pirates">More Pirates</a>
-            </div>
-            <!--/.slanted-container-->
-         </div>
-         <!--/.columns-->
-      </div>
-      <!--/.row -->
-      <div class="row collapse">
-         <div class="columns large-14" id="pirates-image">
-            <div id="heightz">
-               <img src="/wordpress/wp-content/themes/tbwa/assets/images/piratesBG.jpg">
-            </div>
-         </div>
-      </div>
-      <!--/.row collapse-->
-   </article>
+   <?php get_template_part("home-pirates") ?>
    <!--/#home-pirates-->
 </section>
 <!--/#main-container-->
