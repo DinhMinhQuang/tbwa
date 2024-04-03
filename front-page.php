@@ -28,7 +28,7 @@
     content="TBWA is The Disruption® Company. Named Adweek’s 2018 Global Agency of the Year, our collective has 11,300 creative minds across 270 offices in 95 countries.">
   <link rel="shortcut icon" href="https://www.tequila.com.vn/img/favicon.ico" type="image/x-icon">
   <!-- Open Graph tags to customize link previews -->
-  <meta property="og:url" content="https://www.tequila.com.vn/">
+  <meta property="og:url" content="https://www.tbw.com.vn/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="TBWA">
   <!--<meta property="fb:app_id" content="1731508873846176" />-->
@@ -48,8 +48,8 @@
         This website uses cookies to improve your experience.
       </p>
       <p>
-        <a id="js_cookieNotice_accept" href="https://www.tequila.com.vn/#">Accept</a>
-        <a href="https://www.tequila.com.vn/privacy-policy">Privacy Policy</a>
+        <a id="js_cookieNotice_accept" href="https://www.tbwa.vn/#">Accept</a>
+        <a href="https://www.tbwa.vn/privacy-policy">Privacy Policy</a>
       </p>
 
     </div>

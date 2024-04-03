@@ -100,15 +100,31 @@
 
                         <!-- office address -->
                         <div id="office-address">
-                            <h3>TBWA\Group Vietnam</h3>
+                            <h3>
+                                <?php echo esc_html(get_theme_mod('extra_data_name', '')) ?>
+                            </h3>
                             <span class="address">
-                                <p>4th Floor <br></p>
-                                <p>9 Dinh Tien Hoang St.</p>
-                                <p>Da Kao Ward, District 1, </p>
-                                <p>Ho Chi Minh City, Vietnam</p><br>
-                                <a class="phone" href="tel:+84.28.38 245 315">+84.28.38 245 315</a>
+                                <p>
+                                    <?php echo esc_html(get_theme_mod('extra_data_address_first_line', '')) ?> <br>
+                                </p>
+                                <p>
+                                    <?php echo esc_html(get_theme_mod('extra_data_address_second_line', '')) ?>
+                                </p>
+                                <p>
+                                    <?php echo esc_html(get_theme_mod('extra_data_address_third_line', '')) ?>
+                                </p>
+                                <p>
+                                    <?php echo esc_html(get_theme_mod('extra_data_address_fourth_line', '')) ?>
+                                </p><br>
+                                <a class="phone"
+                                    href="tel:<?php echo esc_html(get_theme_mod('extra_data_phone', '')) ?>">
+                                    <?php echo esc_html(get_theme_mod('extra_data_phone', '')) ?>
+                                </a>
                             </span><br>
-                            <a class="email" href="mailto:info@tbwa.com.vn">info@tbwa.com.vn</a>
+                            <a class="email"
+                                href="mailto:<?php echo esc_html(get_theme_mod('extra_data_email', '')) ?>">
+                                <?php echo esc_html(get_theme_mod('extra_data_email', '')) ?>
+                            </a>
                         </div>
                     </div>
                     <!--/#office-addresses-->
@@ -116,11 +132,11 @@
                 <!-- social icons -->
                 <div id="social-icons">
                     <ul class="social-share-buttons">
-                        <li><a href="https://www.facebook.com/tbwavietnam/" data-share-channel="" id="facebook"
+                        <li><a href="<?php echo esc_html(get_theme_mod('extra_data_facebook', '')) ?>" data-share-channel="" id="facebook"
                                 class="share-btn" target="_blank">Facebook</a></li>
-                        <li><a href="https://www.linkedin.com/company/tbwa-group-vietnam/" data-share-channel=""
+                        <li><a href="<?php echo esc_html(get_theme_mod('extra_data_linkedin', '')) ?>" data-share-channel=""
                                 id="linkedin" class="share-btn" target="_blank">Linkedin</a></li>
-                        <li><a href="https://www.instagram.com/tbwa_groupvietnam/" data-share-channel="" id="instagram"
+                        <li><a href="<?php echo esc_html(get_theme_mod('extra_data_instagram', '')) ?>" data-share-channel="" id="instagram"
                                 class="share-btn" target="_blank">Instagram</a></li>
                     </ul>
                 </div>
