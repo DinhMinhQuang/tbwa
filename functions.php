@@ -952,7 +952,7 @@ function custom_extra_information($wp_customize)
     $wp_customize->add_section(
         'extra_data',
         array(
-            'title' => __('More Data', 'textdomain'),
+            'title' => __('Footer', 'textdomain'),
             'priority' => 200,
         )
     );
