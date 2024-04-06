@@ -38,8 +38,7 @@ function tbwa_styles()
         'tbwa-main-min',
         get_template_directory_uri() .
         '/assets/css/main.min.css',
-        array(),
-        'all'
+        array()
     );
 }
 add_action('wp_enqueue_scripts', 'tbwa_styles');
@@ -299,7 +298,7 @@ function theme_customizer_settings($wp_customize)
             )
         )
     );
-    
+
 }
 add_action('customize_register', 'theme_customizer_settings');
 function custom_single_template($single_template)
@@ -307,47 +306,13 @@ function custom_single_template($single_template)
     global $post;
 
     if ($post->post_type == 'post') {
-        $single_template = locate_template(array('work-single.php'));
+        $single_template = locate_template(array('single-work.php'));
     }
 
     return $single_template;
 }
 add_filter('single_template', 'custom_single_template');
 
-
-
-function banner_customizer_settings($wp_customize)
-{
-    $wp_customize->add_section(
-        'banner_section',
-        array(
-            'title' => __('Banner Settings', 'theme'),
-            'capability' => 'edit_theme_options'
-        )
-    );
-
-    $wp_customize->add_setting(
-        'banner_video',
-        array(
-            'default' => '',
-            'sanitize_callback' => 'absint',
-        )
-    );
-
-    $wp_customize->add_control(
-        new WP_Customize_Media_Control(
-            $wp_customize,
-            'banner_video_control',
-            array(
-                'label' => __('Banner Video', 'theme'),
-                'section' => 'banner_section',
-                'type' => 'media',
-                'settings' => 'banner_video',
-            )
-        )
-    );
-}
-add_action('customize_register', 'banner_customizer_settings');
 
 //Add meta box in the post or page
 add_action('add_meta_boxes', 'custom_postpage_meta_box');
@@ -357,16 +322,8 @@ function custom_postpage_meta_box()
     $post_types = array('post');
     foreach ($post_types as $pt) {
         add_meta_box(
-            'custom_postpage_meta_box',
-            __('Hero Image', 'textdomain'),
-            'custom_postpage_meta_box_func',
-            $pt,
-            'side',
-            'low'
-        );
-        add_meta_box(
-            'custom_postpage_meta_box_1',
-            __('Meta Box 1', 'textdomain'),
+            'custom_postpage_meta_box_back',
+            __('Back Thumbnail', 'textdomain'),
             'custom_postpage_meta_box_func_1',
             $pt,
             'side',
@@ -375,87 +332,31 @@ function custom_postpage_meta_box()
 
         // Meta box 2
         add_meta_box(
-            'custom_postpage_meta_box_2',
-            __('Meta Box 2', 'textdomain'),
+            'custom_postpage_meta_box_front',
+            __('Front Thumbnail', 'textdomain'),
             'custom_postpage_meta_box_func_2',
             $pt,
             'side',
             'low'
         );
+
+        // Section Post Thumbnail
+        add_meta_box(
+            'custom_postpage_meta_box_thumbnail',
+            __('Section Thumbnail', 'textdomain'),
+            'custom_postpage_meta_box_func',
+            $pt,
+            'side',
+            'low'
+        );
+
     }
-}
-
-function custom_postpage_meta_box_func($post, $key)
-{
-
-    $meta_keys = array('second_featured_image');
-
-    foreach ($meta_keys as $meta_key) {
-        $image_meta_val = get_post_meta($post->ID, $meta_key, true);
-        ?>
-        <div class="custom_postpage_wrapper" id="<?php echo $meta_key; ?>_wrapper" style="margin-bottom:20px;">
-            <img onclick="custom_postpage_add_image('<?php echo $meta_key; ?>');"
-                src="<?php echo ($image_meta_val != '' ? wp_get_attachment_image_src($image_meta_val)[0] : ''); ?>"
-                style="width:100%;cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>" alt="">
-            <a class="addimage" style="cursor:pointer;" onclick="custom_postpage_add_image('<?php echo $meta_key; ?>');">
-                <?php _e('Set Hero image', 'textdomain'); ?>
-            </a><br>
-            <a class="removeimage" style="cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>"
-                onclick="custom_postpage_remove_image('<?php echo $meta_key; ?>');">
-                <?php _e('Remove Hero image', 'textdomain'); ?>
-            </a>
-            <input type="hidden" name="<?php echo $meta_key; ?>" id="<?php echo $meta_key; ?>"
-                value="<?php echo $image_meta_val; ?>">
-        </div>
-    <?php } ?>
-    <script>
-        function custom_postpage_add_image(key) {
-
-            var $wrapper = jQuery('#' + key + '_wrapper');
-
-            custom_postimage_uploader = wp.media.frames.file_frame = wp.media({
-                title: '<?php _e('select image', 'textdomain'); ?>',
-                button: {
-                    text: '<?php _e('select image', 'textdomain'); ?>'
-                },
-                multiple: false
-            });
-            custom_postimage_uploader.on('select', function () {
-
-                var attachment = custom_postimage_uploader.state().get('selection').first().toJSON();
-                var img_url = attachment['url'];
-                var img_id = attachment['id'];
-                $wrapper.find('input#' + key).val(img_id);
-                $wrapper.find('img').attr('src', img_url);
-                $wrapper.find('img').show();
-                $wrapper.find('a.removeimage').show();
-            });
-            custom_postimage_uploader.on('open', function () {
-                var selection = custom_postimage_uploader.state().get('selection');
-                var selected = $wrapper.find('input#' + key).val();
-                if (selected) {
-                    selection.add(wp.media.attachment(selected));
-                }
-            });
-            custom_postimage_uploader.open();
-            return false;
-        }
-
-        function custom_postpage_remove_image(key) {
-            var $wrapper = jQuery('#' + key + '_wrapper');
-            $wrapper.find('input#' + key).val('');
-            $wrapper.find('img').hide();
-            $wrapper.find('a.removeimage').hide();
-            return false;
-        }
-    </script>
-    <?php wp_nonce_field('custom_postpage_meta_box', 'custom_postpage_meta_box_nonce');
 }
 
 function custom_postpage_meta_box_func_1($post, )
 {
 
-    $meta_keys = array('meta_box_1_field');
+    $meta_keys = array('meta_box_back_field');
 
     foreach ($meta_keys as $meta_key) {
         $image_meta_val = get_post_meta($post->ID, $meta_key, true);
@@ -465,11 +366,11 @@ function custom_postpage_meta_box_func_1($post, )
                 src="<?php echo ($image_meta_val != '' ? wp_get_attachment_image_src($image_meta_val)[0] : ''); ?>"
                 style="width:100%;cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>" alt="">
             <a class="addimage" style="cursor:pointer;" onclick="custom_postpage_add_image('<?php echo $meta_key; ?>');">
-                <?php _e('Set Hero image', 'textdomain'); ?>
+                <?php _e('Set Back image', 'textdomain'); ?>
             </a><br>
             <a class="removeimage" style="cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>"
                 onclick="custom_postpage_remove_image('<?php echo $meta_key; ?>');">
-                <?php _e('Remove Hero image', 'textdomain'); ?>
+                <?php _e('Remove Back image', 'textdomain'); ?>
             </a>
             <input type="hidden" name="<?php echo $meta_key; ?>" id="<?php echo $meta_key; ?>"
                 value="<?php echo $image_meta_val; ?>">
@@ -522,7 +423,7 @@ function custom_postpage_meta_box_func_1($post, )
 function custom_postpage_meta_box_func_2($post)
 {
 
-    $meta_keys = array('meta_box_2_field');
+    $meta_keys = array('meta_box_front_field');
 
     foreach ($meta_keys as $meta_key) {
         $image_meta_val = get_post_meta($post->ID, $meta_key, true);
@@ -532,11 +433,78 @@ function custom_postpage_meta_box_func_2($post)
                 src="<?php echo ($image_meta_val != '' ? wp_get_attachment_image_src($image_meta_val)[0] : ''); ?>"
                 style="width:100%;cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>" alt="">
             <a class="addimage" style="cursor:pointer;" onclick="custom_postpage_add_image('<?php echo $meta_key; ?>');">
-                <?php _e('Set Hero image', 'textdomain'); ?>
+                <?php _e('Set Front image', 'textdomain'); ?>
             </a><br>
             <a class="removeimage" style="cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>"
                 onclick="custom_postpage_remove_image('<?php echo $meta_key; ?>');">
-                <?php _e('Remove Hero image', 'textdomain'); ?>
+                <?php _e('Remove Front image', 'textdomain'); ?>
+            </a>
+            <input type="hidden" name="<?php echo $meta_key; ?>" id="<?php echo $meta_key; ?>"
+                value="<?php echo $image_meta_val; ?>">
+        </div>
+    <?php } ?>
+    <script>
+        function custom_postpage_add_image(key) {
+
+            var $wrapper = jQuery('#' + key + '_wrapper');
+
+            custom_postimage_uploader = wp.media.frames.file_frame = wp.media({
+                title: '<?php _e('select image', 'textdomain'); ?>',
+                button: {
+                    text: '<?php _e('select image', 'textdomain'); ?>'
+                },
+                multiple: false
+            });
+            custom_postimage_uploader.on('select', function () {
+
+                var attachment = custom_postimage_uploader.state().get('selection').first().toJSON();
+                var img_url = attachment['url'];
+                var img_id = attachment['id'];
+                $wrapper.find('input#' + key).val(img_id);
+                $wrapper.find('img').attr('src', img_url);
+                $wrapper.find('img').show();
+                $wrapper.find('a.removeimage').show();
+            });
+            custom_postimage_uploader.on('open', function () {
+                var selection = custom_postimage_uploader.state().get('selection');
+                var selected = $wrapper.find('input#' + key).val();
+                if (selected) {
+                    selection.add(wp.media.attachment(selected));
+                }
+            });
+            custom_postimage_uploader.open();
+            return false;
+        }
+
+        function custom_postpage_remove_image(key) {
+            var $wrapper = jQuery('#' + key + '_wrapper');
+            $wrapper.find('input#' + key).val('');
+            $wrapper.find('img').hide();
+            $wrapper.find('a.removeimage').hide();
+            return false;
+        }
+    </script>
+    <?php wp_nonce_field('custom_postpage_meta_box', 'custom_postpage_meta_box_nonce');
+}
+
+function custom_postpage_meta_box_func($post)
+{
+
+    $meta_keys = array('meta_box_section_thumbnail_field');
+
+    foreach ($meta_keys as $meta_key) {
+        $image_meta_val = get_post_meta($post->ID, $meta_key, true);
+        ?>
+        <div class="custom_postpage_wrapper" id="<?php echo $meta_key; ?>_wrapper" style="margin-bottom:20px;">
+            <img onclick="custom_postpage_add_image('<?php echo $meta_key; ?>');"
+                src="<?php echo ($image_meta_val != '' ? wp_get_attachment_image_src($image_meta_val)[0] : ''); ?>"
+                style="width:100%;cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>" alt="">
+            <a class="addimage" style="cursor:pointer;" onclick="custom_postpage_add_image('<?php echo $meta_key; ?>');">
+                <?php _e('Set Section image', 'textdomain'); ?>
+            </a><br>
+            <a class="removeimage" style="cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>"
+                onclick="custom_postpage_remove_image('<?php echo $meta_key; ?>');">
+                <?php _e('Remove Section image', 'textdomain'); ?>
             </a>
             <input type="hidden" name="<?php echo $meta_key; ?>" id="<?php echo $meta_key; ?>"
                 value="<?php echo $image_meta_val; ?>">
@@ -595,16 +563,7 @@ function custom_postimage_meta_box_save($post_id)
     }
 
     if (isset($_POST['custom_postpage_meta_box_nonce']) && wp_verify_nonce($_POST['custom_postpage_meta_box_nonce'], 'custom_postpage_meta_box')) {
-
-        // $meta_keys = array('second_featured_image');
-        // foreach ($meta_keys as $meta_key) {
-        //     if (isset($_POST[$meta_key]) && intval($_POST[$meta_key]) != '') {
-        //         update_post_meta($post_id, $meta_key, intval($_POST[$meta_key]));
-        //     } else {
-        //         update_post_meta($post_id, $meta_key, '');
-        //     }
-        // }
-        $meta_keys = array('second_featured_image', 'meta_box_1_field', 'meta_box_2_field');
+        $meta_keys = array('meta_box_back_field', 'meta_box_front_field', 'meta_box_section_thumbnail_field');
         foreach ($meta_keys as $meta_key) {
             if (isset($_POST[$meta_key]) && intval($_POST[$meta_key]) != '') {
                 update_post_meta($post_id, $meta_key, intval($_POST[$meta_key]));
@@ -1246,3 +1205,197 @@ function custom_extra_information($wp_customize)
     );
 }
 add_action('customize_register', 'custom_extra_information');
+
+function home_slider_customize($wp_customize)
+{
+    $wp_customize->add_section(
+        'slider_video_section',
+        array(
+            'title' => __('Home Slider', 'theme'),
+            'capability' => 'edit_theme_options'
+        )
+    );
+
+    $wp_customize->add_setting(
+        'banner_video',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'absint',
+        )
+    );
+
+    $wp_customize->add_control(
+        new WP_Customize_Media_Control(
+            $wp_customize,
+            'banner_video_control',
+            array(
+                'label' => __('Banner Video', 'theme'),
+                'section' => 'slider_video_section',
+                'type' => 'media',
+                'settings' => 'banner_video',
+            )
+        )
+    );
+
+    $wp_customize->add_setting(
+        'slider_video_culture_url',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_culture_url',
+        array(
+            'label' => 'Slider Video Our Work Url',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'slider_video_culture_button',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_culture_button',
+        array(
+            'label' => 'Text Button Slider Video Our Work',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'slider_video_disruption_url',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_disruption_url',
+        array(
+            'label' => 'Slider Video Disruption Url',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'slider_video_disruption_button',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_disruption_button',
+        array(
+            'label' => 'Text Button Slider Video Disruption',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'slider_video_software_url',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_software_url',
+        array(
+            'label' => 'Slider Video Our Software Url',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'slider_video_software_button',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_software_button',
+        array(
+            'label' => 'Text Button Slider Video Our Software',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'slider_video_work_url',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_work_url',
+        array(
+            'label' => 'Slider Video Our Work Url',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'slider_video_work_button',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_work_button',
+        array(
+            'label' => 'Text Button Slider Video Our Work',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'slider_video_pirate_url',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_pirate_url',
+        array(
+            'label' => 'Slider Video Our Pirate Url',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'slider_video_pirate_button',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_pirate_button',
+        array(
+            'label' => 'Text Button Slider Video Our Pirate',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+}
+add_action('customize_register', 'home_slider_customize');

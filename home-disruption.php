@@ -33,17 +33,8 @@
                     <div class="large-6 small-8 columns">
                         <div class="bleed-left">
                             <a href="<?php the_permalink(); ?>" class="scale">
-                                <?php
-                                $second_featured_image_id = get_post_meta(get_the_ID(), 'second_featured_image', true);
-                                if ($second_featured_image_id) {
-                                    $second_featured_image_url = wp_get_attachment_image_src($second_featured_image_id, 'single_thumb');
-                                    if ($second_featured_image_url) {
-                                        ?>
-                                        <img src="<?php echo $second_featured_image_url[0]; ?>">
-                                        <?php
-                                    }
-                                }
-                                ?>
+                                <img
+                                    src="<?php echo wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_back_field', true)); ?>">
                             </a>
                         </div>
                     </div>
@@ -54,8 +45,7 @@
                         <div class="small-offset-1 small-10 large-7 columns">
                             <div class="darken-image">
                                 <a href="<?php the_permalink(); ?>" class="scale">
-                                    <img src="<?php echo get_the_post_thumbnail_url();
-                                    ; ?>">
+                                    <img src="<?php echo wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_front_field', true)); ?>">
                                 </a>
                             </div>
                         </div>

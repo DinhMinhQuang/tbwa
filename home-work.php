@@ -72,7 +72,7 @@
                 <?php echo $topImageParent ?>
                 <?php echo $topImageChild ?>
                 <a href="<?php the_permalink(); ?>" class="scale">
-                    <?php the_post_thumbnail(); ?>
+                    <img src="<?php echo wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_back_field', true)); ?>">
                 </a>
             </div>
             </div>
@@ -83,12 +83,13 @@
                     <?php echo $bottomImageParent ?>
                     <?php echo $bottomImageChild ?>
                     <a href="<?php the_permalink(); ?>" class="scale">
-                        <?php the_post_thumbnail(); ?>
+                        <img
+                            src="<?php echo wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_front_field', true)); ?>">
                     </a>
                 </div>
             </div>
             </div>
-            <div class="row work-copy">
+            <div class=" row work-copy">
                 <!-- work copy -->
                 <?php echo $word ?>
                 <div class="slanted-container">
