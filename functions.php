@@ -38,7 +38,9 @@ function tbwa_styles()
         'tbwa-main-min',
         get_template_directory_uri() .
         '/assets/css/main.min.css',
-        array()
+        array(),
+        null,
+        'all'
     );
 }
 add_action('wp_enqueue_scripts', 'tbwa_styles');
