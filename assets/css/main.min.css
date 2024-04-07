@@ -3911,32 +3911,32 @@ a.share-btn {
 
 a.share-btn#twitter {
     background-color: #000;
-    -webkit-mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/Twitter.svg);
-    mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/Twitter.svg);
+    -webkit-mask-image: url(/wp-content/themes/tbwa/assets/images/Twitter.svg);
+    mask-image: url(/wp-content/themes/tbwa/assets/images/Twitter.svg);
     -webkit-mask-size: contain;
     mask-size: contain
 }
 
 a.share-btn#facebook {
     background-color: #000;
-    -webkit-mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/Facebook.svg);
-    mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/Facebook.svg);
+    -webkit-mask-image: url(/wp-content/themes/tbwa/assets/images/Facebook.svg);
+    mask-image: url(/wp-content/themes/tbwa/assets/images/Facebook.svg);
     -webkit-mask-size: contain;
     mask-size: contain
 }
 
 a.share-btn#linkedin {
     background-color: #000;
-    -webkit-mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/LinkedIn.svg);
-    mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/LinkedIn.svg);
+    -webkit-mask-image: url(/wp-content/themes/tbwa/assets/images/LinkedIn.svg);
+    mask-image: url(/wp-content/themes/tbwa/assets/images/LinkedIn.svg);
     -webkit-mask-size: contain;
     mask-size: contain
 }
 
 a.share-btn#instagram {
     background-color: #000;
-    -webkit-mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/Instagram.svg);
-    mask-image: url(/wordpress/wp-content/themes/tbwa/assets/images/Instagram.svg);
+    -webkit-mask-image: url(/wp-content/themes/tbwa/assets/images/Instagram.svg);
+    mask-image: url(/wp-content/themes/tbwa/assets/images/Instagram.svg);
     -webkit-mask-size: contain;
     mask-size: contain
 }
