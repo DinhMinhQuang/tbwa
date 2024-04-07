@@ -20,7 +20,7 @@
                <h4>Watch</h4>
             </a>
          </div>
-         <img src="/wordpress/wp-content/themes/tbwa/assets/images/arrow_white.svg" class="down-arrow"
+         <img src="/wp-content/themes/tbwa/assets/images/arrow_white.svg" class="down-arrow"
             alt="Scroll Down">
       </article>
       <!--/.video-overlay-->
