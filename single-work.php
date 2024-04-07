@@ -33,7 +33,8 @@
             </div>
             <div class="headline">
                 <h1>
-                    <?php $title = get_the_title($post->ID);
+                    <?php
+                    $title = get_the_title($post->ID);
                     $parts = explode(' ##### ', $title);
 
                     // Hiển thị các phần con với mỗi phần bọc trong thẻ <h1>
@@ -45,7 +46,7 @@
                             echo '<h1>' . $part . '</h1>';
                         }
                     }
-                    ?> 
+                    ?>
                 </h1>
             </div>
             <!-- headline -->
@@ -58,8 +59,8 @@
         <div class="vid-container">
             <div id="vid-wrapper">
                 <iframe id="article-featured-video"
-                    data-url="https://player.vimeo.com/video/<?php echo get_post_meta($post->ID, 'hero_vimeo_id', true); ?>?dnt=1&autoplay=0&api=1" frameborder="0"
-                    webkitallowfullscreen mozallowfullscreen allowfullscreen allow="autoplay"></iframe>
+                    data-url="https://player.vimeo.com/video/<?php echo get_post_meta($post->ID, 'hero_vimeo_id', true); ?>?dnt=1&autoplay=0&api=1"
+                    frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="autoplay"></iframe>
                 <div id="frame-shield"></div>
             </div>
             <div class="vid-controls">

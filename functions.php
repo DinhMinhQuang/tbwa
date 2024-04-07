@@ -202,6 +202,11 @@ function tbwa_scripts()
 }
 
 add_action('wp_enqueue_scripts', 'tbwa_scripts');
+function load_custom_wp_admin_style()
+{
+    wp_enqueue_media();
+}
+add_action('admin_enqueue_scripts', 'load_custom_wp_admin_style');
 
 /**
  * Custom walker class.
@@ -307,8 +312,12 @@ function custom_single_template($single_template)
 {
     global $post;
 
-    if ($post->post_type == 'post') {
+    if ($post->post_type == 'post' && has_category('work', $post)) {
         $single_template = locate_template(array('single-work.php'));
+    }
+
+    if ($post->post_type == 'post' && has_category('news', $post)) {
+        $single_template = locate_template(array('single-news.php'));
     }
 
     return $single_template;
@@ -1401,3 +1410,81 @@ function home_slider_customize($wp_customize)
 
 }
 add_action('customize_register', 'home_slider_customize');
+
+// Hàm sẽ được gọi khi trang chỉnh sửa danh mục được tạo ra
+function custom_category_fields($term)
+{
+    // Lấy giá trị hiện tại của các trường nếu có
+    $field1_value = get_term_meta($term->term_id, 'banner_title', true);
+    $field2_value = get_term_meta($term->term_id, 'title_intro', true);
+    $field3_value = get_term_meta($term->term_id, 'description_intro', true);
+    $image_url = get_term_meta($term->term_id, 'banner_image', true);
+    ?>
+    <tr class="form-field">
+        <th scope="row"><label for="banner_title">Banner Title</label></th>
+        <td>
+            <input type="text" name="banner_title" id="banner_title" value="<?php echo esc_attr($field1_value); ?>" />
+            <p class="description">Banner Title.</p>
+        </td>
+    </tr>
+    <tr class="form-field">
+        <th scope="row"><label for="title_intro">Title Intro</label></th>
+        <td>
+            <input type="text" name="title_intro" id="title_intro" value="<?php echo esc_attr($field2_value); ?>" />
+            <p class="description">Enter title intro for work list.</p>
+        </td>
+    </tr>
+    <tr class="form-field">
+        <th scope="row"><label for="description_intro">Description Intro</label></th>
+        <td>
+            <textarea name="description_intro" id="description_intro"
+                rows="5"><?php echo esc_textarea($field3_value); ?></textarea>
+            <p class="description">Enter description intro for work list.</p>
+        </td>
+    </tr>
+    <tr class="form-field">
+        <th scope="row"><label for="banner_image">Category Image</label></th>
+        <td>
+            <input type="text" name="banner_image" id="banner_image" value="<?php echo esc_attr($image_url); ?>" readonly />
+            <button type="button" class="button button-secondary" id="upload_image_button">Upload Image</button>
+            <p class="description">Upload or select an image for this category.</p>
+            <script>
+                jQuery(document).ready(function ($) {
+                    $('#upload_image_button').click(function () {
+                        var send_attachment_bkp = wp.media.editor.send.attachment;
+                        wp.media.editor.send.attachment = function (props, attachment) {
+                            $('#banner_image').val(attachment.url);
+                            wp.media.editor.send.attachment = send_attachment_bkp;
+                        }
+                        wp.media.editor.open();
+                        return false;
+                    });
+                });
+            </script>
+        </td>
+    </tr>
+    <?php
+}
+add_action('edit_category_form_fields', 'custom_category_fields');
+
+// Hàm sẽ được gọi khi bạn lưu danh mục
+function save_custom_category_fields($term_id)
+{
+    if (isset($_POST['banner_title'])) {
+        // Lưu giá trị của trường 1
+        update_term_meta($term_id, 'banner_title', sanitize_text_field($_POST['banner_title']));
+    }
+    if (isset($_POST['title_intro'])) {
+        // Lưu giá trị của trường 2
+        update_term_meta($term_id, 'title_intro', sanitize_text_field($_POST['title_intro']));
+    }
+    if (isset($_POST['description_intro'])) {
+        // Lưu giá trị của trường 3
+        update_term_meta($term_id, 'description_intro', wp_kses_post($_POST['description_intro']));
+    }
+    if (isset($_POST['banner_image'])) {
+        // Lưu URL của ảnh
+        update_term_meta($term_id, 'banner_image', esc_url_raw($_POST['banner_image']));
+    }
+}
+add_action('edited_category', 'save_custom_category_fields');
