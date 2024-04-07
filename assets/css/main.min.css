@@ -9738,4 +9738,178 @@ body.rtl footer #legal {
     width: 100%;
     height: 100%;
     object-fit: contain;
+} 
+/*PAGE DISRUPTION ABOUT*/
+#disruption-content .disruption-about {
+    background: #fff;
+    padding: 256px 0 0; 
+}
+
+.disruption-about-flex {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.disruption-about-content .width-narrow {
+    border-top: 1px solid #0a0a0d;
+    display: inline-block;
+    width: 4.9479166667vw;
+    padding: 0 0 1.5625vw;
+}
+#disruption h3.disruption-about-content-title {
+    font-weight: 600;
+    padding-bottom: 18px;
+    font-size: 18px;
+    line-height: 1.60769em;
+    color: #0a0a0d;
+}
+
+.disruption-about-content p {
+    color: #4d4d4d;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5em;
+    padding-bottom: 16px;
+}  
+.disruption-about-video {
+    padding-bottom: 3.125vw;
+    margin-top: 40px;
+}
+.disruption-about-video video {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+}
+.disruption-about-img img {
+    aspect-ratio: 16/9;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.disruption-about-btn {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0,0,0,0);
+    position: relative;
+    transition-property: color;
+    transition-duration: .3s;
+    text-decoration: none;
+    color: #0a0a0d;
+    line-height: 33px;
+}
+.disruption-about-btn::before { 
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fecc00;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition-property: transform;
+    transition-duration: .3s;
+    transition-timing-function: ease-out;
+}
+.disruption-about-btn svg { 
+    display: inline;
+    vertical-align: text-bottom;
+    padding-left: 2px;
+    width: 16px;
+    height: 16px;
+    fill: #0a0a0d;
+}
+.disruption-about-btn:hover::before {  
+    transform: scaleX(1);
+}
+.disruption-about-understanding .width-narrow {
+    width: 100%;
+}
+#disruption .disruption-about-understanding h3.disruption-about-content-title {
+    font-weight: 400;
+    font-size: 16px;
+    color: #0a0a0d;
+    line-height: 20px;
+    padding-bottom: 0;
+}
+#disruption .disruption-about-understanding h3.disruption-about-desc {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 32px;
+}
+@media (min-width: 576px) {
+    #disruption-content .disruption-about .disruption-about-container {
+        max-width: 80vw;
+        margin: 0 auto;
+    }
+    .col-lg-5 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .col-lg-4 {
+        flex: 0 0 40%;
+        max-width: 40%;
+    }
+    .col-lg-2 {
+        flex: 0 0 10%;
+        max-width: 10%;
+    }
+    #disruption h3.disruption-about-content-title { 
+        line-height: 38px;
+        font-size: 1.5625vw;
+    }
+    .disruption-about-content p { 
+        font-size: 1.3020833333vw;
+        line-height: 26px; 
+    }
+}
+@media (min-width: 992px) {
+    .disruption-about-flex { 
+        padding: 0 0 42px;
+    }
+    .disruption-about-btn {
+        font-size: 1.3020833333vw;
+        padding-top: .5208333333vw;
+        padding-bottom: .5208333333vw;
+    }
+    .disruption-about-btn svg { 
+        padding-left: .3125vw;
+        width: 22px;
+        height: 18px;
+    }
+    #disruption .disruption-about-understanding h3.disruption-about-content-title {
+        font-size: 1.3020833333vw;
+        margin-bottom: 4.6875vw;
+    }
+    #disruption .disruption-about-understanding h3.disruption-about-desc { 
+        margin-bottom: 4.6875vw;
+        font-size: 1.5625vw;
+    }
+}
+@media (max-width: 991px) {
+    #disruption-content .disruption-about {
+        padding: 120px 0;
+    }
+    .disruption-about-flex {
+        padding: 0 24px 30px;
+    }
+    .disruption-about-content .width-narrow {
+        width: 95px;
+        padding: 0 0 30px;      
+    }
+    .disruption-about-content p {
+        padding-bottom: 0;
+    }
+    .disruption-about-img {padding: 0 0 30px;}
+    #disruption h3.disruption-about-content-title {
+        padding-bottom: 15px;
+    }
+    .disruption-about-btn {
+        padding: 16px 0 30px; 
+    }
 }
