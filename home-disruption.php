@@ -61,7 +61,7 @@
                                     <h4 class="client">
                                         <?php echo get_post_meta(get_the_ID(), 'client', true); ?>
                                         <h5 class="agency"></h5>
-                                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/arrow_white.svg"
+                                        <img src="/wp-content/themes/tbwa/assets/images/arrow_white.svg"
                                             class="arrow">
                                 </a>
                             </div>

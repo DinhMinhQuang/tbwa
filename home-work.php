@@ -94,14 +94,24 @@
                 <?php echo $word ?>
                 <div class="slanted-container">
                     <a class="work-title" href="<?php the_permalink(); ?>">
-                        <h3>
-                            <?php the_title(); ?>
-                        </h3>
+                            <?php
+                            $title = get_the_title(get_the_ID());
+
+                            $parts = explode(' ##### ', $title);
+                            foreach ($parts as $part) {
+                                // Loại bỏ các khoảng trắng ở đầu và cuối phần
+                                $part = trim($part);
+                                // Hiển thị thẻ <h1> cho mỗi phần nếu phần không rỗng
+                                if (!empty($part)) {
+                                    echo '<h3>' . $part . '</h3>';
+                                }
+                            }
+                            ?>
                         <h4 class="client">
                             <?php echo get_post_meta(get_the_ID(), 'client', true); ?>
                         </h4>
                         <h5 class="agency"></h5>
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/arrow.svg" class="arrow">
+                        <img src="/wp-content/themes/tbwa/assets/images/arrow.svg" class="arrow">
                     </a>
                 </div>
             </div>

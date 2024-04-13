@@ -75,27 +75,27 @@
                     <div id="contact-info-container">
                         <!-- email contacts -->
                         <div id="contact-info">
-                            <?php
-                            $menu = wp_get_nav_menu_object('third');
+                            <h3>
+                                <?php echo esc_html(get_theme_mod('business_inquiries_first_title', '')) ?>
+                            </h3>
+                            <p class="name small">
+                                <?php echo esc_html(get_theme_mod('business_inquiries_first_name', '')) ?>
+                            </p>
+                            <a class="email"
+                                href="mailto:<?php echo esc_html(get_theme_mod('business_inquiries_first_email', '')) ?>">
+                                <?php echo esc_html(get_theme_mod('business_inquiries_first_email', '')) ?>
+                            </a>
+                            <h3>
+                                <?php echo esc_html(get_theme_mod('business_inquiries_second_title', '')) ?>
+                            </h3>
+                            <p class="name small">
+                                <?php echo esc_html(get_theme_mod('business_inquiries_second_name', '')) ?>
+                            </p>
 
-                            // Check if the menu exists and retrieve its items if it does
-                            if ($menu) {
-                                $menu_items = wp_get_nav_menu_items($menu->term_id);
-
-                                // Loop through the menu items
-                                if ($menu_items) {
-                                    foreach ($menu_items as $menu_item) {
-                                        // Output or process each menu item as needed
-                                        echo '<h3>' . $menu_item->title . '</h3>';
-                                        // Output additional menu item data such as URL, class, etc.
-                                        echo '<p classname="name">' . $menu_item->attr_title . '</p>';
-                                        echo '<a class="email" href="mailto:' . esc_attr($menu_item->description) . '">' . esc_html($menu_item->description) . '</a>';
-                                    }
-                                }
-                            } else {
-                                echo 'Menu not found.';
-                            }
-                            ?>
+                            <a class="email"
+                                href="mailto:<?php echo esc_html(get_theme_mod('business_inquiries_second_email', '')) ?>">
+                                <?php echo esc_html(get_theme_mod('business_inquiries_second_email', '')) ?>
+                            </a>
                         </div>
 
                         <!-- office address -->
@@ -132,12 +132,13 @@
                 <!-- social icons -->
                 <div id="social-icons">
                     <ul class="social-share-buttons">
-                        <li><a href="<?php echo esc_html(get_theme_mod('extra_data_facebook', '')) ?>" data-share-channel="" id="facebook"
-                                class="share-btn" target="_blank">Facebook</a></li>
-                        <li><a href="<?php echo esc_html(get_theme_mod('extra_data_linkedin', '')) ?>" data-share-channel=""
-                                id="linkedin" class="share-btn" target="_blank">Linkedin</a></li>
-                        <li><a href="<?php echo esc_html(get_theme_mod('extra_data_instagram', '')) ?>" data-share-channel="" id="instagram"
-                                class="share-btn" target="_blank">Instagram</a></li>
+                        <li><a href="<?php echo esc_html(get_theme_mod('extra_data_facebook', '')) ?>"
+                                data-share-channel="" id="facebook" class="share-btn" target="_blank">Facebook</a></li>
+                        <li><a href="<?php echo esc_html(get_theme_mod('extra_data_linkedin', '')) ?>"
+                                data-share-channel="" id="linkedin" class="share-btn" target="_blank">Linkedin</a></li>
+                        <li><a href="<?php echo esc_html(get_theme_mod('extra_data_instagram', '')) ?>"
+                                data-share-channel="" id="instagram" class="share-btn" target="_blank">Instagram</a>
+                        </li>
                     </ul>
                 </div>
                 <!--/#social-icons-->
