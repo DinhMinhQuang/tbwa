@@ -55,7 +55,7 @@
     return false
   }
 
-  function cookieIsSet() {
+  function cookieIsSet() { 
     return getCookie('cookieConsent')
   }
   function analyticsIsSet() {
@@ -70,7 +70,7 @@
     elNotice.style.display = 'block'
   }
 
-  function hideNotice() {
+  function hideNotice() { debugger
     elNotice.style.display = 'none'
   }
 
@@ -116,7 +116,7 @@
 
     var fSeg = '';
     var lSeg = '';
-    var workk = 'https://www.tequila.com.vn/work'
+    var workk = '/work'
     if (document.cookie.split(';').filter((item) => item.includes('acceptAnalytics=1')).length) {
 
 

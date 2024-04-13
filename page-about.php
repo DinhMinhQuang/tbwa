@@ -5,7 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About</title>
+    <title>About - TBWA\Vietnam (en-US)</title>
+    <link rel="shortcut icon" href="https://www.tbwa.com.vn/img/favicon.ico" type="image/x-icon">
     <?php wp_head(); ?>
 </head>
 
@@ -15,10 +16,19 @@
         <article id="about-splash">
             <div id="headlines">
                 <h1>
-                    <p>Tequila</p>
-                    <p><span style="background-color: initial;">Banana</span><br></p>
-                    <p>Whisky</p>
-                    <p>Avocado</p>
+                    <?php
+                    $title = get_the_title(get_the_ID());
+
+                    $parts = explode(' ##### ', $title);
+                    foreach ($parts as $part) {
+                        // Loại bỏ các khoảng trắng ở đầu và cuối phần
+                        $part = trim($part);
+                        // Hiển thị thẻ <h1> cho mỗi phần nếu phần không rỗng
+                        if (!empty($part)) {
+                            echo '<p>' . $part . '</p>';
+                        }
+                    }
+                    ?>
                 </h1>
                 <div class="slanted-button ">
                     <h4 id="about-video-watch">Watch</h4>
@@ -30,7 +40,7 @@
         <!--/#about-splash-->
         <article id="about-video-container">
             <video id="about-video-player" class="video-js" height="300" width="300" controls preload="auto">
-                <source src="https://d2rijh2vqznvtd.cloudfront.net/assets/videos/peopleandplaces.mp4" type="video/mp4">
+                <source src="<?php echo get_theme_mod('slider_video_culture_url'); ?>" type="video/mp4">
             </video>
         </article>
         <!--/about-video-container-->
@@ -41,12 +51,9 @@
             <div class="row">
                 <div class="columns large-6 large-offset-5 medium-11 medium-offset-1 small-offset-0 small-14">
                     <div class="slanted-container small-no-slant">
-                        <h1>The Disruption<sup>®</sup>&nbsp;Company</h1>
+                        <h1><?php echo get_post_meta(get_the_ID(), 'company_about_title', true); ?></h1>
                         <div class="slanted-block">
-                            We develop business-changing, culture-defining and award-winning ideas for brands. And we’ve
-                            got the hardware to prove it. Consistently ranked among the top 10 global advertising
-                            agencies worldwide, we have been recognized with top honors from every major creative award
-                            show, including Cannes Lions, Clios, D&amp;AD, Effies, Webbys and the EMMY awards.
+                            <?php echo wp_kses_post(get_post_meta(get_the_ID(), 'company_about_content', true)); ?>
                         </div>
                         <!--/.slanted-block-->
                     </div>
@@ -59,58 +66,60 @@
         <article id="about-clients" class="bg-light">
             <div class="row">
                 <div class="columns large-offset-2 large-10 end">
-                    <h2>Our Clients</h2>
+                    <h2><?php echo esc_html(get_post_meta(get_the_ID(), 'our_clients_title', true)); ?></h2>
                 </div>
                 <!--/.columns-->
             </div>
             <!--/.row-->
             <div class="row">
-                <div class="columns client large-2 medium-2 small-4  large-offset-1 medium-offset-1 small-offset-1 ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/Logo-Vinamilk.png">
-                </div>
-                <div class="columns client large-2 medium-2 small-4  medium-offset-0  ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/Acecook-BW_Web.png">
-                </div>
-                <div class="columns client large-2 medium-2 small-4  medium-offset-0  ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/N-KID-BW_Web.png">
-                </div>
-                <div class="columns client large-2 medium-2 small-4  medium-offset-0 small-offset-1 ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/STB-BW-_-Web_180516_001725.png">
-                </div>
-                <div class="columns client large-2 medium-2 small-4  medium-offset-0  ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/Roche-BW_Web.png">
-                </div>
-                <div class="columns client large-2 medium-2 small-4    medium-offset-0 small-offset-0   end ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/SCG-BW_Web.png">
-                </div>
-            </div>
-            <div class="row">
-                <div class="columns client large-2 medium-2 small-4  large-offset-1 medium-offset-1 small-offset-1 ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/V-Live-BW_Web.png">
-                </div>
-                <div class="columns client large-2 medium-2 small-4  medium-offset-0  ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/Carlsberg-BW_Web_180516_002232.png">
-                </div>
-                <div class="columns client large-2 medium-2 small-4  medium-offset-0  ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/Pizza-Hut-BW_Web.png">
-                </div>
-                <div class="columns client large-2 medium-2 small-4  medium-offset-0 small-offset-1 ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/AK-BW_Web.png">
-                </div>
-                <div class="columns client large-2 medium-2 small-4  medium-offset-0  ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/MC-BW.png">
-                </div>
-                <div class="columns client large-2 medium-2 small-4    medium-offset-0 small-offset-0   end ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/LogoViettel-New2021-PNG.png">
-                </div>
-            </div>
-            <div class="row">
-                <div class="columns client large-2 medium-2 small-4  large-offset-1 medium-offset-1 small-offset-1 ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/K_210309_053835.png">
-                </div>
-                <div class="columns client large-2 medium-2 small-4    medium-offset-0 small-offset-0   end ">
-                    <img src="/wordpress/wp-content/themes/tbwa/assets/images/Baemin_Vietnamworks_Logo_Baemin_244x100.png">
-                </div>
+                <?php
+                $post_id = get_the_ID();
+                $content = get_post_field('post_content', $post_id);
+                $attachments = get_attached_media('image', $post_id);
+
+                // Đếm số lượng tệp đính kèm
+                $attachment_count = count($attachments);
+
+                // Khởi tạo biến đếm
+                $count = 0;
+                
+                // Các class tương ứng với mỗi div
+                $div_classes = array(
+                    'large-2 medium-2 small-4 large-offset-1 medium-offset-1 small-offset-1',
+                    'large-2 medium-2 small-4 medium-offset-0',
+                    'large-2 medium-2 small-4 medium-offset-0',
+                    'large-2 medium-2 small-4 medium-offset-0 small-offset-1',
+                    'large-2 medium-2 small-4 medium-offset-0',
+                    'large-2 medium-2 small-4 medium-offset-0 small-offset-0 end'
+                );
+                
+                // Biến để theo dõi vị trí của mỗi div
+                $div_position = 0;
+                echo '<div class="row">';
+                foreach ($attachments as $attachment) {
+                    $count++;
+                    if (strpos($content, $attachment->guid) !== false) {
+                        // Lấy class cho div hiện tại
+                        $current_class = $div_classes[$div_position];
+                
+                        // In ra div với class tương ứng
+                        echo '<div class="columns client ' . $current_class . '">';
+                        echo '<img class="' .$attachment_count. '" src="' . $attachment->guid . '">';
+                        echo '</div>';
+                
+                        // Tăng vị trí div lên một đơn vị, và nếu vượt quá số lượng class, quay trở lại vị trí đầu tiên
+                        $div_position++;
+                        if ($div_position >= count($div_classes)) {
+                            echo '</div>';
+                            echo '<div class="row">';
+                            $div_position = 0;
+                        }
+                    }
+                }
+                if ($div_position != 0) {
+                    echo '</div>';
+                }
+                ?>
             </div>
         </article>
         <!--/#about-clients-->
@@ -121,23 +130,23 @@
                 </div>
                 <div class="large-3 columns  medium-offset-0 medium-14 small-14 small-offset-0">
                     <span class="address">
-                        <p>4th Floor <br></p>
-                        <p>9 Dinh Tien Hoang St.</p>
-                        <p>Da Kao Ward, District 1, </p>
-                        <p>Ho Chi Minh City, Vietnam</p>
+                        <p><?php echo esc_html(get_theme_mod('extra_data_address_first_line', '')) ?><br></p>
+                        <p><?php echo esc_html(get_theme_mod('extra_data_address_second_line', '')) ?></p>
+                        <p><?php echo esc_html(get_theme_mod('extra_data_address_third_line', '')) ?> </p>
+                        <p> <?php echo esc_html(get_theme_mod('extra_data_address_fourth_line', '')) ?></p>
                     </span>
                 </div>
                 <div class="large-1 columns medium-14 medium-offset-0 small-14 small-offset-0">
                     <h3 class="section-title">Telephone</h3>
                 </div>
                 <div class="large-3 columns medium-14 medium-offset-0 small-14 small-offset-0">
-                    <a class="phone" href="tel:+84.28.38 245 315">+84.28.38 245 315</a>
+                    <a class="phone" href="tel:<?php echo esc_html(get_theme_mod('extra_data_phone', '')) ?>"><?php echo esc_html(get_theme_mod('extra_data_phone', '')) ?></a>
                 </div>
                 <div class="large-1 columns medium-14 medium-offset-0 small-14 small-offset-0">
                     <h3 class="section-title">Email</h3>
                 </div>
                 <div class="large-3 columns end medium-14 medium-offset-0 small-14 small-offset-0">
-                    <a class="email" href="mailto:info@tbwa.com.vn">info@tbwa.com.vn</a>
+                    <a class="email" href="mailto:<?php echo esc_html(get_theme_mod('extra_data_email', '')) ?>"><?php echo esc_html(get_theme_mod('extra_data_email', '')) ?></a>
                 </div>
             </div>
             <!--/.row-->

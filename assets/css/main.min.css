@@ -9868,6 +9868,9 @@ body.rtl footer #legal {
         line-height: 26px; 
     }
 }
+section#about-landing article#about-clients .row .columns:last-child {
+    float: left;
+} 
 @media (min-width: 992px) {
     .disruption-about-flex { 
         padding: 0 0 42px;
@@ -9893,7 +9896,7 @@ body.rtl footer #legal {
 }
 @media (max-width: 991px) {
     #disruption-content .disruption-about {
-        padding: 120px 0;
+        padding: 120px 0 30px;
     }
     .disruption-about-flex {
         padding: 0 24px 30px;
@@ -9912,4 +9915,52 @@ body.rtl footer #legal {
     .disruption-about-btn {
         padding: 16px 0 30px; 
     }
+    .disruption-about-flex:nth-child(odd) .disruption-about-img {
+        padding: 0;   
+    } 
+    #disruption .disruption-about-understanding h3.disruption-about-content-title {
+        padding-bottom: 60px;
+    }
+}
+.wp-block-tbwa-blocks-image-animated-sprite {
+    position: relative;
+    width: 100%;
+    height: auto;
+    font-size: 0;
+    line-height: 0
+}
+
+.wp-block-tbwa-blocks-image-animated-sprite .no-media-selected {
+    display: none
+}
+
+.wp-block-tbwa-blocks-image-animated-sprite.proportion-original {
+    width: 100%;
+    height: auto;
+}
+
+.wp-block-tbwa-blocks-image-animated-sprite.proportion-original-size {
+    width: initial;
+    height: initial
+}
+
+.wp-block-tbwa-blocks-image-animated-sprite.border-white {
+    border: 1px solid #fff
+}
+
+.wp-block-tbwa-blocks-image-animated-sprite.border-black {
+    border: 1px solid #0a0a0d
+}
+
+.wp-block-tbwa-blocks-image-animated-sprite.border-light-grey {
+    border: 1px solid #bdbdbd
+}
+
+.wp-block-tbwa-blocks-image-animated-sprite.border-dark-grey {
+    border: 1px solid #4d4d4d
+}
+.sprite {
+    width: 100%!important;
+    height: 0;
+    padding-top: 100%;
 }

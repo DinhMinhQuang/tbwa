@@ -39,8 +39,7 @@ function tbwa_styles()
         get_template_directory_uri() .
         '/assets/css/main.min.css',
         array(),
-        null,
-        'all'
+        'v1'
     );
 }
 add_action('wp_enqueue_scripts', 'tbwa_styles');
@@ -146,6 +145,14 @@ function tbwa_scripts()
             'disruption-min',
             get_template_directory_uri() .
             '/assets/js/disruption.min.js',
+            array(),
+            '1.0',
+            true
+        );
+        wp_enqueue_script(
+            'image-animated-sprite',
+            get_template_directory_uri() .
+            '/assets/js/image-animated-sprite.js',
             array(),
             '1.0',
             true
@@ -307,14 +314,16 @@ function custom_single_template($single_template)
 {
     global $post;
 
-    if ($post->post_type == 'post') {
+    if ($post->post_type == 'post' && has_category('work', $post)) {
         $single_template = locate_template(array('single-work.php'));
+    }
+    if ($post->post_type == 'post' && has_category('news', $post)) {
+        $single_template = locate_template(array('single-news.php'));
     }
 
     return $single_template;
 }
 add_filter('single_template', 'custom_single_template');
-
 
 //Add meta box in the post or page
 add_action('add_meta_boxes', 'custom_postpage_meta_box');
@@ -645,16 +654,16 @@ function customizer_settings($wp_customize)
 add_action('customize_register', 'customizer_settings');
 function customizer_settings_disruption($wp_customize)
 {
-    // Thêm section mới cho nội dung "Home Disruption"
+    // Thêm section mới cho Content "Home Disruption"
     $wp_customize->add_section(
         'home_disruption_section',
         array(
-            'title' => 'Home Disruption', // Tiêu đề của section
+            'title' => 'Home Disruption', // Title của section
             'priority' => 30,
         )
     );
 
-    // Thêm thiết lập cho nội dung "Home Disruption"
+    // Thêm thiết lập cho Content "Home Disruption"
     $wp_customize->add_setting(
         'home_disruption_first_title',
         array(
@@ -663,7 +672,7 @@ function customizer_settings_disruption($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
     $wp_customize->add_control(
         'home_disruption_first_title',
         array(
@@ -681,7 +690,7 @@ function customizer_settings_disruption($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
     $wp_customize->add_control(
         'home_disruption_first_content',
         array(
@@ -700,7 +709,7 @@ function customizer_settings_disruption($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
     $wp_customize->add_control(
         'home_disruption_first_link',
         array(
@@ -719,7 +728,7 @@ function customizer_settings_disruption($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
     $wp_customize->add_control(
         'home_disruption_second_title',
         array(
@@ -737,7 +746,7 @@ function customizer_settings_disruption($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
     $wp_customize->add_control(
         'home_disruption_second_content',
         array(
@@ -756,7 +765,7 @@ function customizer_settings_disruption($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
     $wp_customize->add_control(
         'home_disruption_second_link',
         array(
@@ -770,16 +779,16 @@ add_action('customize_register', 'customizer_settings_disruption');
 
 function customizer_settings_pirates($wp_customize)
 {
-    // Thêm section mới cho nội dung "Home Disruption"
+    // Thêm section mới cho Content "Home Disruption"
     $wp_customize->add_section(
         'home_pirates_section',
         array(
-            'title' => 'Home Pirates', // Tiêu đề của section
+            'title' => 'Home Pirates', // Title của section
             'priority' => 30,
         )
     );
 
-    // Thêm thiết lập cho nội dung "Home Disruption"
+    // Thêm thiết lập cho Content "Home Disruption"
     $wp_customize->add_setting(
         'home_pirates_title',
         array(
@@ -788,7 +797,7 @@ function customizer_settings_pirates($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_pirates_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_pirates_section'
     $wp_customize->add_control(
         'home_pirates_title',
         array(
@@ -824,7 +833,7 @@ function customizer_settings_pirates($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
     $wp_customize->add_control(
         'home_pirates_link',
         array(
@@ -862,12 +871,12 @@ function customizer_settings_work($wp_customize)
     $wp_customize->add_section(
         'home_work_section',
         array(
-            'title' => 'Home Work', // Tiêu đề của section
+            'title' => 'Home Work', // Title của section
             'priority' => 30,
         )
     );
 
-    // Thêm thiết lập cho nội dung "Home Disruption"
+    // Thêm thiết lập cho Content "Home Disruption"
     $wp_customize->add_setting(
         'home_work_title',
         array(
@@ -876,7 +885,7 @@ function customizer_settings_work($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_pirates_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_pirates_section'
     $wp_customize->add_control(
         'home_work_title',
         array(
@@ -886,7 +895,7 @@ function customizer_settings_work($wp_customize)
         )
     );
 
-    // Thêm thiết lập cho nội dung "Home Disruption"
+    // Thêm thiết lập cho Content "Home Disruption"
     $wp_customize->add_setting(
         'home_work_content',
         array(
@@ -895,7 +904,7 @@ function customizer_settings_work($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_pirates_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_pirates_section'
     $wp_customize->add_control(
         'home_work_content',
         array(
@@ -918,7 +927,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Setting cho nội dung footer
+    // Thêm Setting cho Content footer
     $wp_customize->add_setting(
         'business_inquiries_first_title',
         array(
@@ -927,7 +936,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Control cho nội dung footer
+    // Thêm Control cho Content footer
     $wp_customize->add_control(
         'business_inquiries_first_title',
         array(
@@ -937,7 +946,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Setting cho nội dung footer
+    // Thêm Setting cho Content footer
     $wp_customize->add_setting(
         'business_inquiries_first_name',
         array(
@@ -946,7 +955,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Control cho nội dung footer
+    // Thêm Control cho Content footer
     $wp_customize->add_control(
         'business_inquiries_first_name',
         array(
@@ -964,7 +973,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Control cho nội dung footer
+    // Thêm Control cho Content footer
     $wp_customize->add_control(
         'business_inquiries_first_email',
         array(
@@ -982,7 +991,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Control cho nội dung footer
+    // Thêm Control cho Content footer
     $wp_customize->add_control(
         'business_inquiries_second_title',
         array(
@@ -992,7 +1001,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Setting cho nội dung footer
+    // Thêm Setting cho Content footer
     $wp_customize->add_setting(
         'business_inquiries_second_name',
         array(
@@ -1001,7 +1010,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Control cho nội dung footer
+    // Thêm Control cho Content footer
     $wp_customize->add_control(
         'business_inquiries_second_name',
         array(
@@ -1019,7 +1028,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Control cho nội dung footer
+    // Thêm Control cho Content footer
     $wp_customize->add_control(
         'business_inquiries_second_email',
         array(
@@ -1037,7 +1046,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Control cho nội dung footer
+    // Thêm Control cho Content footer
     $wp_customize->add_control(
         'extra_data_name',
         array(
@@ -1055,7 +1064,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
     $wp_customize->add_control(
         'extra_data_address_first_line',
         array(
@@ -1072,7 +1081,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
     $wp_customize->add_control(
         'extra_data_address_second_line',
         array(
@@ -1089,7 +1098,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
     $wp_customize->add_control(
         'extra_data_address_third_line',
         array(
@@ -1106,7 +1115,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm control cho nội dung "Home Disruption" và đặt trong section 'home_disruption_section'
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
     $wp_customize->add_control(
         'extra_data_address_fourth_line',
         array(
@@ -1124,7 +1133,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Control cho nội dung footer
+    // Thêm Control cho Content footer
     $wp_customize->add_control(
         'extra_data_phone',
         array(
@@ -1142,7 +1151,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Control cho nội dung footer
+    // Thêm Control cho Content footer
     $wp_customize->add_control(
         'extra_data_email',
         array(
@@ -1160,7 +1169,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Control cho nội dung footer
+    // Thêm Control cho Content footer
     $wp_customize->add_control(
         'extra_data_facebook',
         array(
@@ -1178,7 +1187,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Control cho nội dung footer
+    // Thêm Control cho Content footer
     $wp_customize->add_control(
         'extra_data_linkedin',
         array(
@@ -1196,7 +1205,7 @@ function custom_extra_information($wp_customize)
         )
     );
 
-    // Thêm Control cho nội dung footer
+    // Thêm Control cho Content footer
     $wp_customize->add_control(
         'extra_data_instagram',
         array(
@@ -1401,3 +1410,339 @@ function home_slider_customize($wp_customize)
 
 }
 add_action('customize_register', 'home_slider_customize');
+/* START PAGE DISRUPTION */
+function add_custom_meta_boxes()
+{
+    global $post;
+    if (!empty($post)) {
+        $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
+        if ($pageTemplate == 'page-disruption.php') {
+            add_meta_box('featured_image_meta_box', 'Banner, Text and Video Disruption', 'render_featured_image_meta_box', 'page', 'side', 'default');
+            add_meta_box('methods_meta_box', 'Module Methods Disruption', 'render_content_methods_meta_box', 'page', 'side', 'default');
+            add_meta_box('about_meta_box', 'Module About Disruption', 'render_content_about_meta_box', 'page', 'side', 'default');
+        }
+    }
+}
+add_action('add_meta_boxes', 'add_custom_meta_boxes');
+/*Banner , Text and Video */
+function render_featured_image_meta_box($post)
+{
+
+    $featured_image_id = get_post_meta($post->ID, 'featured_image_id', true);
+    $featured_image = wp_get_attachment_image_src($featured_image_id, 'medium');
+    $custom_text = get_post_meta($post->ID, 'custom_text', true);
+    ?>
+    <p>
+        <label for="featured_image">
+            <?php _e('Upload Featured Image'); ?>
+        </label><br />
+        <input type="hidden" name="featured_image_id" id="featured_image_id" value="<?php echo $featured_image_id; ?>" />
+        <img id="featured_image" src="<?php echo $featured_image ? $featured_image[0] : ''; ?>" style="max-width: 100%;" />
+        <button type="button" id="featured_image_button" class="button-secondary">
+            <?php _e('Select Image'); ?>
+        </button>
+        <button type="button" id="featured_image_remove_button" class="button-secondary">
+            <?php _e('Remove Image'); ?>
+        </button>
+    </p>
+    <p>
+        <label for="custom_text">
+            <?php _e('Custom Text'); ?>
+        </label><br />
+        <textarea style="width: 100%;" name="custom_text" id="custom_text" rows="5"
+            cols="50"><?php echo $custom_text; ?></textarea>
+    </p>
+    <p><b>The video will be taken from the settings on the home page in the "Home Slider => Slider Video Disruption Url"
+            section.</b></p>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('#featured_image_button').click(function () {
+                var frame = wp.media({
+                    title: 'Select or Upload Image',
+                    multiple: false,
+                    library: {
+                        type: 'image'
+                    },
+                    button: {
+                        text: 'Select'
+                    }
+                });
+
+                frame.on('select', function () {
+                    var attachment = frame.state().get('selection').first().toJSON();
+                    $('#featured_image').attr('src', attachment.url);
+                    $('#featured_image_id').val(attachment.id);
+                });
+
+                frame.open();
+            });
+
+            $('#featured_image_remove_button').click(function () {
+                $('#featured_image').attr('src', '');
+                $('#featured_image_id').val('');
+            });
+        });
+    </script>
+    <?php
+}
+/* Module Methods */
+function render_content_methods_meta_box($post)
+{
+    $module_methods_id = get_post_meta($post->ID, 'methods_meta_box', true);
+    $methods_title = get_post_meta($post->ID, 'methods_title', true);
+    $methods_content = get_post_meta($post->ID, 'methods_content', true);
+    $methods_video = get_post_meta($post->ID, 'methods_video', true);
+    $num_anchor_links = 3;
+    ?>
+    <div><b>Anchor links</b></div>
+    <?php
+    for ($i = 1; $i <= $num_anchor_links; $i++) {
+        $anchor_links = get_post_meta($post->ID, 'anchor_links' . $i, true); // Lấy giá trị từ meta
+        ?>
+
+        <p>
+
+            <label for="anchor_links<?php echo $i; ?>">
+                <?php printf(__('Anchor links %d'), $i); ?>
+            </label><br />
+            <input style="width: 100%;" name="anchor_links<?php echo $i; ?>" id="anchor_links<?php echo $i; ?>"
+                value="<?php echo esc_attr($anchor_links); ?>" />
+        </p>
+
+        <?php
+    }
+    ?>
+    <div><b>Title</b></div>
+    <p>
+        <label for="methods_title">
+            Title Methods
+        </label><br />
+        <input style="width: 100%;" name="methods_title" id="methods_title"
+            value="<?php echo esc_attr($methods_title); ?>" />
+    </p>
+    <div><b>Content</b></div>
+    <p>
+        <label for="methods_content">
+            Content Methods
+        </label><br />
+        <input style="width: 100%;" name="methods_content" id="methods_content"
+            value="<?php echo esc_attr($methods_content); ?>" />
+    </p>
+    <div><b>Video</b></div>
+    <p>
+        <label for="methods_video">
+            Video Methods (Video upload under 40MB)
+        </label><br />
+        <input style="width: 100%;" name="methods_video" id="methods_video"
+            value="<?php echo esc_attr($methods_video); ?>" />
+    </p>
+    <?php
+}
+/* Module About */
+function render_content_about_meta_box($post)
+{
+    $module_methods_id = get_post_meta($post->ID, 'about_meta_box', true);
+    $title_about_video_disruption = get_post_meta($post->ID, 'title_about_video_disruption', true);
+    $text_about_video_disruption = get_post_meta($post->ID, 'text_about_video_disruption', true);
+    $about_video_disruption = get_post_meta($post->ID, 'about_video_disruption', true);
+    ?>
+    <div><b>Text and Video 1</b></div>
+    <p>
+        <label for="title_about_video_disruption">Title</label>
+        <br><input style="width: 100%" type="text" name="title_about_video_disruption" id="title_about_video_disruption"
+            value="<?php echo $title_about_video_disruption; ?>"></br>
+    </p>
+    <p>
+        <label for="text_about_video_disruption">Text</label>
+        <br><input style="width: 100%" type="text" name="text_about_video_disruption" id="text_about_video_disruption"
+            value="<?php echo $text_about_video_disruption; ?>"></br>
+    </p>
+    <p>
+        <label for="about_video_disruption">Video Methods (Video upload under 40MB)</label>
+        <br><input style="width: 100%" type="text" name="about_video_disruption" id="about_video_disruption"
+            value="<?php echo $about_video_disruption; ?>"></br>
+    </p>
+    <?php
+    for ($i = 1; $i <= 4; $i++) {
+        $featured_image_about_id = get_post_meta($post->ID, 'featured_image_about_id_' . $i, true);
+        $featured_image_about = wp_get_attachment_image_src($featured_image_about_id, 'medium');
+        $title_about_disruption = get_post_meta($post->ID, 'title_about_disruption' . $i, true);
+        $text_about_disruption = get_post_meta($post->ID, 'text_about_disruption' . $i, true);
+        ?>
+        <div><b><?php printf(__('Text and Image %d'), $i); ?></b></div>
+        <p>
+            <label for="title_about_disruption<?php echo $i; ?>">Title</label>
+            <br><input style="width: 100%" type="text" name="title_about_disruption<?php echo $i; ?>"
+                id="title_about_disruption<?php echo $i; ?>" value="<?php echo $title_about_disruption; ?>"></br>
+        </p>
+        <p>
+            <label for="text_about_disruption<?php echo $i; ?>">Text</label>
+            <br><input style="width: 100%" type="text" name="text_about_disruption<?php echo $i; ?>"
+                id="text_about_disruption<?php echo $i; ?>" value="<?php echo $text_about_disruption; ?>"></br>
+        </p>
+        <p>
+            <label for="featured_image_about_<?php echo $i; ?>">
+                Upload Image
+            </label><br />
+            <input type="hidden" name="featured_image_about_id_<?php echo $i; ?>" id="featured_image_about_<?php echo $i; ?>_id"
+                value="<?php echo $featured_image_about_id; ?>" />
+            <img id="featured_image_about_<?php echo $i; ?>"
+                src="<?php echo $featured_image_about ? $featured_image_about[0] : ''; ?>" style="max-width: 100%;" />
+            <button type="button" class="button-secondary featured_image_about_button"
+                data-target="featured_image_about_<?php echo $i; ?>">
+                <?php _e('Select Image'); ?>
+            </button>
+            <button type="button" class="button-secondary featured_image_about_remove_button"
+                data-target="featured_image_about_<?php echo $i; ?>">
+                <?php _e('Remove Image'); ?>
+            </button>
+        </p>
+        <?php
+    }
+    ?>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('.featured_image_about_button').click(function () {
+                var target = $(this).data('target');
+                var frame = wp.media({
+                    title: 'Select or Upload Image',
+                    multiple: false,
+                    library: {
+                        type: 'image'
+                    },
+                    button: {
+                        text: 'Select'
+                    }
+                });
+
+                frame.on('select', function () {
+                    var attachment = frame.state().get('selection').first().toJSON();
+                    $('#' + target).attr('src', attachment.url);
+                    $('#' + target + '_id').val(attachment.id);
+                });
+
+                frame.open();
+            });
+
+            $('.featured_image_about_remove_button').click(function () {
+                var target = $(this).data('target');
+                $('#' + target).attr('src', '');
+                $('#' + target + '_id').val('');
+            });
+        });
+    </script>
+    <?php
+}
+/* END PAGE DISRUPTION */
+/* START PAGE ABOUT */
+function add_custom_page_about_meta_boxes()
+{
+    global $post;
+    if (!empty($post)) {
+        $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
+        if ($pageTemplate == 'page-about.php') {
+            add_meta_box('featured_image_about_meta_box', 'Video About', 'render_page_about_img_featured_meta_box', 'page', 'side', 'default');
+            add_meta_box('company_about_meta_box', 'Module Company About', 'render_content_company_about_meta_box', 'page', 'side', 'default');
+            add_meta_box('our_clients_meta_box', 'Module Our Clients', 'render_content_our_clients_meta_box', 'page', 'side', 'default');
+        }
+    }
+}
+add_action('add_meta_boxes', 'add_custom_page_about_meta_boxes');
+function render_page_about_img_featured_meta_box($post)
+{
+    /* Video About */
+    $featured_image_id = get_post_meta($post->ID, 'featured_image_bout_id', true);
+    ?>
+    <p><b>The video will be taken from the settings on the home page in the "Home Slider => Slider Video About Url"
+            section.</b></p>
+    <?php
+}
+/* Module Company */
+function render_content_company_about_meta_box($post) {
+    $module_methods_id = get_post_meta($post->ID, 'company_about_meta_box', true);
+    $company_about_title = get_post_meta($post->ID, 'company_about_title', true);
+    $company_about_content = get_post_meta($post->ID, 'company_about_content', true);
+    ?>
+    <div><b>Title</b></div>
+    <p>
+        <label for="company_about_title">
+            Title Company
+        </label><br />
+        <input type="text" style="width: 100%;" name="company_about_title" id="company_about_title"
+            value="<?php echo htmlspecialchars($company_about_title); ?>" />
+    </p>
+    <div><b>Content</b></div>
+    <p>
+        <label for="company_about_content">
+            Content Company
+        </label><br />
+        <textarea style="width: 100%;" name="company_about_content" id="company_about_content" rows="5"
+        cols="50"><?php echo  esc_html($company_about_content); ?></textarea>
+    </p>
+    <?php
+}
+function render_content_our_clients_meta_box($post) {
+    $our_clients_title = get_post_meta($post->ID, 'our_clients_title', true);
+    ?>
+    <div><b>Title</b></div>
+    <p>
+        <label for="our_clients_title">
+            Title Our Clients
+        </label><br />
+        <input type="text" style="width: 100%;" name="our_clients_title" id="our_clients_title"
+            value="<?php echo htmlspecialchars($our_clients_title); ?>" />
+    </p>
+    <div><b>Image Our Clients</b></div>
+    <p><b>"The images will be taken from the content entry on the pages"</b></p>
+    <?php
+}
+/* END PAGE ABOUT */
+/* Save Disruption & About */
+function save_disruption_meta_box($post_id)
+{
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+        return;
+
+    if (!current_user_can('edit_post', $post_id))
+        return;
+
+    // Các trường meta có cùng cấu trúc
+    $meta_fields = array(
+        //Disruption
+        'featured_image_id',
+        'custom_text',
+        'anchor_links1',
+        'anchor_links2',
+        'anchor_links3',
+        'methods_title',
+        'methods_content',
+        'methods_video',
+        'text_about_disruption1',
+        'text_about_disruption2',
+        'text_about_disruption3',
+        'text_about_disruption4',
+        'title_about_disruption1',
+        'title_about_disruption2',
+        'title_about_disruption3',
+        'title_about_disruption4',
+        'featured_image_about_id_1',
+        'featured_image_about_id_2',
+        'featured_image_about_id_3',
+        'featured_image_about_id_4',
+        'title_about_video_disruption',
+        'text_about_video_disruption',
+        'about_video_disruption',
+        //About
+        'company_about_title',
+        'company_about_content',
+        'our_clients_title'
+    );
+
+    // Lặp qua mảng các trường meta để lưu giá trị
+    foreach ($meta_fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
+        }
+    }
+}
+add_action('save_post', 'save_disruption_meta_box');
