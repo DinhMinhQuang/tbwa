@@ -15,11 +15,27 @@
 
 <body class="dark">
     <?php get_header(); ?>
+    <?php get_template_part('cookie-notice'); ?>
+    <?php
+    $category = get_term_by('slug', 'work', 'category');
+    if (!$category)
+        echo "Category Not Found";
+    ?>
+
     <article id="work-landing" class="bg-light">
-        <div id="work-splash" style="background-image:url( /wordpress/wp-content/themes/tbwa/assets/images/work.png );">
+        <div id="work-splash"
+            style="background-image:url(<?php echo get_term_meta($category->term_id, 'banner_image', true); ?> );">
             <div id="work-splash-copy" class="slanted-container small-no-slant">
                 <div id="splash-title" class="slanted-block" style="color:white" ;>
-                    We hate boring
+                    <?php
+                    // $category = get_term_by('slug', 'work', 'category');
+                    $banner_title = get_term_meta($category->term_id, 'banner_title', true);
+                    if ($banner_title) {
+                        echo $banner_title;
+                    } else {
+                        echo "Banner Title Not Found";
+                    }
+                    ?>
                 </div>
                 <div class="slanted-button  white ">
                     <h4 id="work-video-watch">Watch</h4>
@@ -30,7 +46,7 @@
         <!--/#work-splash-->
         <div id="work-video-container">
             <video id="work-video-player" class="video-js" height="300" width="300" controls preload="auto">
-                <source src="https://d2rijh2vqznvtd.cloudfront.net/assets/videos/work.mp4" type="video/mp4">
+                <source src="<?php echo get_theme_mod('slider_video_work_url'); ?>" type="video/mp4">
             </video>
         </div>
         <!--/work-video-container-->
@@ -41,303 +57,113 @@
                 <div
                     class="columns xxlarge-offset-4 xlarge-offset-3 xlarge-9 large-offset-2 large-10 medium-offset-2 medium-11 small-offset-1 small-13">
                     <div class="slanted-container small-no-slant">
-                        <h1>Finding the whitespace</h1>
+                        <h1>
+                            <?php echo get_term_meta($category->term_id, 'title_intro', true); ?>
+                        </h1>
                         <div class="slanted-block section-intro-copy">
-                            Browse below for work that has made an impact for our clients.
+                            <?php echo get_term_meta($category->term_id, 'description_intro', true); ?>
                         </div>
                     </div>
                 </div>
             </div>
         </article>
         <div class="row">
-            <div class="columns large-3 medium-10 small-14
-         large-offset-1                                         ">
-                <div class="work-entry ">
-                    <a href="https://www.tbwa.com.vn/work/thoải-mái-data-chỉ-15k"
-                        alt="Feel Free For Data, Just &quot;15k&quot;">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/Ảnh-chụp-Màn-hình-2020-09-08-lúc-12.20.55.png"
-                            alt="Feel Free For Data, Just &quot;15k&quot;" />
+            <?php
+            $sizes = [
+                "large-3",
+                "large-5",
+                "large-4",
+                "large-5",
+                "large-4",
+                "large-3",
+                "large-4",
+                "large-3",
+                "large-5",
+            ];
+            $middleIndices = [1, 4, 7, 10, 13];
+            $rightIndices = [2, 5, 8, 11, 14];
+            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+            $args = array(
+                'post_type' => 'post', // Thay 'post' bằng kiểu bài viết tùy chỉnh của bạn nếu cần
+                'posts_per_page' => 15,
+                'category_name' => 'work',
+                'paged' => $paged,
+                'orderby' => 'date',
+                'order' => 'DESC',
+            );
+
+
+            $query = new WP_Query($args);
+            if ($query->have_posts()) {
+                $totalPosts = $query->found_posts;
+                for ($i = 0; $i < $totalPosts; $i++) {
+                    $query->the_post();
+                    $index = $query->current_post % count($sizes);
+                    $string = "<div class='columns " . $sizes[$index];
+
+                    $string .= "\tmedium-10 small-14";
+                    if ($query->current_post % 3 == 0) {
+                        $string .= "\tlarge-offset-1";
+                    } else {
+                        $string .= "\tlarge-offset-0";
+                    }
+                    if ($query->current_post % 2 != 0) {
+                        $string .= "\tmedium-offset-4";
+                    }
+
+                    $childString = "<div class='work-entry";
+
+                    if (in_array($query->current_post % 15, $middleIndices)) {
+                        $childString .= "\tentry-middle";
+                    } elseif (in_array($query->current_post % 15, $rightIndices)) {
+                        $childString .= "\tentry-right";
+                    }
+                    if ($i === $totalPosts - 1) {
+                        $string .= "\tend";
+                    }
+
+                    $string .= "'>";
+                    $childString .= "'>";
+
+                    echo $string . "\n";
+                    echo $childString . "\n";
+
+                    ?>
+                    <a href="<?php echo get_permalink() ?>" alt="<?php echo str_replace(' ##### ', ' ', get_the_title()) ?>">
+                        <img src="<?php echo wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_section_thumbnail_field', true)); ?>"
+                            alt="<?php echo str_replace(' ##### ', ' ', get_the_title()) ?>" />
                     </a>
                     <div class="slanted-container">
                         <!-- <a href="https://www.tbwa.com.vn/work/thoải-mái-data-chỉ-15k"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/thoải-mái-data-chỉ-15k"
-                                alt="Feel Free For Data, Just &quot;15k&quot;">Viettel ST</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/thoải-mái-data-chỉ-15k"
-                                alt="Feel Free For Data, Just &quot;15k&quot;">Feel Free For Data, Just
-                                &quot;15k&quot;</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/thoải-mái-data-chỉ-15k"
-                                alt="Feel Free For Data, Just &quot;15k&quot;"></a></h4>
+                        <h3 class="entry-client"><a href="<?php echo get_permalink() ?>"
+                                alt="<?php echo str_replace(' ##### ', ' ', get_the_title()) ?>"><?php echo get_post_meta(get_the_ID(), 'client', true) ?></a>
+                        </h3>
+                        <h2 class="entry-title"><a href="<?php echo get_permalink() ?>"
+                                alt="<?php echo str_replace(' ##### ', ' ', get_the_title()) ?>"><?php echo str_replace(' ##### ', ' ', get_the_title()) ?></a>
+                        </h2>
+                        <h4 class="entry-agency"><a href="<?php echo get_permalink() ?>"
+                                alt="<?php echo str_replace(' ##### ', ' ', get_the_title()) ?>"></a></h4>
                         <!-- </a> -->
                     </div>
                 </div>
-            </div>
-            <div class="columns large-5 medium-10 small-14
-         large-offset-0                      medium-offset-4                     ">
-                <div class="work-entry  entry-middle ">
-                    <a href="https://www.tbwa.com.vn/work/vinammilk-yomilk-chẳng-cần-thính-chỉ-cần-xinh-1"
-                        alt="“Chẳng cần thính chỉ cần xinh”">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/Ảnh-chụp-Màn-hình-2020-09-08-lúc-11.11.53.png"
-                            alt="“Chẳng cần thính chỉ cần xinh”" />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/vinammilk-yomilk-chẳng-cần-thính-chỉ-cần-xinh-1"> -->
-                        <h3 class="entry-client"><a
-                                href="https://www.tbwa.com.vn/work/vinammilk-yomilk-chẳng-cần-thính-chỉ-cần-xinh-1"
-                                alt="“Chẳng cần thính chỉ cần xinh”">Vinamilk Yomilk</a></h3>
-                        <h2 class="entry-title"><a
-                                href="https://www.tbwa.com.vn/work/vinammilk-yomilk-chẳng-cần-thính-chỉ-cần-xinh-1"
-                                alt="“Chẳng cần thính chỉ cần xinh”">“Chẳng cần thính chỉ cần xinh”</a></h2>
-                        <h4 class="entry-agency"><a
-                                href="https://www.tbwa.com.vn/work/vinammilk-yomilk-chẳng-cần-thính-chỉ-cần-xinh-1"
-                                alt="“Chẳng cần thính chỉ cần xinh”"></a></h4>
-                        <!-- </a> -->
-                    </div>
                 </div>
-            </div>
-            <div class="columns large-4 medium-10 small-14
-         large-offset-0                                         ">
-                <div class="work-entry  entry-right ">
-                    <a href="https://www.tbwa.com.vn/work/vlive-rose-for-your-idols" alt="#RosesForYourIdols">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/Vlive_Bantim-Thumbnails.png"
-                            alt="#RosesForYourIdols" />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/vlive-rose-for-your-idols"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/vlive-rose-for-your-idols"
-                                alt="#RosesForYourIdols">V LIVE</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/vlive-rose-for-your-idols"
-                                alt="#RosesForYourIdols">#RosesForYourIdols</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/vlive-rose-for-your-idols"
-                                alt="#RosesForYourIdols"></a></h4>
-                        <!-- </a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="columns large-5 medium-10 small-14
-         large-offset-1                      medium-offset-4                     ">
-                <div class="work-entry ">
-                    <a href="https://www.tbwa.com.vn/work/vươncaoviệtnam" alt="#StandTallVietnam">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/VNM_40-năm-Thumb2.png" alt="#StandTallVietnam" />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/vươncaoviệtnam"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/vươncaoviệtnam"
-                                alt="#StandTallVietnam">Vinamilk</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/vươncaoviệtnam"
-                                alt="#StandTallVietnam">#StandTallVietnam</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/vươncaoviệtnam"
-                                alt="#StandTallVietnam"></a></h4>
-                        <!-- </a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="columns large-4 medium-10 small-14
-         large-offset-0                                         ">
-                <div class="work-entry  entry-middle ">
-                    <a href="https://www.tbwa.com.vn/work/we-care-for-her" alt="We care for her ( . )( . )">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/K5__0935-edt.jpg"
-                            alt="We care for her ( . )( . )" />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/we-care-for-her"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/we-care-for-her"
-                                alt="We care for her ( . )( . )">Roche</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/we-care-for-her"
-                                alt="We care for her ( . )( . )">We care for her ( . )( . )</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/we-care-for-her"
-                                alt="We care for her ( . )( . )"></a></h4>
-                        <!-- </a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="columns large-3 medium-10 small-14
-         large-offset-0                      medium-offset-4                     ">
-                <div class="work-entry  entry-right ">
-                    <a href="https://www.tbwa.com.vn/work/hao-hao-thematic" alt="Enjoy the moment">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/HH-Thematic_Thumbnail.png"
-                            alt="Enjoy the moment" />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/hao-hao-thematic"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/hao-hao-thematic"
-                                alt="Enjoy the moment">Acecook\Hao Hao</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/hao-hao-thematic"
-                                alt="Enjoy the moment">Enjoy the moment</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/hao-hao-thematic"
-                                alt="Enjoy the moment"></a></h4>
-                        <!-- </a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="columns large-4 medium-10 small-14
-         large-offset-1                                         ">
-                <div class="work-entry ">
-                    <a href="https://www.tbwa.com.vn/work/hao-hao-make-every-moment-count" alt="Mannequin Challenge">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/Screenshot-26.png" alt="Mannequin Challenge" />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/hao-hao-make-every-moment-count"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/hao-hao-make-every-moment-count"
-                                alt="Mannequin Challenge">Acecook\Handy Hao Hao</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/hao-hao-make-every-moment-count"
-                                alt="Mannequin Challenge">Mannequin Challenge</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/hao-hao-make-every-moment-count"
-                                alt="Mannequin Challenge"></a></h4>
-                        <!-- </a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="columns large-3 medium-10 small-14
-         large-offset-0                      medium-offset-4                     ">
-                <div class="work-entry  entry-middle ">
-                    <a href="https://www.tbwa.com.vn/work/sure-prevent" alt="Honeymoon at 50">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/Sureprevent.png" alt="Honeymoon at 50" />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/sure-prevent"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/sure-prevent"
-                                alt="Honeymoon at 50">Vinamilk\Sure Prevent</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/sure-prevent"
-                                alt="Honeymoon at 50">Honeymoon at 50</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/sure-prevent"
-                                alt="Honeymoon at 50"></a></h4>
-                        <!-- </a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="columns large-5 medium-10 small-14
-         large-offset-0                                         ">
-                <div class="work-entry  entry-right ">
-                    <a href="https://www.tbwa.com.vn/work/susu-catpunzel" alt="Catpunzel">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/maxresdefault.jpg" alt="Catpunzel" />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/susu-catpunzel"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/susu-catpunzel"
-                                alt="Catpunzel">Vinamilk\Susu</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/susu-catpunzel"
-                                alt="Catpunzel">Catpunzel</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/susu-catpunzel"
-                                alt="Catpunzel"></a></h4>
-                        <!-- </a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="columns large-3 medium-10 small-14
-         large-offset-1                      medium-offset-4                     ">
-                <div class="work-entry ">
-                    <a href="https://www.tbwa.com.vn/work/master-of-play" alt="Master of Play">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/tiNi_thumbnail-1.jpg" alt="Master of Play" />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/master-of-play"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/master-of-play"
-                                alt="Master of Play">NKID\tiNi World</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/master-of-play"
-                                alt="Master of Play">Master of Play</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/master-of-play"
-                                alt="Master of Play"></a></h4>
-                        <!-- </a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="columns large-5 medium-10 small-14
-         large-offset-0                                         ">
-                <div class="work-entry  entry-middle ">
-                    <a href="https://www.tbwa.com.vn/work/daddy-lets-go-to-singapore"
-                        alt="“Daddy, let’s go to Singapore” music video">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/STB_Thumb-HB-2.png"
-                            alt="“Daddy, let’s go to Singapore” music video" />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/daddy-lets-go-to-singapore"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/daddy-lets-go-to-singapore"
-                                alt="“Daddy, let’s go to Singapore” music video">Singapore Tourism Board</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/daddy-lets-go-to-singapore"
-                                alt="“Daddy, let’s go to Singapore” music video">“Daddy, let’s go to Singapore” music
-                                video</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/daddy-lets-go-to-singapore"
-                                alt="“Daddy, let’s go to Singapore” music video"></a></h4>
-                        <!-- </a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="columns large-4 medium-10 small-14
-         large-offset-0                      medium-offset-4                     ">
-                <div class="work-entry  entry-right ">
-                    <a href="https://www.tbwa.com.vn/work/road-to-milan-final-milano-2016" alt="Road to Milan">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/MC_Thumbnails.png" alt="Road to Milan" />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/road-to-milan-final-milano-2016"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/road-to-milan-final-milano-2016"
-                                alt="Road to Milan">Master Card</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/road-to-milan-final-milano-2016"
-                                alt="Road to Milan">Road to Milan</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/road-to-milan-final-milano-2016"
-                                alt="Road to Milan"></a></h4>
-                        <!-- </a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="columns large-5 medium-10 small-14
-         large-offset-1                                         ">
-                <div class="work-entry ">
-                    <a href="https://www.tbwa.com.vn/work/driving-change" alt="Driving Change">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/Screen-Shot-2021-04-07-at-2.18.33-PM.png"
-                            alt="Driving Change" />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/driving-change"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/driving-change"
-                                alt="Driving Change">VinFast</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/driving-change"
-                                alt="Driving Change">Driving Change</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/driving-change"
-                                alt="Driving Change"></a></h4>
-                        <!-- </a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="columns large-4 medium-10 small-14
-         large-offset-0                      medium-offset-4                     ">
-                <div class="work-entry  entry-middle ">
-                    <a href="https://www.tbwa.com.vn/work/bank-earn-go" alt="Bank. Earn. Go.">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/Screen-Shot-2021-04-15-at-2.57.14-PM.png"
-                            alt="Bank. Earn. Go." />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/bank-earn-go"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/bank-earn-go"
-                                alt="Bank. Earn. Go.">Standard Chartered</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/bank-earn-go"
-                                alt="Bank. Earn. Go.">Bank. Earn. Go.</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/bank-earn-go"
-                                alt="Bank. Earn. Go."></a></h4>
-                        <!-- </a> -->
-                    </div>
-                </div>
-            </div>
-            <div class="columns large-3 medium-10 small-14
-         large-offset-0                                          end ">
-                <div class="work-entry  entry-right ">
-                    <a href="https://www.tbwa.com.vn/work/tết-ngợp-giải-trí-tết-mê-ly"
-                        alt="Entertaining Tết - Captivating Joy">
-                        <img src="/wordpress/wp-content/themes/tbwa/assets/images/Screen-Shot-2021-04-12-at-4.50.25-PM.png"
-                            alt="Entertaining Tết - Captivating Joy" />
-                    </a>
-                    <div class="slanted-container">
-                        <!-- <a href="https://www.tbwa.com.vn/work/tết-ngợp-giải-trí-tết-mê-ly"> -->
-                        <h3 class="entry-client"><a href="https://www.tbwa.com.vn/work/tết-ngợp-giải-trí-tết-mê-ly"
-                                alt="Entertaining Tết - Captivating Joy">K+</a></h3>
-                        <h2 class="entry-title"><a href="https://www.tbwa.com.vn/work/tết-ngợp-giải-trí-tết-mê-ly"
-                                alt="Entertaining Tết - Captivating Joy">Entertaining Tết - Captivating Joy</a></h2>
-                        <h4 class="entry-agency"><a href="https://www.tbwa.com.vn/work/tết-ngợp-giải-trí-tết-mê-ly"
-                                alt="Entertaining Tết - Captivating Joy"></a></h4>
-                        <!-- </a> -->
-                    </div>
-                </div>
-            </div>
+                <?php
+                }
+                // Hiển thị phân trang
+                $big = 999999999; // need an unlikely integer
+                echo paginate_links(
+                    array(
+                        'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                        'format' => '?paged=%#%',
+                        'current' => max(1, get_query_var('paged')),
+                        'total' => $query->max_num_pages
+                    )
+                );
+
+                wp_reset_postdata();
+            }
+            ?>
+
         </div>
         <!--/.row-->
         <!-- pagination -->
@@ -345,7 +171,7 @@
     <!--/#work-container-->
 
     <?php get_template_part('footer-script'); ?>
-    
+
 
     <?php get_footer(); ?>
     <?php
