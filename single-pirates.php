@@ -16,6 +16,7 @@
 
 <body class="dark single-article">
     <?php get_header(); ?>
+    <?php get_template_part( 'cookie-notice' ); ?>
     <article id="leader-container" class="bg-dark grid-container">
         <div class="row leader">
             <div class="large-6 columns large-offset-1 leader-image">

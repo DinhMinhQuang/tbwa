@@ -12,6 +12,7 @@
 
 <body class="dark">
    <?php get_header(); ?>
+   <?php get_template_part( 'cookie-notice' ); ?>
    <section id="disruption">
       <?php
       $featured_image_id = get_post_meta(get_the_ID(), 'featured_image_id', true); // Lấy ID của hình ảnh nổi bật

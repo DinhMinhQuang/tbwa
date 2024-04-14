@@ -9,14 +9,25 @@ add_action('after_setup_theme', 'theme_supports');
 
 function tbwa_menus($locations = array())
 {
-    // remove category prefix 
-    global $wp_rewrite;
-    $wp_rewrite->category_base = '';
 
     add_theme_support('menus');
 }
 
 add_action('init', 'tbwa_menus');
+
+function custom_rewrite_rules()
+{
+    // Thêm rewrite rule mới
+    add_rewrite_rule(
+        '^work/page/([0-9]+)/?$',
+        'index.php?category_name=work&paged=$matches[1]',
+        'top'
+    );
+}
+
+// Gọi hàm custom_rewrite_rules khi init
+add_action('init', 'custom_rewrite_rules');
+
 
 function tbwa_styles()
 {
@@ -1668,7 +1679,8 @@ function render_page_about_img_featured_meta_box($post)
     <?php
 }
 /* Module Company */
-function render_content_company_about_meta_box($post) {
+function render_content_company_about_meta_box($post)
+{
     $module_methods_id = get_post_meta($post->ID, 'company_about_meta_box', true);
     $company_about_title = get_post_meta($post->ID, 'company_about_title', true);
     $company_about_content = get_post_meta($post->ID, 'company_about_content', true);
@@ -1687,11 +1699,12 @@ function render_content_company_about_meta_box($post) {
             Content Company
         </label><br />
         <textarea style="width: 100%;" name="company_about_content" id="company_about_content" rows="5"
-        cols="50"><?php echo  esc_html($company_about_content); ?></textarea>
+            cols="50"><?php echo esc_html($company_about_content); ?></textarea>
     </p>
     <?php
 }
-function render_content_our_clients_meta_box($post) {
+function render_content_our_clients_meta_box($post)
+{
     $our_clients_title = get_post_meta($post->ID, 'our_clients_title', true);
     ?>
     <div><b>Title</b></div>

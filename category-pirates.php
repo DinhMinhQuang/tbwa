@@ -15,6 +15,7 @@
 
 <body class="dark">
     <?php get_header(); ?>
+    <?php get_template_part( 'cookie-notice' ); ?>
     <section id="pirates-intro">
         <?php
         // Lấy giá trị của 'banner_image' từ danh mục hiện tại

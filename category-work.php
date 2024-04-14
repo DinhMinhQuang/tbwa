@@ -96,10 +96,14 @@
             $query = new WP_Query($args);
             if ($query->have_posts()) {
                 $totalPosts = $query->found_posts;
-                for ($i = 0; $i < $totalPosts; $i++) {
+                $post_count = 0;
+
+                while ($query->have_posts() && $post_count <= $totalPosts) {
                     $query->the_post();
-                    $index = $query->current_post % count($sizes);
-                    $string = "<div class='columns " . $sizes[$index];
+                    $index = $post_count % count($sizes);
+                    // $string = "<div class='columns " . $sizes[$index];
+                    $string = isset($sizes[$index]) ? "<div class='columns " . $sizes[$index] : "";
+
 
                     $string .= "\tmedium-10 small-14";
                     if ($query->current_post % 3 == 0) {
@@ -113,12 +117,12 @@
 
                     $childString = "<div class='work-entry";
 
-                    if (in_array($query->current_post % 15, $middleIndices)) {
+                    if (in_array($post_count % 15, $middleIndices)) {
                         $childString .= "\tentry-middle";
-                    } elseif (in_array($query->current_post % 15, $rightIndices)) {
+                    } elseif (in_array($post_count % 15, $rightIndices)) {
                         $childString .= "\tentry-right";
                     }
-                    if ($i === $totalPosts - 1) {
+                    if ($post_count === $totalPosts - 1) {
                         $string .= "\tend";
                     }
 
@@ -147,25 +151,50 @@
                     </div>
                 </div>
                 </div>
+
                 <?php
+                $post_count++;
                 }
+                ?>
+            </div>
+
+            <!--/.row-->
+            <div class="row pagination">
+                <?php
                 // Hiển thị phân trang
                 $big = 999999999; // need an unlikely integer
-                echo paginate_links(
+                $pagination_links = paginate_links(
                     array(
+                        'type' => 'array',
                         'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
                         'format' => '?paged=%#%',
                         'current' => max(1, get_query_var('paged')),
-                        'total' => $query->max_num_pages
+                        'total' => $query->max_num_pages,
+                        "prev_text" => "&lt;",
+                        "next_text" => "&gt;"
                     )
                 );
 
+                // Khởi tạo biến để kiểm tra xem thay thế đã được thực hiện cho "Previous" hay "Next" chưa
+                $replacedPrevious = false;
+                $replacedNext = false;
+
+                if ($pagination_links) {
+                    // Lặp qua từng liên kết
+                    foreach ($pagination_links as $link) {
+                        // Nếu liên kết là số trang hiện tại
+                        if (strpos($link, 'current') !== false) {
+                            // In ra số trang hiện tại bằng thẻ <span>
+                            echo "<span class='current'>" . strip_tags($link) . "</span>";
+                        } else {
+                            echo $link;
+                        }
+                    }
+                }
                 wp_reset_postdata();
             }
             ?>
-
         </div>
-        <!--/.row-->
         <!-- pagination -->
     </article>
     <!--/#work-container-->

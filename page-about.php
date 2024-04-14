@@ -12,6 +12,7 @@
 
 <body class="dark">
     <?php get_header(); ?>
+    <?php get_template_part( 'cookie-notice' ); ?>
     <section id="about-intro">
         <article id="about-splash">
             <div id="headlines">

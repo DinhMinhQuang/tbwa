@@ -15,6 +15,13 @@
 
 <body class="dark">
     <?php get_header(); ?>
+
+    <?php
+    $category = get_term_by('slug', 'news', 'category');
+    if (!$category)
+        echo "Category Not Found";
+    ?>
+    ?>
     <section id="news-archive">
         <div class="grid-container">
             <article class="section-intro">
@@ -22,19 +29,18 @@
                     <div
                         class="columns xxlarge-offset-5 xlarge-offset-4 xlarge-6 large-offset-3 large-7 medium-offset-2 medium-8 small-offset-1 small-13">
                         <div class="slanted-container small-no-slant">
-                            <h1>Pirates in the News</h1>
+                            <h1>
+                                <?php echo get_term_meta($category->term_id, 'title_intro', true); ?>
+                            </h1>
                             <div class="slanted-block section-intro-copy">
-                                We are ambitious - made up of movers and shakers within the industry, across culture,
-                                and beyond borders.
+                                <?php echo get_term_meta($category->term_id, 'description_intro', true); ?>
                             </div>
                         </div>
                     </div>
                 </div>
             </article>
             <div class="row">
-                <div class="columns large-6 medium-10 small-14
-         large-offset-1
-         ">
+                <div class="columns large-6 medium-10 small-14 large-offset-1">
                     <div class="work-entry ">
                         <a href="https://www.tbwa.com.vn/news/tbwaxtiktok-kể-chuyện-trong-thời-kỳ-sáng-tạo-phục-hưng-mới"
                             alt="TBWAxTiktok: STORYTELLING IN THE NEXT CREATIVE RENAISSANCE">
@@ -57,9 +63,7 @@
                     </div>
                 </div>
                 <!--/.columns-->
-                <div class="columns large-5 medium-10 small-14
-         large-offset-1
-         medium-offset-4 end ">
+                <div class="columns large-5 medium-10 small-14 large-offset-1 medium-offset-4 end ">
                     <div class="work-entry  entry-middle ">
                         <a href="https://www.tbwa.com.vn/news/tbwa-was-named-adweeks-2022-global-agency"
                             alt="TBWA Recognized as Adweek&#039;s 2022 Global Agency of the Year for Second Year in a Row">
@@ -85,9 +89,7 @@
             </div>
             <!--/.row-->
             <div class="row">
-                <div class="columns large-5 medium-10 small-14
-         large-offset-1
-         ">
+                <div class="columns large-5 medium-10 small-14 large-offset-1">
                     <div class="work-entry ">
                         <a href="https://vietcetera.com/en/the-future-of-retail-in-vietnam?fbclid=IwAR1MWeVva7cMBL7iS--nJ65ZxtRkMlf0HPimgqQeKxxXWfMMpWPaJIioJj4"
                             alt="TBWA\ The Future Of Retail In Vietnam" target="_blank">
@@ -100,7 +102,8 @@
                                 href="https://vietcetera.com/en/the-future-of-retail-in-vietnam?fbclid=IwAR1MWeVva7cMBL7iS--nJ65ZxtRkMlf0HPimgqQeKxxXWfMMpWPaJIioJj4"
                                 alt="TBWA\ The Future Of Retail In Vietnam" target="_blank">
                                 TBWA\ The Future Of Retail In Vietnam
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location">TBWA\Group Vietnam</h4>
                             <p class="entry-body">
@@ -111,9 +114,7 @@
                     </div>
                 </div>
                 <!--/.columns-->
-                <div class="columns large-6 medium-10 small-14
-         large-offset-1
-         medium-offset-4 end ">
+                <div class="columns large-6 medium-10 small-14 large-offset-1 medium-offset-4 end ">
                     <div class="work-entry  entry-middle ">
                         <a href="https://www.campaignasia.com/article/pride-month-how-can-brands-avoid-pinkwashing/469971?fbclid=IwAR2VddKECTk0k60WR6eaxNWoIdst4p_FGEjHzgEvFTXunUwBROQvU_blMXw"
                             alt="Pride month: How can brands avoid pinkwashing?" target="_blank">
@@ -126,7 +127,8 @@
                                 href="https://www.campaignasia.com/article/pride-month-how-can-brands-avoid-pinkwashing/469971?fbclid=IwAR2VddKECTk0k60WR6eaxNWoIdst4p_FGEjHzgEvFTXunUwBROQvU_blMXw"
                                 alt="Pride month: How can brands avoid pinkwashing?" target="_blank">
                                 Pride month: How can brands avoid pinkwashing?
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location">TBWA\GroupVietnam</h4>
                             <p class="entry-body">
@@ -140,9 +142,7 @@
             </div>
             <!--/.row-->
             <div class="row">
-                <div class="columns large-6 medium-10 small-14
-         large-offset-1
-         ">
+                <div class="columns large-6 medium-10 small-14 large-offset-1 ">
                     <div class="work-entry ">
                         <a href="https://advertisingvietnam.com/loreal-paris-ket-hop-cung-tbwagroup-vietnam-trong-chien-dich-chinh-nu-ton-vinh-mot-nua-the-gioi-nhan-ngay-83-p16232"
                             alt="L’Oreal Paris in association with TBWA \ Group Vietnam in the &quot;Chinh Nu - Because you’re worth it&quot; campaign - Honoring half of the world on March 8"
@@ -158,7 +158,8 @@
                                 target="_blank">
                                 L’Oreal Paris in association with TBWA \ Group Vietnam in the &quot;Chinh Nu - Because
                                 you’re worth it&quot; campaign - Honoring half of the world on March 8
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location">TBWA\ Group Vietnam</h4>
                             <p class="entry-body">
@@ -170,9 +171,7 @@
                     </div>
                 </div>
                 <!--/.columns-->
-                <div class="columns large-5 medium-10 small-14
-         large-offset-1
-         medium-offset-4 end ">
+                <div class="columns large-5 medium-10 small-14 large-offset-1 medium-offset-4 end ">
                     <div class="work-entry  entry-middle ">
                         <a href="https://advertisingvietnam.com/diem-danh-3-chien-dich-giup-tbwa-group-vietnam-rinh-vang-o-agency-of-the-year-2020-p15791?fbclid=IwAR3hKYRgo1baCXW47rjktPmLpQzV-vsyDs2JbztjtxF-o8joFBv3V8eE35Q"
                             alt="Attend three campaigns to help TBWA\ Group Vietnam &quot;get gold&quot; at Agency of the Year 2020"
@@ -188,7 +187,8 @@
                                 target="_blank">
                                 Attend three campaigns to help TBWA\ Group Vietnam &quot;get gold&quot; at Agency of the
                                 Year 2020
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location">TBWA\ Group Vietnam</h4>
                             <p class="entry-body">
@@ -202,9 +202,7 @@
             </div>
             <!--/.row-->
             <div class="row">
-                <div class="columns large-5 medium-10 small-14
-         large-offset-1
-         ">
+                <div class="columns large-5 medium-10 small-14 large-offset-1 ">
                     <div class="work-entry ">
                         <a href="https://campaignbriefasia.com/2020/06/22/tbwagroup-vietnam-merges-fadigital-into-the-agency-collective/"
                             alt="TBWA Vietnam Joins Together with f\adigital" target="_blank">
@@ -217,7 +215,8 @@
                                 href="https://campaignbriefasia.com/2020/06/22/tbwagroup-vietnam-merges-fadigital-into-the-agency-collective/"
                                 alt="TBWA Vietnam Joins Together with f\adigital" target="_blank">
                                 TBWA Vietnam Joins Together with f\adigital
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location">TBWA\GroupVietnam</h4>
                             <p class="entry-body">
@@ -228,9 +227,7 @@
                     </div>
                 </div>
                 <!--/.columns-->
-                <div class="columns large-6 medium-10 small-14
-         large-offset-1
-         medium-offset-4 end ">
+                <div class="columns large-6 medium-10 small-14 large-offset-1 medium-offset-4 end ">
                     <div class="work-entry  entry-middle ">
                         <a href="https://www.thedrum.com/opinion/2020/05/18/can-vietnamese-brands-succeed-with-covid-19-the-country-did?fbclid=IwAR201HX2Sn-v4XS5FtAcSDgFH3EgPSAwBjhm8SNKVCyLpb5cMedSoYVtax4"
                             alt="CAN VIETNAMESE BRANDS SUCCEED WITH COVID-19 LIKE THE COUNTRY DID?" target="_blank">
@@ -243,7 +240,8 @@
                                 href="https://www.thedrum.com/opinion/2020/05/18/can-vietnamese-brands-succeed-with-covid-19-the-country-did?fbclid=IwAR201HX2Sn-v4XS5FtAcSDgFH3EgPSAwBjhm8SNKVCyLpb5cMedSoYVtax4"
                                 alt="CAN VIETNAMESE BRANDS SUCCEED WITH COVID-19 LIKE THE COUNTRY DID?" target="_blank">
                                 CAN VIETNAMESE BRANDS SUCCEED WITH COVID-19 LIKE THE COUNTRY DID?
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location">TBWA\Group Vietnam</h4>
                             <p class="entry-body">
@@ -258,9 +256,7 @@
             </div>
             <!--/.row-->
             <div class="row">
-                <div class="columns large-6 medium-10 small-14
-         large-offset-1
-         ">
+                <div class="columns large-6 medium-10 small-14 large-offset-1 ">
                     <div class="work-entry ">
                         <a href="https://www.facebook.com/tbwavietnam/videos/2673819576049404/"
                             alt="FIGHT THE VIRUS, NOT THE PEOPLE!" target="_blank">
@@ -273,7 +269,8 @@
                                 href="https://www.facebook.com/tbwavietnam/videos/2673819576049404/"
                                 alt="FIGHT THE VIRUS, NOT THE PEOPLE!" target="_blank">
                                 FIGHT THE VIRUS, NOT THE PEOPLE!
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location">TBWA\ Group Vietnam</h4>
                             <p class="entry-body">
@@ -285,9 +282,7 @@
                     </div>
                 </div>
                 <!--/.columns-->
-                <div class="columns large-5 medium-10 small-14
-         large-offset-1
-         medium-offset-4 end ">
+                <div class="columns large-5 medium-10 small-14 large-offset-1 medium-offset-4 end ">
                     <div class="work-entry  entry-middle ">
                         <a href="https://advertisingvietnam.com/2019/12/danh-sach-agency-viet-nam-dat-giai-agency-of-the-year-2019/"
                             alt="Vietnam Creative Agency of the Year 2019" target="_blank">
@@ -300,7 +295,8 @@
                                 href="https://advertisingvietnam.com/2019/12/danh-sach-agency-viet-nam-dat-giai-agency-of-the-year-2019/"
                                 alt="Vietnam Creative Agency of the Year 2019" target="_blank">
                                 Vietnam Creative Agency of the Year 2019
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location">TBWA\Group Vietnam</h4>
                             <p class="entry-body">
