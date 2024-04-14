@@ -51,7 +51,7 @@
             <div class="row">
                 <div class="columns large-6 large-offset-5 medium-11 medium-offset-1 small-offset-0 small-14">
                     <div class="slanted-container small-no-slant">
-                        <h1><?php echo get_post_meta(get_the_ID(), 'company_about_title', true); ?></h1>
+                        <h1><?php echo wp_kses_post(get_post_meta(get_the_ID(), 'company_about_title', true)); ?></h1>
                         <div class="slanted-block">
                             <?php echo wp_kses_post(get_post_meta(get_the_ID(), 'company_about_content', true)); ?>
                         </div>

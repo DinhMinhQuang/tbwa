@@ -39,7 +39,7 @@ function tbwa_styles()
         get_template_directory_uri() .
         '/assets/css/main.min.css',
         array(),
-        'v1'
+        'v2'
     );
 }
 add_action('wp_enqueue_scripts', 'tbwa_styles');
@@ -1679,7 +1679,7 @@ function render_content_company_about_meta_box($post) {
             Title Company
         </label><br />
         <input type="text" style="width: 100%;" name="company_about_title" id="company_about_title"
-            value="<?php echo htmlspecialchars($company_about_title); ?>" />
+            value="<?php echo wp_kses_post($company_about_title); ?>" />
     </p>
     <div><b>Content</b></div>
     <p>
@@ -1751,7 +1751,7 @@ function save_disruption_meta_box($post_id)
     // Lặp qua mảng các trường meta để lưu giá trị
     foreach ($meta_fields as $field) {
         if (isset($_POST[$field])) {
-            update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
+            update_post_meta($post_id, $field, wp_kses_post($_POST[$field]));
         }
     }
 }
@@ -1818,7 +1818,7 @@ function save_custom_category_fields($term_id)
 {
     if (isset($_POST['banner_title'])) {
         // Lưu giá trị của trường 1
-        update_term_meta($term_id, 'banner_title', sanitize_text_field($_POST['banner_title']));
+        update_term_meta($term_id, 'banner_title', wp_kses_post($_POST['banner_title']));
     }
     if (isset($_POST['title_intro'])) {
         // Lưu giá trị của trường 2

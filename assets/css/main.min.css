@@ -9868,8 +9868,10 @@ body.rtl footer #legal {
         line-height: 26px; 
     }
 }
-section#about-landing article#about-clients .row .columns:last-child {
+section#about-landing article#about-clients .row .columns:last-child,
+section#pirates-container #pirates-leadership .row .columns:last-child {
     float: left;
+    clear: none;
 } 
 @media (min-width: 992px) {
     .disruption-about-flex { 

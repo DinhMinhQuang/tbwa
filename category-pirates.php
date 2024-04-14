@@ -16,11 +16,18 @@
 <body class="dark">
     <?php get_header(); ?>
     <section id="pirates-intro">
-        <article id="pirates-quote">
+        <?php
+        // Lấy giá trị của 'banner_image' từ danh mục hiện tại
+        $banner_image = get_term_meta(get_queried_object()->term_id, 'banner_image', true);
+        ?>
+        <article id="pirates-quote" style="background-image:url('<?php echo esc_url($banner_image); ?>' );">
             <div class="content">
                 <h1>
-                    "It's better to be a pirate than to join the Navy."&nbsp;<sup><br></sup><sup>&mdash; Steve
-                        Jobs</sup>
+                    <?php
+                    // Lấy giá trị của 'banner_title' từ danh mục hiện tại
+                    $banner_title = get_term_meta(get_queried_object()->term_id, 'banner_title', true);
+                    ?>
+                    <?php echo wp_kses_post($banner_title); ?>
                     <p><br></p>
                 </h1>
                 <div class="slanted-button ">
@@ -33,7 +40,7 @@
         <!--/#pirates-quote-->
         <article id="pirates-video-container">
             <video id="pirates-video-player" class="video-js" height="300" width="300" controls preload="auto">
-                <source src="https://d2rijh2vqznvtd.cloudfront.net/assets/videos/pirate.mp4" type="video/mp4">
+                <source src="<?php echo get_theme_mod('slider_video_pirate_url'); ?>" type="video/mp4">
             </video>
         </article>
         <!--/pirates-video-container-->
@@ -44,72 +51,93 @@
             <article id="leadership-intro">
                 <div class="row">
                     <div class="large-8 large-offset-5 medium-4 medium-offset-5 columns small-offset-1">
-                        <h2 class="section-title">Our People</h2>
+                        <h2 class="section-title">
+                            <?php
+                             echo get_term_meta(get_queried_object()->term_id, 'title_intro', true);
+                            ?>
+                        </h2>
                     </div>
                 </div>
                 <!--/.row-->
             </article>
-            <!--/#leadership-intro -->
-            <div class="row">
-                <div class="columns small-12 small-offset-1 medium-4  ">
-                    <div class="leader position-0-0">
-                        <a href="https://www.tbwa.com.vn/pirates/tan-nguyen-sunshine"><img class="leader-image"
-                                src="/wordpress/wp-content/themes/tbwa/assets/images/Ms-Tan_BW.jpg" /></a>
-                        <div class="leader-copy">
-                            <a href="https://www.tbwa.com.vn/pirates/tan-nguyen-sunshine" class="name">Tan Nguyen
-                                (Sunshine)</a>
-                            <a href="https://www.tbwa.com.vn/pirates/tan-nguyen-sunshine" class="title">Managing
-                                Director, TBWA\GroupVietnam</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="columns small-12 small-offset-1 medium-3  medium-offset-0  ">
-                    <div class="leader position-0-1">
-                        <a href="https://www.tbwa.com.vn/pirates/kim-chi"><img class="leader-image"
-                                src="/wordpress/wp-content/themes/tbwa/assets/images/Ms-Chi_BW.jpg" /></a>
-                        <div class="leader-copy">
-                            <a href="https://www.tbwa.com.vn/pirates/kim-chi" class="name">Nguyen Kim Chi</a>
-                            <a href="https://www.tbwa.com.vn/pirates/kim-chi" class="title">Chief Operating Officer,
-                                TBWA\GroupVietnam</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="columns small-12 small-offset-1 medium-2  medium-offset-0  ">
-                    <div class="leader position-0-2">
-                        <a href="https://www.tbwa.com.vn/pirates/ha-ngoc-linh"><img class="leader-image"
-                                src="/wordpress/wp-content/themes/tbwa/assets/images/Mr-Linh_BW.jpg" /></a>
-                        <div class="leader-copy">
-                            <a href="https://www.tbwa.com.vn/pirates/ha-ngoc-linh" class="name">Ha Ngoc Linh</a>
-                            <a href="https://www.tbwa.com.vn/pirates/ha-ngoc-linh" class="title">Senior Advisor,
-                                TBWA\GroupVietnam</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="columns small-12 small-offset-1 medium-3  medium-offset-0   end ">
-                    <div class="leader position-0-3">
-                        <a href="https://www.tbwa.com.vn/pirates/phan-bich-ha"><img class="leader-image"
-                                src="/wordpress/wp-content/themes/tbwa/assets/images/Phan-Bich-Ha.001.jpeg" /></a>
-                        <div class="leader-copy">
-                            <a href="https://www.tbwa.com.vn/pirates/phan-bich-ha" class="name">Phan Bich Ha</a>
-                            <a href="https://www.tbwa.com.vn/pirates/phan-bich-ha" class="title">Senior Advisor,
-                                TBWA\GroupVietnam</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="columns small-12 small-offset-1 medium-2   end ">
-                    <div class="leader position-1-0">
-                        <a href="https://www.tbwa.com.vn/pirates/to-lien"><img class="leader-image"
-                                src="/wordpress/wp-content/themes/tbwa/assets/images/Ms-Lien_BW.jpg" /></a>
-                        <div class="leader-copy">
-                            <a href="https://www.tbwa.com.vn/pirates/to-lien" class="name">Dinh To Lien</a>
-                            <a href="https://www.tbwa.com.vn/pirates/to-lien" class="title">Group Creative Director,
-                                TBWA\GroupVietnam</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+            $imgSize = [
+                ['medium-4', 'medium-3 medium-offset-0 ', 'medium-2 medium-offset-0 ', 'medium-3 medium-offset-0'],
+                ['medium-2', 'medium-3 medium-offset-0', 'medium-4 medium-offset-0', 'medium-3 medium-offset-0'],
+                ['medium-3', 'medium-4 medium-offset-0', 'medium-3 medium-offset-0', 'medium-2 medium-offset-0']
+            ];
+            $rowCount = -1;
+            $gridPos = -1;
+            $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+            $posts_per_page = 12; // Số lượng bài post muốn hiển thị
+            $args_total = array(
+                'post_type' => 'post',
+                'category_name' => 'pirates',
+                'posts_per_page' => -1, // Lấy tất cả bài post trong category
+            );
+            $query_total = new WP_Query($args_total);
+            $total_posts = $query_total->post_count; // Tổng số bài post trong category
+            $total_pages = ceil($total_posts / $posts_per_page); // Tính tổng số trang
+            wp_reset_postdata();
+
+            // Lặp qua từng trang
+            for ($page = 1; $page <= $total_pages; $page++) {
+                echo '<div class="row">';
+                // Tính toán offset cho trang hiện tại
+                $offset = ($page - 1) * $posts_per_page;
+                // Lặp qua mỗi hàng trong mảng imgSize
+                for ($i = 0; $i < count($imgSize); $i++) {
+                    $rowCount++;
+                    $count_j = count($imgSize[$i]);
+                    // Lặp qua từng phần tử trong hàng hiện tại
+                    for ($j = 0; $j < count($imgSize[$i]); $j++) {
+                        $gridPos++;
+                        if ($gridPos % 4 == 0) {
+                            $gridPos = 0;
+                        }
+                        $isLastIteration = ($j == $count_j - 1);
+                        $classEnd = $isLastIteration ? 'end' : '';
+                        // Lấy bài post tương ứng với chỉ số $i và $j
+                        $args = array(
+                            'post_type' => 'post',
+                            'category_name' => 'pirates',
+                            'posts_per_page' => 1, // Số lượng bài post muốn hiển thị
+                            'paged' => $paged,
+                            'orderby' => 'date',
+                            'order' => 'DESC',
+                            'offset' => $offset + $i * count($imgSize[$i]) + $j // Vị trí bắt đầu của bài post
+                        );
+                        $query = new WP_Query($args);
+                        // Kiểm tra xem có bài post nào không
+                        if ($query->have_posts()) {
+                            while ($query->have_posts()) {
+                                $query->the_post();
+                                $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+                                $post_content = strip_tags(get_the_content());
+                                // Hiển thị tiêu đề hoặc nội dung bài post ở đây
+                                echo '<div class="columns small-12 small-offset-1 ' . $imgSize[$i][$j] . ' ' . $classEnd . '">';
+                                echo '<div class="leader position-' . $rowCount . '-' . $gridPos . '">';
+                                echo '<a href="' . get_permalink() . '">';
+                                echo '<img class="leader-image" src="' . $thumbnail_url . '" />';
+                                echo '</a>';
+                                echo '<div class="leader-copy">';
+                                echo '<a href="' . get_permalink() . '" class="name">' . get_the_title() . '</a>';
+                                echo '<a href="' . get_permalink() . '" class="title">' . $post_content . '</a>';
+                                echo '</div>';
+                                echo '</div>';
+                                echo '</div>';
+                            }
+                        }
+                        wp_reset_postdata();
+                        // Kiểm tra nếu đã hiển thị đủ số lượng bài post thì dừng vòng lặp
+                        if (($offset + $i * count($imgSize[$i]) + $j + 1) >= $total_posts) {
+                            break 3; // Thoát khỏi cả ba vòng lặp
+                        }
+                    }
+                }
+                echo '</div>';
+            }
+            ?>
         </article>
         <!--/#pirates-leadership-->
         <article id="pirates-news" class="bg-dark">
@@ -188,7 +216,8 @@
                                 href="https://vietcetera.com/en/the-future-of-retail-in-vietnam?fbclid=IwAR1MWeVva7cMBL7iS--nJ65ZxtRkMlf0HPimgqQeKxxXWfMMpWPaJIioJj4"
                                 alt="TBWA\ The Future Of Retail In Vietnam" target="_blank">
                                 TBWA\ The Future Of Retail In Vietnam
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location">TBWA\Group Vietnam</h4>
                             <p class="entry-body">
@@ -214,7 +243,8 @@
                                 href="https://www.campaignasia.com/article/pride-month-how-can-brands-avoid-pinkwashing/469971?fbclid=IwAR2VddKECTk0k60WR6eaxNWoIdst4p_FGEjHzgEvFTXunUwBROQvU_blMXw"
                                 alt="Pride month: How can brands avoid pinkwashing?" target="_blank">
                                 Pride month: How can brands avoid pinkwashing?
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location">TBWA\GroupVietnam</h4>
                             <p class="entry-body">
@@ -246,7 +276,8 @@
                                 target="_blank">
                                 L’Oreal Paris in association with TBWA \ Group Vietnam in the &quot;Chinh Nu - Because
                                 you’re worth it&quot; campaign - Honoring half of the world on March 8
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location">TBWA\ Group Vietnam</h4>
                             <p class="entry-body">
@@ -276,7 +307,8 @@
                                 target="_blank">
                                 Attend three campaigns to help TBWA\ Group Vietnam &quot;get gold&quot; at Agency of the
                                 Year 2020
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location">TBWA\ Group Vietnam</h4>
                             <p class="entry-body">
@@ -305,7 +337,8 @@
                                 href="https://campaignbriefasia.com/2020/06/22/tbwagroup-vietnam-merges-fadigital-into-the-agency-collective/"
                                 alt="TBWA Vietnam Joins Together with f\adigital" target="_blank">
                                 TBWA Vietnam Joins Together with f\adigital
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location">TBWA\GroupVietnam</h4>
                             <p class="entry-body">
@@ -331,7 +364,8 @@
                                 href="https://lbbonline.com/news/tbwavietnam-boosts-leadership-team-with-key-promotions/"
                                 alt="TBWA\Vietnam Boosts Leadership Team with Key Promotions" target="_blank">
                                 TBWA\Vietnam Boosts Leadership Team with Key Promotions
-                                <img class="link-arrow" src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
+                                <img class="link-arrow"
+                                    src="/wordpress/wp-content/themes/tbwa/assets/images/link.svg" />
                             </a>
                             <h4 class="entry-location"></h4>
                             <p class="entry-body">
