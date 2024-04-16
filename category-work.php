@@ -98,7 +98,7 @@
                 $totalPosts = $query->found_posts;
                 $post_count = 0;
 
-                while ($query->have_posts() && $post_count <= $totalPosts) {
+                while ($query->have_posts() && $post_count < $totalPosts) {
                     $query->the_post();
                     $index = $post_count % count($sizes);
                     // $string = "<div class='columns " . $sizes[$index];

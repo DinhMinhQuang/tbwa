@@ -23,6 +23,11 @@ function custom_rewrite_rules()
         'index.php?category_name=work&paged=$matches[1]',
         'top'
     );
+    add_rewrite_rule(
+        '^work/page/([0-9]+)/?$',
+        'index.php?category_name=news&paged=$matches[1]',
+        'top'
+    );
 }
 
 // Gọi hàm custom_rewrite_rules khi init
