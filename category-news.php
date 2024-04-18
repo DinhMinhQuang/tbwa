@@ -54,15 +54,16 @@
                 $totalPosts = $query->found_posts;
                 $post_count = 0;
                 while ($query->have_posts() && $post_count < $totalPosts) {
+                    $query->the_post(); // Thêm dòng này để thiết lập dữ liệu của bài viết hiện tại
                     $index = $post_count % count($sizes);
                     $currentSize = $sizes[$index];
-                    $div = "<div class='columns $currentSize medium-10 small-14 large-offset-1'";
+                    $div = "<div class='columns $currentSize medium-10 small-14 large-offset-1";
                     $childDiv = "<div class='work-entry'";
                     if ($post_count % 2 === 0) {
                         echo "<div class='row'>\n";
                     }
                     if ($post_count % 2 === 0) {
-                        $div .= ">\n";
+                        $div .= "'>\n";
                         $childDiv .= ">\n";
                     } else {
                         $div .= "\tend'>\n";
@@ -71,18 +72,32 @@
                     echo $div;
                     echo $childDiv;
                     ?>
-                    <a href="<?php echo get_permalink() ?>" alt="<?php echo get_the_title() ?>">
-                        <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php echo get_the_title() ?>" />
+                    <?php
+
+                    $redirectUrl = get_post_meta(get_the_ID(), 'redirectUrl', true);
+
+                    if (empty($redirectUrl)) {
+                        $redirectUrl = get_permalink();
+                    }
+                    ?>
+
+                    <a href="<?php $redirectUrl; ?>" alt="<?php the_title(); ?>">
+                        <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php the_title(); ?>" />
                     </a>
                     <div>
-                        <h3 class="entry-date"><?php echo get_post_meta(get_the_ID(), 'date', true) ?></h3>
-                        <a class="entry-headline" href="<?php echo get_permalink() ?>" alt="<?php echo get_the_title() ?>"
-                            alt="<?php echo get_the_title() ?>">
-                            <?php echo get_the_title() ?>
+                        <h3 class="entry-date"><?php echo get_post_meta(get_the_ID(), 'date', true); ?></h3>
+                        <a class="entry-headline" href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>">
+                            <?php the_title(); ?>
+                            <?php
+                            $test = get_post_meta(get_the_ID(), 'redirectUrl', true);
+                            if (!empty($test)) {
+                                echo "<img class='link-arrow' src='/wordpress/wp-content/themes/tbwa/assets/images/link.svg' />";
+                            }
+                            ?>
                         </a>
-                        <h4 class="entry-location"><?php echo get_post_meta(get_the_ID(), 'location', true) ?></h4>
+                        <h4 class="entry-location"><?php echo get_post_meta(get_the_ID(), 'location', true); ?></h4>
                         <p class="entry-body">
-                            <?php echo trim(get_the_excerpt()) ?>
+                            <?php echo trim(get_the_excerpt()); ?>
                         </p>
                     </div>
                 </div>
@@ -94,6 +109,7 @@
                 $post_count++;
                 }
                 ?>
+            </div>
             <div class="row pagination">
                 <?php
                 // Hiển thị phân trang

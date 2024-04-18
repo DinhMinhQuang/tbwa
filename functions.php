@@ -24,7 +24,7 @@ function custom_rewrite_rules()
         'top'
     );
     add_rewrite_rule(
-        '^work/page/([0-9]+)/?$',
+        '^news/page/([0-9]+)/?$',
         'index.php?category_name=news&paged=$matches[1]',
         'top'
     );
