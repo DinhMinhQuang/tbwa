@@ -58,13 +58,13 @@
                     $index = $post_count % count($sizes);
                     $currentSize = $sizes[$index];
                     $div = "<div class='columns $currentSize medium-10 small-14 large-offset-1";
-                    $childDiv = "<div class='work-entry'";
+                    $childDiv = "<div class='work-entry";
                     if ($post_count % 2 === 0) {
                         echo "<div class='row'>\n";
                     }
                     if ($post_count % 2 === 0) {
                         $div .= "'>\n";
-                        $childDiv .= ">\n";
+                        $childDiv .= "'>\n";
                     } else {
                         $div .= "\tend'>\n";
                         $childDiv .= "\tentry-middle'>\n";
@@ -81,7 +81,7 @@
                     }
                     ?>
 
-                    <a href="<?php $redirectUrl; ?>" alt="<?php the_title(); ?>">
+                    <a href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>">
                         <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php the_title(); ?>" />
                     </a>
                     <div>

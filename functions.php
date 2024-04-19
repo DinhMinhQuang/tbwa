@@ -28,6 +28,11 @@ function custom_rewrite_rules()
         'index.php?category_name=news&paged=$matches[1]',
         'top'
     );
+    add_rewrite_rule(
+        '^pirates/page/([0-9]+)/?$',
+        'index.php?category_name=pirates&paged=$matches[1]',
+        'top'
+    );
 }
 
 // Gọi hàm custom_rewrite_rules khi init
@@ -342,8 +347,8 @@ function custom_single_template($single_template)
         $single_template = locate_template(array('single-news.php'));
     }
 
-    if ($post->post_type == 'post' && has_category('news', $post)) {
-        $single_template = locate_template(array('single-news.php'));
+    if ($post->post_type == 'post' && has_category('pirates', $post)) {
+        $single_template = locate_template(array('single-pirates.php'));
     }
 
     return $single_template;
