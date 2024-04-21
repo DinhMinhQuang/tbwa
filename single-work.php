@@ -16,7 +16,7 @@
 
 <body class="dark single-article">
     <?php get_header(); ?>
-    <?php get_template_part( 'cookie-notice' ); ?>
+    <?php get_template_part('cookie-notice'); ?>
     <?php
     $post_slug = get_post_field('post_name', get_post());
     $post = get_page_by_path($post_slug, OBJECT, 'post');
@@ -51,10 +51,14 @@
                 </h1>
             </div>
             <!-- headline -->
-            <a href="#" alt="<?php echo str_replace(' ##### ', ' ', get_the_title($post->ID)) ?>" class="slanted-button"
-                id="watch-vid-work">
-                <h4>Watch</h4>
-            </a>
+            <?php
+            $heroVimeoId = get_post_meta($post->ID, 'hero_vimeo_id', true);
+            if (!empty($heroVimeoId)) {
+                echo "<a href='#' alt='" . str_replace(' ##### ', ' ', get_the_title($post->ID)) . "' class='slanted-button' id='watch-vid-work'>";
+                echo "<h4>Watch</h4>";
+                echo "</a>";
+            }
+            ?>
         </div>
         </div>
         <!--/.vid-cover-->

@@ -81,12 +81,22 @@
                     }
                     ?>
 
-                    <a href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>">
+                    <a href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>" <?php
+                         $newTab = get_post_meta(get_the_ID(), 'redirectUrl', true);
+                         if (!empty($newTab)) {
+                             echo "target='_blank'";
+                         }
+                         ?>>
                         <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php the_title(); ?>" />
                     </a>
                     <div>
                         <h3 class="entry-date"><?php echo get_post_meta(get_the_ID(), 'date', true); ?></h3>
-                        <a class="entry-headline" href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>">
+                        <a class="entry-headline" href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>" <?php
+                             $newTab = get_post_meta(get_the_ID(), 'redirectUrl', true);
+                             if (!empty($newTab)) {
+                                 echo "target='_blank'";
+                             }
+                             ?>>
                             <?php the_title(); ?>
                             <?php
                             $test = get_post_meta(get_the_ID(), 'redirectUrl', true);

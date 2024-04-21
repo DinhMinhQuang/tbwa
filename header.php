@@ -29,7 +29,6 @@
         }
     }
 </style>
-
 <div id="menu-container"> <!-- container for TBWA logo, menu button and menu overlay -->
     <div id="menu-dark-bg"></div>
     <div id="menu-slash-bg">

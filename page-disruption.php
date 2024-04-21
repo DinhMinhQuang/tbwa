@@ -12,7 +12,7 @@
 
 <body class="dark">
    <?php get_header(); ?>
-   <?php get_template_part( 'cookie-notice' ); ?>
+   <?php get_template_part('cookie-notice'); ?>
    <section id="disruption">
       <?php
       $featured_image_id = get_post_meta(get_the_ID(), 'featured_image_id', true); // Lấy ID của hình ảnh nổi bật
@@ -156,14 +156,14 @@
                         <h3 class="disruption-about-content-title"><?php echo esc_html($title_about_disruption2); ?>
                         </h3>
                         <p><?php echo esc_html($text_about_disruption2); ?></p>
-                        <a href="/" class="disruption-about-btn">
+                        <!-- <a href="/" class="disruption-about-btn">
                            <span>Our commitment</span>
                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                               style="enable-background:new 0 0 24 24" xml:space="preserve" class="arrowIcon">
                               <path d="M12.9 9.7v2.6H2.7V9.7h10.2zM9.6 3.1h3.7l7.9 7.9-7.9 7.9H9.6l7.9-7.9-7.9-7.9z">
                               </path>
                            </svg>
-                        </a>
+                        </a> -->
                      </div>
                   </div>
                   <div class="col-lg-2"></div>
@@ -218,10 +218,10 @@
                   </div>
                   <div class="col-lg-2"></div>
                   <div class="col-lg-4">
-					  <div class="wp-block-tbwa-blocks-image-animated-sprite proportion-original media-type-image"
-						   data-sprite-url="<?php echo esc_url($featured_image_about4[0]); ?>">
-						  <div class="sprite"></div>
-					  </div>
+                     <div class="wp-block-tbwa-blocks-image-animated-sprite proportion-original media-type-image"
+                        data-sprite-url="<?php echo esc_url($featured_image_about4[0]); ?>">
+                        <div class="sprite"></div>
+                     </div>
                      <!--<div class="disruption-about-img">
                         <img decoding="async" src="" alt=""
                            title="diversity-people" loading="eager" width="960" height="540">

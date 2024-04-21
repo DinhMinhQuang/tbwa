@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <style class="vjs-styles-defaults">
@@ -40,9 +41,21 @@
  -->
 
 </head>
+<?php
+$attributes = get_language_attributes('html');
+
+
+preg_match('/lang="([^"]+)"/', $attributes, $matches);
+$lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+
+if ($lang_attribute_value === 'vi_VN') {
+  echo "gaf chuwa";
+}
+echo $lang_attribute_value;
+?>
 
 <body class="dark homepage">
-  <div id="js_cookieNotice" class="cookieNotice" >
+  <div id="js_cookieNotice" class="cookieNotice">
     <div class="cookieNotice__container">
       <p>
         This website uses cookies to improve your experience.
@@ -55,12 +68,12 @@
     </div>
   </div>
   <?php get_header(); ?>
-  <?php get_template_part( 'index' ); ?>
-  
+  <?php get_template_part('index'); ?>
+
   <!--/#main-container-->
   <?php get_footer(); ?>
 
-  <?php get_template_part( 'footer-script' ); ?>
+  <?php get_template_part('footer-script'); ?>
   <?php
   wp_footer();
   ?>

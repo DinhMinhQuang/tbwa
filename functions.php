@@ -28,15 +28,34 @@ function custom_rewrite_rules()
         'index.php?category_name=news&paged=$matches[1]',
         'top'
     );
+    
     add_rewrite_rule(
         '^pirates/page/([0-9]+)/?$',
         'index.php?category_name=pirates&paged=$matches[1]',
         'top'
     );
+
+    add_rewrite_rule('^vi/?$', 'index.php', 'top');
 }
 
 // Gọi hàm custom_rewrite_rules khi init
 add_action('init', 'custom_rewrite_rules');
+function set_language_in_html_tag($output)
+{
+    // Kiểm tra ngôn ngữ từ URL
+    $current_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $path_parts = explode('/', trim(parse_url($current_url, PHP_URL_PATH), '/'));
+    $language = isset($path_parts[1]) ? $path_parts[1] : '';
+
+    // Nếu ngôn ngữ là tiếng Việt, thêm lang="vi" vào phần tử <html>
+    if ($language === 'vi') {
+        $output = preg_replace('/lang="en-US"/', 'lang="vi_VN"', $output);
+    }
+
+    return $output;
+}
+add_filter('language_attributes', 'set_language_in_html_tag');
+
 
 
 function tbwa_styles()
@@ -1857,4 +1876,6 @@ function save_custom_category_fields($term_id)
     }
 }
 add_action('edited_category', 'save_custom_category_fields');
+
+
 
