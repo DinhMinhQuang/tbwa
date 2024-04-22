@@ -10,13 +10,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?php echo str_replace(' ##### ', ' ', get_the_title()) ?> - <?php echo get_bloginfo('name'); ?></title>
+	<meta property='og:title' content='<?php echo str_replace(' ##### ', ' ', get_the_title()) ?>'/>
+	<meta property="og:image" content="<?php echo esc_url(get_the_post_thumbnail_url($post->ID, 'full')); ?>" />
     <?php wp_head(); ?>
 </head>
 
 <body class="dark single-article">
     <?php get_header(); ?>
-    <?php get_template_part('cookie-notice'); ?>
+    <?php get_template_part( 'cookie-notice' ); ?>
     <?php
     $post_slug = get_post_field('post_name', get_post());
     $post = get_page_by_path($post_slug, OBJECT, 'post');
@@ -135,8 +137,10 @@
                 <div class="large-4 small-8 small-offset-1 medium-offset-0 columns end article-share"
                     style="display: none;">
                     <!-- 				<script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
-               --> <a href="https://twitter.com/intent/tweet?text=Viettel%20ST%20%22Feel%20Free%20For%20Data%2C%20Just%20%2215k%22%22%20by%20%40TBWA&url=https://www.tbwa.com.vn/work/tho%E1%BA%A3i-m%C3%A1i-data-ch%E1%BB%89-15k"
-                        class="twitter-share">Share on Twitter</a>
+               --> <a target="_blank" href="//www.facebook.com/sharer.php?u=<?php echo get_permalink() ?>"
+                        class="fb-share">Share on Facebook</a>
+					<a target="_blank" href="//www.linkedin.com/sharing/share-offsite/?url=<?php echo get_permalink() ?>"
+                        class="linkedin-share">Share on LinkedIn </a>
                 </div>
             </div>
             <div class="row">
@@ -176,7 +180,7 @@
             <!--/.row -->
             <div class="row">
                 <div class="columns large-14" id="back-to-parent">
-                    <a href="https://www.tbwa.com.vn/work">More Work</a>
+                    <a href="/work">More Work</a>
                 </div>
             </div>
             <!--/.row -->
