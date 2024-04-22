@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?php single_cat_title(); ?> - <?php echo get_bloginfo('name'); ?></title>
     <?php wp_head(); ?>
 </head>
 
@@ -41,7 +41,7 @@
                     <h4 id="work-video-watch">Watch</h4>
                 </div>
             </div>
-            <img src="/wordpress/wp-content/themes/tbwa/assets/images/arrow_white.svg" class="down-arrow" />
+            <img src="/wp-content/themes/tbwa/assets/images/arrow_white.svg" class="down-arrow" />
         </div>
         <!--/#work-splash-->
         <div id="work-video-container">
@@ -98,7 +98,7 @@
                 $totalPosts = $query->found_posts;
                 $post_count = 0;
 
-                while ($query->have_posts() && $post_count < $totalPosts) {
+                while ($query->have_posts() && $post_count <= $totalPosts) {
                     $query->the_post();
                     $index = $post_count % count($sizes);
                     // $string = "<div class='columns " . $sizes[$index];

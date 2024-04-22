@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <style class="vjs-styles-defaults">
@@ -25,6 +24,7 @@
   </style>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title><?php echo get_bloginfo('name'); ?></title>
   <meta name="description"
     content="TBWA is The Disruption® Company. Named Adweek’s 2018 Global Agency of the Year, our collective has 11,300 creative minds across 270 offices in 95 countries.">
   <link rel="shortcut icon" href="https://www.tequila.com.vn/img/favicon.ico" type="image/x-icon">
@@ -41,18 +41,6 @@
  -->
 
 </head>
-<?php
-$attributes = get_language_attributes('html');
-
-
-preg_match('/lang="([^"]+)"/', $attributes, $matches);
-$lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
-
-if ($lang_attribute_value === 'vi_VN') {
-  echo "gaf chuwa";
-}
-echo $lang_attribute_value;
-?>
 
 <body class="dark homepage">
   <div id="js_cookieNotice" class="cookieNotice">
@@ -61,19 +49,19 @@ echo $lang_attribute_value;
         This website uses cookies to improve your experience.
       </p>
       <p>
-        <a id="js_cookieNotice_accept" href="#">Accept</a>
-        <a href="/wordpress/privacy-policy">Privacy Policy</a>
+        <a id="js_cookieNotice_accept" href="https://www.tbwa.vn/#">Accept</a>
+        <a href="https://www.tbwa.vn/privacy-policy">Privacy Policy</a>
       </p>
 
     </div>
   </div>
   <?php get_header(); ?>
-  <?php get_template_part('index'); ?>
-
+  <?php get_template_part( 'index' ); ?>
+  
   <!--/#main-container-->
   <?php get_footer(); ?>
 
-  <?php get_template_part('footer-script'); ?>
+  <?php get_template_part( 'footer-script' ); ?>
   <?php
   wp_footer();
   ?>

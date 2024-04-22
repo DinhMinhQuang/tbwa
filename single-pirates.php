@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?php the_title() ?> - <?php echo get_bloginfo('name'); ?></title>
     <?php wp_head(); ?>
 </head>
 
@@ -43,11 +43,8 @@
                     $text = strstr(get_the_content(), '#####'); // Lấy phần văn bản sau chuỗi '#####'
                     $textWithoutHashes = str_replace('#####', '', $text); // Loại bỏ các dấu '#####' khỏi văn bản
                     
-                    // Loại bỏ các thẻ <p> và </p> xung quanh văn bản
-                    $textWithoutParagraphTags = strip_tags($textWithoutHashes, '<br>');
-
                     // Tách nội dung thành các đoạn bằng thẻ <br> hoặc <br /> sau đó loại bỏ dấu <br> ở cuối mỗi đoạn
-                    $paragraphs = explode('<br />', $textWithoutParagraphTags);
+                    $paragraphs = explode('<br />', $textWithoutHashes);
 
                     foreach ($paragraphs as $paragraph) {
                         // Loại bỏ khoảng trắng và các ký tự trống khác ở đầu và cuối mỗi đoạn
@@ -55,10 +52,26 @@
                         // Kiểm tra xem đoạn có rỗng không hoặc chỉ chứa ký tự khoảng trắng
                         if (!empty($trimmedParagraph)) {
                             // In ra đoạn văn bản nếu nó không chỉ chứa ký tự khoảng trắng
-                            echo "<p>$trimmedParagraph</p><br />";
+                            echo "<p>$trimmedParagraph</p>";
                         }
                     }
                     ?>
+
+
+
+                    <!-- <p>Tan began her career in advertising as an Account Manager with Grey before moving to Pyramid
+                        Consulting to capture the growing digital marketing landscape in Asia Pacific.</p>
+                    <br />
+                    <p>She joined TBWA\ in 2010 to lead the digital group in order to combine her digital experience
+                        with her passion for advertising. <br /></p>
+                    <br />
+                    <p>With her promotion in 2017 to Managing Director, Tan’s responsibilities expanded to include the
+                        leadership of Tequila, TBWA’s PR, Event, and Activation branch.<br /></p>
+                    <br />
+                    <p>In 2017, she was named Women to Watch, and TBWA won Silver Agency of The Year by Campaign Asia
+                        under her leadership.</p>
+                    <br />
+                    <p>Outside of TBWA\, she runs around after her two little twins. <br /></p> -->
                 </div>
                 <!--/.leadership-bio-->
             </div>

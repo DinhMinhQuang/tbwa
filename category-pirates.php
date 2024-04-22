@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?php single_cat_title(); ?> - <?php echo get_bloginfo('name'); ?></title>
     <?php wp_head(); ?>
 </head>
 
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <!--/.content-->
-            <img src="/wordpress/wp-content/themes/tbwa/assets/images/arrow_white.svg" class="down-arrow" />
+            <img src="/wp-content/themes/tbwa/assets/images/arrow_white.svg" class="down-arrow" />
         </article>
         <!--/#pirates-quote-->
         <article id="pirates-video-container">
@@ -190,27 +190,31 @@
                     }
                     ?>
 
-                    <a href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>" <?php
-                         $newTab = get_post_meta(get_the_ID(), 'redirectUrl', true);
-                         if (!empty($newTab)) {
-                             echo "target='_blank'";
-                         }
-                         ?>>
+                    <a href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>"
+					   <?php
+						$newTab = get_post_meta(get_the_ID(), 'redirectUrl', true);
+						if (!empty($newTab)) {
+							echo "target='_blank'";
+						}
+						   ?>
+					   >
                         <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php the_title(); ?>" />
                     </a>
                     <div>
                         <h3 class="entry-date"><?php echo get_post_meta(get_the_ID(), 'date', true); ?></h3>
-                        <a class="entry-headline" href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>" <?php
-                             $newTab = get_post_meta(get_the_ID(), 'redirectUrl', true);
-                             if (!empty($newTab)) {
-                                 echo "target='_blank'";
-                             }
-                             ?>>
+                        <a class="entry-headline" href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>"
+						   <?php
+							 $newTab = get_post_meta(get_the_ID(), 'redirectUrl', true);
+							 if (!empty($newTab)) {
+								 echo "target='_blank'";
+							 }
+							 ?>
+						   >
                             <?php the_title(); ?>
                             <?php
                             $test = get_post_meta(get_the_ID(), 'redirectUrl', true);
                             if (!empty($test)) {
-                                echo "<img class='link-arrow' src='/wordpress/wp-content/themes/tbwa/assets/images/link.svg' />";
+                                echo "<img class='link-arrow' src='/wp-content/themes/tbwa/assets/images/link.svg' />";
                             }
                             ?>
                         </a>

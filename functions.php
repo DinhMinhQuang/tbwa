@@ -23,39 +23,20 @@ function custom_rewrite_rules()
         'index.php?category_name=work&paged=$matches[1]',
         'top'
     );
-    add_rewrite_rule(
+	add_rewrite_rule(
         '^news/page/([0-9]+)/?$',
         'index.php?category_name=news&paged=$matches[1]',
         'top'
     );
-    
     add_rewrite_rule(
         '^pirates/page/([0-9]+)/?$',
         'index.php?category_name=pirates&paged=$matches[1]',
         'top'
     );
-
-    add_rewrite_rule('^vi/?$', 'index.php', 'top');
 }
 
 // Gọi hàm custom_rewrite_rules khi init
 add_action('init', 'custom_rewrite_rules');
-function set_language_in_html_tag($output)
-{
-    // Kiểm tra ngôn ngữ từ URL
-    $current_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    $path_parts = explode('/', trim(parse_url($current_url, PHP_URL_PATH), '/'));
-    $language = isset($path_parts[1]) ? $path_parts[1] : '';
-
-    // Nếu ngôn ngữ là tiếng Việt, thêm lang="vi" vào phần tử <html>
-    if ($language === 'vi') {
-        $output = preg_replace('/lang="en-US"/', 'lang="vi_VN"', $output);
-    }
-
-    return $output;
-}
-add_filter('language_attributes', 'set_language_in_html_tag');
-
 
 
 function tbwa_styles()
@@ -79,7 +60,7 @@ function tbwa_styles()
         get_template_directory_uri() .
         '/assets/css/main.min.css',
         array(),
-        'v2'
+        'v1.0.0'
     );
 }
 add_action('wp_enqueue_scripts', 'tbwa_styles');
@@ -1467,21 +1448,29 @@ function add_custom_meta_boxes()
     if (!empty($post)) {
         $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
         if ($pageTemplate == 'page-disruption.php') {
-            add_meta_box('featured_image_meta_box', 'Banner, Text and Video Disruption', 'render_featured_image_meta_box', 'page', 'side', 'default');
+            add_meta_box('featured_image_meta_box', 'Banner, Title, Text and Video Disruption', 'render_featured_image_meta_box', 'page', 'side', 'default');
             add_meta_box('methods_meta_box', 'Module Methods Disruption', 'render_content_methods_meta_box', 'page', 'side', 'default');
             add_meta_box('about_meta_box', 'Module About Disruption', 'render_content_about_meta_box', 'page', 'side', 'default');
         }
     }
 }
 add_action('add_meta_boxes', 'add_custom_meta_boxes');
-/*Banner , Text and Video */
+/*Banner , Title , Text and Video */
 function render_featured_image_meta_box($post)
 {
 
     $featured_image_id = get_post_meta($post->ID, 'featured_image_id', true);
     $featured_image = wp_get_attachment_image_src($featured_image_id, 'medium');
+	$custom_title_disruption = get_post_meta($post->ID, 'custom_title_disruption', true);
     $custom_text = get_post_meta($post->ID, 'custom_text', true);
     ?>
+	<p>
+        <label for="custom_title_disruption">
+            <?php _e('Custom Title'); ?>
+        </label><br />
+		<input style="width: 100%;" name="custom_title_disruption" id="custom_title_disruption"
+            value="<?php echo esc_attr($custom_title_disruption); ?>" />
+    </p>
     <p>
         <label for="featured_image">
             <?php _e('Upload Featured Image'); ?>
@@ -1691,7 +1680,7 @@ function add_custom_page_about_meta_boxes()
     if (!empty($post)) {
         $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
         if ($pageTemplate == 'page-about.php') {
-            add_meta_box('featured_image_about_meta_box', 'Video About', 'render_page_about_img_featured_meta_box', 'page', 'side', 'default');
+            add_meta_box('featured_image_about_meta_box', 'Title and Video About', 'render_page_about_img_featured_meta_box', 'page', 'side', 'default');
             add_meta_box('company_about_meta_box', 'Module Company About', 'render_content_company_about_meta_box', 'page', 'side', 'default');
             add_meta_box('our_clients_meta_box', 'Module Our Clients', 'render_content_our_clients_meta_box', 'page', 'side', 'default');
         }
@@ -1700,9 +1689,17 @@ function add_custom_page_about_meta_boxes()
 add_action('add_meta_boxes', 'add_custom_page_about_meta_boxes');
 function render_page_about_img_featured_meta_box($post)
 {
-    /* Video About */
+    /* Title and Video About */
     $featured_image_id = get_post_meta($post->ID, 'featured_image_bout_id', true);
+	$about__title = get_post_meta($post->ID, 'about__title', true);
     ?>
+	 <p>
+        <label for="about__title">
+            Title (Use '#####' to drop rows from header)
+        </label><br />
+        <input style="width: 100%;" name="about__title" id="about__title"
+            value="<?php echo esc_attr($about__title); ?>" />
+    </p>
     <p><b>The video will be taken from the settings on the home page in the "Home Slider => Slider Video About Url"
             section.</b></p>
     <?php
@@ -1762,6 +1759,7 @@ function save_disruption_meta_box($post_id)
     $meta_fields = array(
         //Disruption
         'featured_image_id',
+		'custom_title_disruption',
         'custom_text',
         'anchor_links1',
         'anchor_links2',
@@ -1785,6 +1783,7 @@ function save_disruption_meta_box($post_id)
         'text_about_video_disruption',
         'about_video_disruption',
         //About
+		'about__title',
         'company_about_title',
         'company_about_content',
         'our_clients_title'
@@ -1876,6 +1875,4 @@ function save_custom_category_fields($term_id)
     }
 }
 add_action('edited_category', 'save_custom_category_fields');
-
-
 

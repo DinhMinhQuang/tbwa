@@ -2,7 +2,7 @@
   <div class="row grid-container" id="footer-menus">
     <div class="columns large-3 large-offset-1 medium-10 medium-offset-2 small-14 small-offset-0 mobile-hide"
       id="footer-logo-container">
-      <a href="https://www.tbwa.com.vn/" id="footer-logo">
+      <a href="/" id="footer-logo">
         <img src="<?php echo get_theme_mod('footer_logo_setting'); ?>">
       </a>
     </div>
@@ -99,11 +99,11 @@
             </p>
             <p></p>
             <a class="phone" href="tel:<?php echo esc_html(get_theme_mod('extra_data_phone', '')) ?>">
-            <?php echo esc_html(get_theme_mod('extra_data_phone', '')) ?>
-          </a>
+              <?php echo esc_html(get_theme_mod('extra_data_phone', '')) ?>
+            </a>
             <a class="email" href="mailto:<?php echo esc_html(get_theme_mod('extra_data_email', '')) ?>">
-            <?php echo esc_html(get_theme_mod('extra_data_email', '')) ?>
-          </a>
+              <?php echo esc_html(get_theme_mod('extra_data_email', '')) ?>
+            </a>
           </span>
 
 
@@ -117,12 +117,12 @@
         <div class="columns large-6 large-offset-8">
           <span class="block footer-social-share">
             <ul class="social-share-buttons">
-              <li><a href="<?php echo esc_html(get_theme_mod('extra_data_facebook', '')) ?>" data-share-channel="" id="facebook" class="share-btn"
-                  target="_blank">Facebook</a></li>
-              <li><a href="<?php echo esc_html(get_theme_mod('extra_data_linkedin', '')) ?>" data-share-channel="" id="linkedin"
-                  class="share-btn" target="_blank">Linkedin</a></li>
-              <li><a href="<?php echo esc_html(get_theme_mod('extra_data_instagram', '')) ?>" data-share-channel="" id="instagram"
-                  class="share-btn" target="_blank">Instagram</a></li>
+              <li><a href="<?php echo esc_html(get_theme_mod('extra_data_facebook', '')) ?>" data-share-channel=""
+                  id="facebook" class="share-btn" target="_blank">Facebook</a></li>
+              <li><a href="<?php echo esc_html(get_theme_mod('extra_data_linkedin', '')) ?>" data-share-channel=""
+                  id="linkedin" class="share-btn" target="_blank">Linkedin</a></li>
+              <li><a href="<?php echo esc_html(get_theme_mod('extra_data_instagram', '')) ?>" data-share-channel=""
+                  id="instagram" class="share-btn" target="_blank">Instagram</a></li>
             </ul>
           </span>
         </div>
@@ -156,10 +156,14 @@
         <a href="https://tbwa.com/" target="_blank">TBWA\Worldwide</a> -->
         <?php
         $menu_items = wp_get_nav_menu_items('footer');
-
         if ($menu_items) {
-          foreach ($menu_items as $menu_item) {
-            echo '<a href="' . esc_url($menu_item->url) . '">' . esc_html($menu_item->title) . '</a>';
+          $last_item = end($menu_items);
+          foreach ($menu_items as $key => $menu_item) {
+            echo '<a href="' . esc_url($menu_item->url) . '"';
+            if ($menu_item === $last_item) {
+              echo ' target="_blank"';
+            }
+            echo '>' . esc_html($menu_item->title) . '</a>';
           }
         }
         ?>

@@ -5,14 +5,13 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Disruption - TBWA\Vietnam (en-US)</title>
+   <title><?php the_title() ?> - <?php echo get_bloginfo('name'); ?></title>
    <link rel="shortcut icon" href="https://www.tbwa.com.vn/img/favicon.ico" type="image/x-icon">
    <?php wp_head(); ?>
 </head>
 
 <body class="dark">
    <?php get_header(); ?>
-   <?php get_template_part('cookie-notice'); ?>
    <section id="disruption">
       <?php
       $featured_image_id = get_post_meta(get_the_ID(), 'featured_image_id', true); // Lấy ID của hình ảnh nổi bật
@@ -24,18 +23,21 @@
             <div class="columns large-offset-5 large-9 medium-offset-3 small-14 small-offset-0 end">
                <div class="slanted-container small-no-slant">
                   <?php
-                  $title = get_the_title(get_the_ID());
+					$custom_title_disruption = get_post_meta($post->ID, 'custom_title_disruption', true);
 
-                  $parts = explode(' ##### ', $title);
-                  foreach ($parts as $part) {
-                     // Loại bỏ các khoảng trắng ở đầu và cuối phần
-                     $part = trim($part);
-                     // Hiển thị thẻ <h1> cho mỗi phần nếu phần không rỗng
-                     if (!empty($part)) {
-                        echo '<h1>' . $part . '</h1>';
-                     }
-                  }
-                  ?>
+					if (!empty($custom_title_disruption)) {
+						$parts = explode(' ##### ', $custom_title_disruption);
+
+						foreach ($parts as $part) {
+							$part = trim($part);
+							if (!empty($part)) {
+								echo '<h1>' . $part . '</h1>';
+							}
+						}
+					} else {
+						echo '<h1>' . get_the_title() . '</h1>';
+					}
+					?>
                   <div class="slanted-block ">
                      <span>
                         <?php
@@ -52,7 +54,7 @@
             </div>
          </div>
          <!--/.#splash-landing-->
-         <img src="/wordpress/wp-content/themes/tbwa/assets/images/arrow.svg" class="down-arrow" />
+         <img src="/wp-content/themes/tbwa/assets/images/arrow.svg" class="down-arrow" />
          <article id="disruption-video-player">
             <video id="disruption-video" class="video-js vjs-default-skin" controls preload="auto" data-setup=''>
                <source src="<?php echo get_theme_mod('slider_video_disruption_url'); ?>" type="video/mp4">
@@ -156,14 +158,14 @@
                         <h3 class="disruption-about-content-title"><?php echo esc_html($title_about_disruption2); ?>
                         </h3>
                         <p><?php echo esc_html($text_about_disruption2); ?></p>
-                        <!-- <a href="/" class="disruption-about-btn">
+                        <!--<a href="/" class="disruption-about-btn">
                            <span>Our commitment</span>
                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                               style="enable-background:new 0 0 24 24" xml:space="preserve" class="arrowIcon">
                               <path d="M12.9 9.7v2.6H2.7V9.7h10.2zM9.6 3.1h3.7l7.9 7.9-7.9 7.9H9.6l7.9-7.9-7.9-7.9z">
                               </path>
                            </svg>
-                        </a> -->
+                        </a>-->
                      </div>
                   </div>
                   <div class="col-lg-2"></div>
@@ -218,10 +220,10 @@
                   </div>
                   <div class="col-lg-2"></div>
                   <div class="col-lg-4">
-                     <div class="wp-block-tbwa-blocks-image-animated-sprite proportion-original media-type-image"
-                        data-sprite-url="<?php echo esc_url($featured_image_about4[0]); ?>">
-                        <div class="sprite"></div>
-                     </div>
+					  <div class="wp-block-tbwa-blocks-image-animated-sprite proportion-original media-type-image"
+						   data-sprite-url="<?php echo esc_url($featured_image_about4[0]); ?>">
+						  <div class="sprite"></div>
+					  </div>
                      <!--<div class="disruption-about-img">
                         <img decoding="async" src="" alt=""
                            title="diversity-people" loading="eager" width="960" height="540">

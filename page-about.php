@@ -5,38 +5,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - TBWA\Vietnam (en-US)</title>
+    <title><?php the_title() ?> - <?php echo get_bloginfo('name'); ?></title>
     <link rel="shortcut icon" href="https://www.tbwa.com.vn/img/favicon.ico" type="image/x-icon">
     <?php wp_head(); ?>
 </head>
 
 <body class="dark">
     <?php get_header(); ?>
-    <?php get_template_part( 'cookie-notice' ); ?>
     <section id="about-intro">
         <article id="about-splash">
             <div id="headlines">
                 <h1>
-                    <?php
-                    $title = get_the_title(get_the_ID());
+					<?php
+					$about__title = get_post_meta($post->ID, 'about__title', true);
 
-                    $parts = explode(' ##### ', $title);
-                    foreach ($parts as $part) {
-                        // Loại bỏ các khoảng trắng ở đầu và cuối phần
-                        $part = trim($part);
-                        // Hiển thị thẻ <h1> cho mỗi phần nếu phần không rỗng
-                        if (!empty($part)) {
-                            echo '<p>' . $part . '</p>';
-                        }
-                    }
-                    ?>
+					if (!empty($about__title)) {
+						$parts = explode(' ##### ', $about__title);
+
+						foreach ($parts as $part) {
+							$part = trim($part);
+							if (!empty($part)) {
+								echo '<p>' . $part . '</p>';
+							}
+						}
+					} else {
+						echo '<p>' . get_the_title() . '</p>';
+					}
+					?>
                 </h1>
                 <div class="slanted-button ">
                     <h4 id="about-video-watch">Watch</h4>
                 </div>
             </div>
             <div id="backslash">\</div>
-            <img src="/wordpress/wp-content/themes/tbwa/assets/images/arrow_white.svg" class="down-arrow" />
+            <img src="/wp-content/themes/tbwa/assets/images/arrow_white.svg" class="down-arrow" />
         </article>
         <!--/#about-splash-->
         <article id="about-video-container">
@@ -83,7 +85,6 @@
 
                 // Khởi tạo biến đếm
                 $count = 0;
-                
                 // Các class tương ứng với mỗi div
                 $div_classes = array(
                     'large-2 medium-2 small-4 large-offset-1 medium-offset-1 small-offset-1',
@@ -99,13 +100,14 @@
                 echo '<div class="row">';
                 foreach ($attachments as $attachment) {
                     $count++;
-                    if (strpos($content, $attachment->guid) !== false) {
+					$image_url = wp_get_attachment_url($attachment->ID);
+                    //if (strpos($content, $attachment->guid) !== false) { }
                         // Lấy class cho div hiện tại
                         $current_class = $div_classes[$div_position];
                 
                         // In ra div với class tương ứng
                         echo '<div class="columns client ' . $current_class . '">';
-                        echo '<img class="' .$attachment_count. '" src="' . $attachment->guid . '">';
+                        echo '<img src="' . $image_url . '">';
                         echo '</div>';
                 
                         // Tăng vị trí div lên một đơn vị, và nếu vượt quá số lượng class, quay trở lại vị trí đầu tiên
@@ -115,7 +117,6 @@
                             echo '<div class="row">';
                             $div_position = 0;
                         }
-                    }
                 }
                 if ($div_position != 0) {
                     echo '</div>';

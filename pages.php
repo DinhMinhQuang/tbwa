@@ -5,13 +5,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php the_title(); ?></title>
+    <title><?php the_title(); ?> - <?php echo get_bloginfo('name'); ?></title>
     <?php wp_head(); ?>
 </head>
  
 <body class="dark"> 
     <?php get_header(); ?>
-    <?php get_template_part( 'cookie-notice' ); ?>
+	<?php get_template_part('cookie-notice'); ?>
     <section class="single row">
         <div class="columns large-10 large-offset-2 medium-10 medium-offset-2 small-12 small-offset-1 end">
             <h1><?php the_title(); ?></h1>

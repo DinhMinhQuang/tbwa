@@ -1,7 +1,7 @@
 .cookieNotice {
     background: #000;
     display: none;
-    font-family: "Grotesk", sans-serif;
+    font-family: "Grotesk",sans-serif;
     font-weight: 600;
     font-size: 1em;
     line-height: 120%;
@@ -3662,59 +3662,40 @@ input:checked+label>.switch-inactive {
 }
 
 @font-face {
-    font-family: "Averta Regular";
-    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/Averta-Regular.woff2);
-    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/Averta-Regular.woff2) format("woff2");
-    font-display: block
-}
-
-@font-face {
-    font-family: "Averta Semibold";
-    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/Averta-Semibold.woff2);
-    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/Averta-Semibold.woff2) format("woff2");
-    font-display: block
-}
-
-@font-face {
     font-family: 'Grotesk';
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-Regular.woff2) format('woff2');
+    src: url(/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-Regular.woff2) format('woff2');
 }
-
 @font-face {
     font-family: 'Grotesk';
     font-style: normal;
     font-weight: 500;
     font-display: swap;
-    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-Medium.woff2) format('woff2');
+    src: url(/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-Medium.woff2) format('woff2');
 }
-
 @font-face {
     font-family: 'Grotesk';
     font-style: normal;
     font-weight: 600;
     font-display: swap;
-    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-SemiBold.woff2) format('woff2');
+    src: url(/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-SemiBold.woff2) format('woff2');
 }
-
 @font-face {
     font-family: 'Grotesk';
     font-style: normal;
     font-weight: 700;
     font-display: swap;
-    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-Bold.woff2) format('woff2');
+    src: url(/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-Bold.woff2) format('woff2');
 }
-
 @font-face {
     font-family: 'Grotesk';
     font-style: normal;
     font-weight: 900;
     font-display: swap;
-    src: url(/wordpress/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-Black.woff2) format('woff2');
+    src: url(/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-Black.woff2) format('woff2');
 }
-
 body,
 div,
 h1,
@@ -5738,13 +5719,13 @@ section#featured-media div.vid-container .vid-controls .vid-fullscreen a#fullscr
     display: inline-block;
     width: 32px;
     height: 32px;
-    background: url(/wordpress/wp-content/themes/tbwa/assets/images/fullscreen.svg) no-repeat;
+    background: url(/wp-content/themes/tbwa/assets/images/fullscreen.svg) no-repeat;
     text-indent: -99999px
 }
 
 .vjs-icon-fullscreen-enter:before,
 .video-js .vjs-fullscreen-control:before {
-    background: url(/wordpress/wp-content/themes/tbwa/assets/images/fullscreen.svg) no-repeat;
+    background: url(/wp-content/themes/tbwa/assets/images/fullscreen.svg) no-repeat;
 }
 
 section#featured-media div.vid-container .vid-controls .vid-close {
@@ -5934,26 +5915,24 @@ section#article-content #awards-share p {
 section#article-content #awards-share p.award-desc {
     margin-bottom: 10px
 }
-
-section#article-content #awards-share .fb-share {
-    background: url(/wordpress/wp-content/themes/tbwa/assets/images/Facebook.svg) 0 0/contain no-repeat !important;
-    display: inline-block;
+section#article-content #awards-share .article-share > a {
+	display: inline-block;
     width: 24px;
     height: 24px;
     text-indent: -999999px;
     margin-right: 10px;
     cursor: pointer;
-    direction: ltr
+    direction: ltr;
+}
+section#article-content #awards-share .fb-share {
+    background: url(/wp-content/themes/tbwa/assets/images/Facebook.svg) 0 0/contain no-repeat !important;
+}
+section#article-content #awards-share .linkedin-share {
+    background: url(/wp-content/themes/tbwa/assets/images/LinkedIn.svg) 0 0/contain no-repeat !important;
 }
 
 section#article-content #awards-share .twitter-share {
-    background: url(/wordpress/wp-content/themes/tbwa/assets/images/Twitter.svg) 0 0/contain no-repeat !important;
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    text-indent: -999999px;
-    cursor: pointer;
-    direction: ltr
+    background: url(/wp-content/themes/tbwa/assets/images/Twitter.svg) 0 0/contain no-repeat !important;
 }
 
 section#article-content #back-to-parent {
@@ -7605,7 +7584,7 @@ screen and (max-width:47.99875em) {
 article#pirates-quote {
     width: 100%;
     height: 100%;
-    background: url(/wordpress/wp-content/themes/tbwa/assets/images/piratesBG.jpg);
+    background: url(/wp-content/themes/tbwa/assets/images/piratesBG.jpg);
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
@@ -8377,20 +8356,20 @@ article#leader-container .leadership-headline div.social-handles a svg {
 
 article#leader-container .leadership-headline div.social-handles a.social-linkedin {
     background-color: #fff;
-    -webkit-mask: url(/wordpress/wp-content/themes/tbwa/assets/images/LinkedIn.svg) no-repeat 50% 50%;
-    mask: url(/wordpress/wp-content/themes/tbwa/assets/images/LinkedIn.svg) no-repeat 50% 50%
+    -webkit-mask: url(/wp-content/themes/tbwa/assets/images/LinkedIn.svg) no-repeat 50% 50%;
+    mask: url(/wp-content/themes/tbwa/assets/images/LinkedIn.svg) no-repeat 50% 50%
 }
 
 article#leader-container .leadership-headline div.social-handles a.social-twitter {
     background-color: #fff;
-    -webkit-mask: url(/wordpress/wp-content/themes/tbwa/assets/images/Twitter.svg) no-repeat 50% 50%;
-    mask: url(/wordpress/wp-content/themes/tbwa/assets/images/Twitter.svg) no-repeat 50% 50%
+    -webkit-mask: url(/wp-content/themes/tbwa/assets/images/Twitter.svg) no-repeat 50% 50%;
+    mask: url(/wp-content/themes/tbwa/assets/images/Twitter.svg) no-repeat 50% 50%
 }
 
 article#leader-container .leadership-headline div.social-handles a.social-instagram {
     background-color: #fff;
-    -webkit-mask: url(/wordpress/wp-content/themes/tbwa/assets/images/Instagram.svg) no-repeat 50% 50%;
-    mask: url(/wordpress/wp-content/themes/tbwa/assets/images/Instagram.svg) no-repeat 50% 50%
+    -webkit-mask: url(/wp-content/themes/tbwa/assets/images/Instagram.svg) no-repeat 50% 50%;
+    mask: url(/wp-content/themes/tbwa/assets/images/Instagram.svg) no-repeat 50% 50%
 }
 
 article#leader-container .leadership-bio {
@@ -8498,7 +8477,7 @@ screen and (max-width:47.99875em) {
     height: 100vh;
     overflow: hidden;
     color: #000;
-    background-image: url(/wordpress/wp-content/themes/tbwa/assets/images/disruption_splash.jpg);
+    background-image: url(/wp-content/themes/tbwa/assets/images/disruption_splash.jpg);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -9048,7 +9027,7 @@ screen and (max-width:47.99875em) {
     height: 100vh;
     background-size: cover;
     background-position: center;
-    background-image: url(/wordpress/wp-content/themes/tbwa/assets/images/work_splash.png);
+    background-image: url(/wp-content/themes/tbwa/assets/images/work_splash.png);
     background-attachment: fixed;
     text-align: center;
     direction: ltr;
@@ -9739,20 +9718,18 @@ body.rtl footer #legal {
     padding-top: 25px;
     height: 0;
 }
-
-.wp-block-embed__wrapper iframe {
+.wp-block-embed__wrapper iframe{ 
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: contain;
-}
-
+} 
 /*PAGE DISRUPTION ABOUT*/
 #disruption-content .disruption-about {
     background: #fff;
-    padding: 256px 0 0;
+    padding: 256px 0 0; 
 }
 
 .disruption-about-flex {
@@ -9766,7 +9743,6 @@ body.rtl footer #legal {
     width: 4.9479166667vw;
     padding: 0 0 1.5625vw;
 }
-
 #disruption h3.disruption-about-content-title {
     font-weight: 600;
     padding-bottom: 18px;
@@ -9781,13 +9757,11 @@ body.rtl footer #legal {
     font-weight: 400;
     line-height: 1.5em;
     padding-bottom: 16px;
-}
-
+}  
 .disruption-about-video {
     padding-bottom: 3.125vw;
     margin-top: 40px;
 }
-
 .disruption-about-video video {
     width: 100%;
     height: 100%;
@@ -9795,20 +9769,18 @@ body.rtl footer #legal {
     object-fit: cover;
     object-position: center;
 }
-
 .disruption-about-img img {
     aspect-ratio: 16/9;
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
 .disruption-about-btn {
     display: inline-flex;
     align-items: center;
     vertical-align: middle;
     transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    box-shadow: 0 0 1px rgba(0,0,0,0);
     position: relative;
     transition-property: color;
     transition-duration: .3s;
@@ -9816,8 +9788,7 @@ body.rtl footer #legal {
     color: #0a0a0d;
     line-height: 33px;
 }
-
-.disruption-about-btn::before {
+.disruption-about-btn::before { 
     content: "";
     position: absolute;
     z-index: -1;
@@ -9832,8 +9803,7 @@ body.rtl footer #legal {
     transition-duration: .3s;
     transition-timing-function: ease-out;
 }
-
-.disruption-about-btn svg {
+.disruption-about-btn svg { 
     display: inline;
     vertical-align: text-bottom;
     padding-left: 2px;
@@ -9841,15 +9811,12 @@ body.rtl footer #legal {
     height: 16px;
     fill: #0a0a0d;
 }
-
-.disruption-about-btn:hover::before {
+.disruption-about-btn:hover::before {  
     transform: scaleX(1);
 }
-
 .disruption-about-understanding .width-narrow {
     width: 100%;
 }
-
 #disruption .disruption-about-understanding h3.disruption-about-content-title {
     font-weight: 400;
     font-size: 16px;
@@ -9857,116 +9824,100 @@ body.rtl footer #legal {
     line-height: 20px;
     padding-bottom: 0;
 }
-
 #disruption .disruption-about-understanding h3.disruption-about-desc {
     font-weight: 600;
     font-size: 18px;
     line-height: 32px;
 }
-
+section#about-landing article#about-clients .row .columns:last-child,
+section#pirates-container #pirates-leadership .row .columns:last-child {
+    float: left;
+	clear: none;
+} 
 @media (min-width: 576px) {
     #disruption-content .disruption-about .disruption-about-container {
         max-width: 80vw;
         margin: 0 auto;
     }
-
     .col-lg-5 {
         flex: 0 0 50%;
         max-width: 50%;
     }
-
     .col-lg-4 {
         flex: 0 0 40%;
         max-width: 40%;
     }
-
     .col-lg-2 {
         flex: 0 0 10%;
         max-width: 10%;
     }
-
-    #disruption h3.disruption-about-content-title {
+    #disruption h3.disruption-about-content-title { 
         line-height: 38px;
         font-size: 1.5625vw;
     }
-
-    .disruption-about-content p {
+    .disruption-about-content p { 
         font-size: 1.3020833333vw;
-        line-height: 26px;
+        line-height: 26px; 
     }
-}
-section#about-landing article#about-clients .row .columns:last-child,
-section#pirates-container #pirates-leadership .row .columns:last-child {
-    float: left;
-    clear: none;
+	.disruption-about-understanding .col-lg-4 {
+		flex: 0 0 32%;
+    	max-width: 32%;	
+	}
 }
 @media (min-width: 992px) {
-    .disruption-about-flex {
+    .disruption-about-flex { 
         padding: 0 0 42px;
     }
-
     .disruption-about-btn {
         font-size: 1.3020833333vw;
         padding-top: .5208333333vw;
         padding-bottom: .5208333333vw;
     }
-
-    .disruption-about-btn svg {
+    .disruption-about-btn svg { 
         padding-left: .3125vw;
         width: 22px;
         height: 18px;
     }
-
     #disruption .disruption-about-understanding h3.disruption-about-content-title {
         font-size: 1.3020833333vw;
         margin-bottom: 4.6875vw;
     }
-
-    #disruption .disruption-about-understanding h3.disruption-about-desc {
+    #disruption .disruption-about-understanding h3.disruption-about-desc { 
         margin-bottom: 4.6875vw;
         font-size: 1.5625vw;
     }
 }
-
 @media (max-width: 991px) {
     #disruption-content .disruption-about {
         padding: 120px 0 30px;
     }
-
     .disruption-about-flex {
         padding: 0 24px 30px;
     }
-
     .disruption-about-content .width-narrow {
         width: 95px;
-        padding: 0 0 30px;
+        padding: 0 0 30px;      
     }
-
     .disruption-about-content p {
         padding-bottom: 0;
     }
-
-    .disruption-about-img {
-        padding: 0 0 30px;
-    }
-
+    .disruption-about-img {padding: 0 0 30px;}
     #disruption h3.disruption-about-content-title {
         padding-bottom: 15px;
     }
-
     .disruption-about-btn {
-        padding: 16px 0 30px;
+        padding: 16px 0 30px; 
     }
-
     .disruption-about-flex:nth-child(odd) .disruption-about-img {
-        padding: 0;
-    }
-
+        padding: 0;   
+    } 
     #disruption .disruption-about-understanding h3.disruption-about-content-title {
         padding-bottom: 60px;
-    }
+    } 
+	.disruption-about-flex.disruption-about-understanding {
+		flex-flow: column;
+	}
 }
-
 .wp-block-tbwa-blocks-image-animated-sprite {
     position: relative;
     width: 100%;
@@ -10004,21 +9955,11 @@ section#pirates-container #pirates-leadership .row .columns:last-child {
 .wp-block-tbwa-blocks-image-animated-sprite.border-dark-grey {
     border: 1px solid #4d4d4d
 }
-
 .sprite {
-    width: 100% !important;
+    width: 100%!important;
     height: 0;
     padding-top: 100%;
 }
-
-.prev-link,
-.row .pagination {
-    /* Đặt các thuộc tính CSS cho văn bản trong các liên kết prev và next ở đây */
-    color: #000000;
-    /* Màu chữ */
-    font-weight: bold;
-    /* Độ đậm của chữ */
-    text-decoration: none;
-    /* Gỡ bỏ gạch chân */
-    /* Thêm các thuộc tính CSS khác tùy thuộc vào ý định của bạn */
+article#leader-container .leadership-bio p {
+	margin: 0 0 15px;	
 }
