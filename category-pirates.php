@@ -113,7 +113,7 @@
                         if ($query->have_posts()) {
                             while ($query->have_posts()) {
                                 $query->the_post();
-                                $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+                                $thumbnail_url = wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_section_thumbnail_field', true));
                                 $post_content = strstr(get_the_content(), '#####', true);
                                 // Hiển thị tiêu đề hoặc nội dung bài post ở đây
                                 echo '<div class="columns small-12 small-offset-1 ' . $imgSize[$i][$j] . ' ' . $classEnd . '">';
