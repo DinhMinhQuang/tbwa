@@ -44,7 +44,7 @@ function hide_post_meta_boxes()
     remove_meta_box('commentsdiv', 'post', 'normal');
     remove_meta_box('postcustom', 'post', 'normal');
     remove_meta_box('commentstatusdiv', 'post', 'normal');
-    
+
     remove_meta_box('trackbacksdiv', 'page', 'normal');
     remove_meta_box('commentsdiv', 'page', 'normal');
     remove_meta_box('postcustom', 'page', 'normal');
@@ -420,11 +420,11 @@ function custom_postpage_meta_box_func_1($post, )
                 src="<?php echo ($image_meta_val != '' ? wp_get_attachment_image_src($image_meta_val)[0] : ''); ?>"
                 style="width:100%;cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>" alt="">
             <a class="addimage" style="cursor:pointer;" onclick="custom_postpage_add_image('<?php echo $meta_key; ?>');">
-                <?php _e('Set Back image', 'textdomain'); ?>
+                <?php _e('Set Back thumbnail', 'textdomain'); ?>
             </a><br>
             <a class="removeimage" style="cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>"
                 onclick="custom_postpage_remove_image('<?php echo $meta_key; ?>');">
-                <?php _e('Remove Back image', 'textdomain'); ?>
+                <?php _e('Remove Back thumbnail', 'textdomain'); ?>
             </a>
             <input type="hidden" name="<?php echo $meta_key; ?>" id="<?php echo $meta_key; ?>"
                 value="<?php echo $image_meta_val; ?>">
@@ -487,11 +487,11 @@ function custom_postpage_meta_box_func_2($post)
                 src="<?php echo ($image_meta_val != '' ? wp_get_attachment_image_src($image_meta_val)[0] : ''); ?>"
                 style="width:100%;cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>" alt="">
             <a class="addimage" style="cursor:pointer;" onclick="custom_postpage_add_image('<?php echo $meta_key; ?>');">
-                <?php _e('Set Front image', 'textdomain'); ?>
+                <?php _e('Set Front thumbnail', 'textdomain'); ?>
             </a><br>
             <a class="removeimage" style="cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>"
                 onclick="custom_postpage_remove_image('<?php echo $meta_key; ?>');">
-                <?php _e('Remove Front image', 'textdomain'); ?>
+                <?php _e('Remove Front thumbnail', 'textdomain'); ?>
             </a>
             <input type="hidden" name="<?php echo $meta_key; ?>" id="<?php echo $meta_key; ?>"
                 value="<?php echo $image_meta_val; ?>">
@@ -554,11 +554,11 @@ function custom_postpage_meta_box_func($post)
                 src="<?php echo ($image_meta_val != '' ? wp_get_attachment_image_src($image_meta_val)[0] : ''); ?>"
                 style="width:100%;cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>" alt="">
             <a class="addimage" style="cursor:pointer;" onclick="custom_postpage_add_image('<?php echo $meta_key; ?>');">
-                <?php _e('Set Section image', 'textdomain'); ?>
+                <?php _e('Set Post thumbnail', 'textdomain'); ?>
             </a><br>
             <a class="removeimage" style="cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>"
                 onclick="custom_postpage_remove_image('<?php echo $meta_key; ?>');">
-                <?php _e('Remove Section image', 'textdomain'); ?>
+                <?php _e('Remove Post thumbnail', 'textdomain'); ?>
             </a>
             <input type="hidden" name="<?php echo $meta_key; ?>" id="<?php echo $meta_key; ?>"
                 value="<?php echo $image_meta_val; ?>">
@@ -1540,38 +1540,11 @@ function render_featured_image_meta_box($post)
 /* Module Methods */
 function render_content_methods_meta_box($post)
 {
-    $module_methods_id = get_post_meta($post->ID, 'methods_meta_box', true);
     $methods_title = get_post_meta($post->ID, 'methods_title', true);
     $methods_content = get_post_meta($post->ID, 'methods_content', true);
     $methods_video = get_post_meta($post->ID, 'methods_video', true);
-    $num_anchor_links = 3;
+    
     ?>
-    <div><b>Anchor links</b></div>
-    <?php
-    for ($i = 1; $i <= $num_anchor_links; $i++) {
-        $anchor_links = get_post_meta($post->ID, 'anchor_links' . $i, true); // Lấy giá trị từ meta
-        ?>
-
-        <p>
-
-            <label for="anchor_links<?php echo $i; ?>">
-                <?php printf(__('Anchor links %d'), $i); ?>
-            </label><br />
-            <input style="width: 100%;" name="anchor_links<?php echo $i; ?>" id="anchor_links<?php echo $i; ?>"
-                value="<?php echo esc_attr($anchor_links); ?>" />
-        </p>
-
-        <?php
-    }
-    ?>
-    <div><b>Title</b></div>
-    <p>
-        <label for="methods_title">
-            Title Methods
-        </label><br />
-        <input style="width: 100%;" name="methods_title" id="methods_title"
-            value="<?php echo esc_attr($methods_title); ?>" />
-    </p>
     <div><b>Content</b></div>
     <p>
         <label for="methods_content">
@@ -1986,8 +1959,8 @@ add_action('save_post', 'save_custom_meta_box_values');
 function custom_featured_image_text($content)
 {
     // Thay đổi văn bản của nút "Set featured image"
-    $content = str_replace('Set featured image', 'Đặt hình đại diện', $content);
-    $content = str_replace('Remove featured image', 'Đặt hình đại diện', $content);
+    $content = str_replace('Set featured image', 'Set Banner image', $content);
+    $content = str_replace('Remove featured image', 'Remove Banner image', $content);
 
     return $content;
 }
