@@ -38,6 +38,19 @@ function custom_rewrite_rules()
 // Gọi hàm custom_rewrite_rules khi init
 add_action('init', 'custom_rewrite_rules');
 
+function hide_post_meta_boxes()
+{
+    remove_meta_box('trackbacksdiv', 'post', 'normal');
+    remove_meta_box('commentsdiv', 'post', 'normal');
+    remove_meta_box('postcustom', 'post', 'normal');
+    remove_meta_box('commentstatusdiv', 'post', 'normal');
+    
+    remove_meta_box('trackbacksdiv', 'page', 'normal');
+    remove_meta_box('commentsdiv', 'page', 'normal');
+    remove_meta_box('postcustom', 'page', 'normal');
+    remove_meta_box('commentstatusdiv', 'page', 'normal');
+}
+add_action('do_meta_boxes', 'hide_post_meta_boxes');
 
 function tbwa_styles()
 {
@@ -1903,8 +1916,10 @@ add_action('do_meta_boxes', 'custom_admin_featured_image_label');
 
 function add_custom_meta_boxes_based_on_category($post_type, $post)
 {
-    add_meta_box('custom_meta_box_for_word_category', 'Apply for page Work', 'render_custom_meta_box_for_word_category', $post_type, 'normal', 'default', $post);
-    add_meta_box('custom_meta_box_for_news_category', 'Apply for page News', 'render_custom_meta_box_for_news_category', $post_type, 'normal', 'default', $post);
+    if ($post_type === 'post') {
+        add_meta_box('custom_meta_box_for_word_category', 'Apply for page Work', 'render_custom_meta_box_for_word_category', $post_type, 'normal', 'default', $post);
+        add_meta_box('custom_meta_box_for_news_category', 'Apply for page News', 'render_custom_meta_box_for_news_category', $post_type, 'normal', 'default', $post);
+    }
 }
 add_action('add_meta_boxes', 'add_custom_meta_boxes_based_on_category', 10, 2);
 
@@ -1921,7 +1936,8 @@ function render_custom_meta_box_for_word_category($post)
     $heroVimeoId = get_post_meta($post->ID, 'hero_vimeo_id', true);
     ?>
     <label for="hero_vimeo_id">Vimeo video id (Video which is shown on the banner of the post)</label>
-    <input style="width: 100%" type="text" name="hero_vimeo_id" id="hero_vimeo_id" value="<?php echo esc_attr($heroVimeoId); ?>">
+    <input style="width: 100%" type="text" name="hero_vimeo_id" id="hero_vimeo_id"
+        value="<?php echo esc_attr($heroVimeoId); ?>">
     <?php
 }
 
