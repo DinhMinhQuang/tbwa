@@ -23,7 +23,7 @@ function custom_rewrite_rules()
         'index.php?category_name=work&paged=$matches[1]',
         'top'
     );
-	add_rewrite_rule(
+    add_rewrite_rule(
         '^news/page/([0-9]+)/?$',
         'index.php?category_name=news&paged=$matches[1]',
         'top'
@@ -60,7 +60,7 @@ function tbwa_styles()
         get_template_directory_uri() .
         '/assets/css/main.min.css',
         array(),
-        'v1.0.0'
+        'v1.0.1'
     );
 }
 add_action('wp_enqueue_scripts', 'tbwa_styles');
@@ -364,7 +364,7 @@ function custom_postpage_meta_box()
     foreach ($post_types as $pt) {
         add_meta_box(
             'custom_postpage_meta_box_back',
-            __('Back Thumbnail', 'textdomain'),
+            __('Back thumbnail on Homepage (for posts in page Work)', 'textdomain'),
             'custom_postpage_meta_box_func_1',
             $pt,
             'side',
@@ -374,7 +374,7 @@ function custom_postpage_meta_box()
         // Meta box 2
         add_meta_box(
             'custom_postpage_meta_box_front',
-            __('Front Thumbnail', 'textdomain'),
+            __('Front thumbnail on Homepage (for posts in page Work)', 'textdomain'),
             'custom_postpage_meta_box_func_2',
             $pt,
             'side',
@@ -384,7 +384,7 @@ function custom_postpage_meta_box()
         // Section Post Thumbnail
         add_meta_box(
             'custom_postpage_meta_box_thumbnail',
-            __('Section Thumbnail', 'textdomain'),
+            __('Post thumbnail', 'textdomain'),
             'custom_postpage_meta_box_func',
             $pt,
             'side',
@@ -1461,14 +1461,14 @@ function render_featured_image_meta_box($post)
 
     $featured_image_id = get_post_meta($post->ID, 'featured_image_id', true);
     $featured_image = wp_get_attachment_image_src($featured_image_id, 'medium');
-	$custom_title_disruption = get_post_meta($post->ID, 'custom_title_disruption', true);
+    $custom_title_disruption = get_post_meta($post->ID, 'custom_title_disruption', true);
     $custom_text = get_post_meta($post->ID, 'custom_text', true);
     ?>
-	<p>
+    <p>
         <label for="custom_title_disruption">
             <?php _e('Custom Title'); ?>
         </label><br />
-		<input style="width: 100%;" name="custom_title_disruption" id="custom_title_disruption"
+        <input style="width: 100%;" name="custom_title_disruption" id="custom_title_disruption"
             value="<?php echo esc_attr($custom_title_disruption); ?>" />
     </p>
     <p>
@@ -1691,14 +1691,13 @@ function render_page_about_img_featured_meta_box($post)
 {
     /* Title and Video About */
     $featured_image_id = get_post_meta($post->ID, 'featured_image_bout_id', true);
-	$about__title = get_post_meta($post->ID, 'about__title', true);
+    $about__title = get_post_meta($post->ID, 'about__title', true);
     ?>
-	 <p>
+    <p>
         <label for="about__title">
             Title (Use '#####' to drop rows from header)
         </label><br />
-        <input style="width: 100%;" name="about__title" id="about__title"
-            value="<?php echo esc_attr($about__title); ?>" />
+        <input style="width: 100%;" name="about__title" id="about__title" value="<?php echo esc_attr($about__title); ?>" />
     </p>
     <p><b>The video will be taken from the settings on the home page in the "Home Slider => Slider Video About Url"
             section.</b></p>
@@ -1759,7 +1758,7 @@ function save_disruption_meta_box($post_id)
     $meta_fields = array(
         //Disruption
         'featured_image_id',
-		'custom_title_disruption',
+        'custom_title_disruption',
         'custom_text',
         'anchor_links1',
         'anchor_links2',
@@ -1783,7 +1782,7 @@ function save_disruption_meta_box($post_id)
         'text_about_video_disruption',
         'about_video_disruption',
         //About
-		'about__title',
+        'about__title',
         'company_about_title',
         'company_about_content',
         'our_clients_title'
@@ -1875,4 +1874,105 @@ function save_custom_category_fields($term_id)
     }
 }
 add_action('edited_category', 'save_custom_category_fields');
+/* Classic Editor Pages Posts */
+add_filter('use_block_editor_for_post', '__return_false');
 
+function custom_excerpt_label($translated_text, $text, $domain)
+{
+    // Kiểm tra xem đang ở trang chỉnh sửa bài viết và text đang được dịch có phải là "Excerpt" không
+    if (is_admin() && $text === 'Excerpt') {
+        // Thay đổi label thành chuỗi mới bạn muốn
+        $translated_text = 'Excerpt (secondary post title)';
+    }
+    return $translated_text;
+}
+add_filter('gettext', 'custom_excerpt_label', 20, 3);
+
+function custom_admin_featured_image_label()
+{
+    global $post_type;
+
+    // Chỉ thực hiện đối với post type là post
+    if ($post_type === 'post') {
+        // Thay đổi label của trường Feature Image
+        remove_meta_box('postimagediv', 'post', 'side');
+        add_meta_box('postimagediv', __('Banner image (for posts in page Work)'), 'post_thumbnail_meta_box', 'post', 'side', 'default');
+    }
+}
+add_action('do_meta_boxes', 'custom_admin_featured_image_label');
+
+function add_custom_meta_boxes_based_on_category($post_type, $post)
+{
+    add_meta_box('custom_meta_box_for_word_category', 'Apply for page Work', 'render_custom_meta_box_for_word_category', $post_type, 'normal', 'default', $post);
+    add_meta_box('custom_meta_box_for_news_category', 'Apply for page News', 'render_custom_meta_box_for_news_category', $post_type, 'normal', 'default', $post);
+}
+add_action('add_meta_boxes', 'add_custom_meta_boxes_based_on_category', 10, 2);
+
+
+function render_custom_meta_box_for_word_category($post)
+{
+    // Lấy giá trị hiện tại của trường tùy chỉnh nếu có
+    $client_value = get_post_meta($post->ID, 'client', true);
+    ?>
+    <label for="client">Client</label>
+    <input style="width: 100%" type="text" name="client" id="client" value="<?php echo esc_attr($client_value); ?>">
+    <?php
+
+    $heroVimeoId = get_post_meta($post->ID, 'hero_vimeo_id', true);
+    ?>
+    <label for="hero_vimeo_id">Vimeo video id (Video which is shown on the banner of the post)</label>
+    <input style="width: 100%" type="text" name="hero_vimeo_id" id="hero_vimeo_id" value="<?php echo esc_attr($heroVimeoId); ?>">
+    <?php
+}
+
+function render_custom_meta_box_for_news_category($post)
+{
+    $date_value = get_post_meta($post->ID, 'date', true);
+    ?>
+    <label for="date">Choose your date:</label>
+    <input style="width: 100%" type="text" name="date" id="date" value="<?php echo esc_attr($date_value); ?>">
+    <?php
+
+    $location = get_post_meta($post->ID, 'location', true);
+    ?>
+    <label for="location">Choose your location:</label>
+    <input style="width: 100%" type="text" name="location" id="location" value="<?php echo esc_attr($location); ?>">
+    <?php
+}
+
+function save_custom_meta_box_values($post_id)
+{
+    // Kiểm tra xem người dùng có quyền chỉnh sửa bài viết không
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    // Lưu giá trị của trường tùy chỉnh cho danh mục "Word"
+    if (isset($_POST['client'])) {
+        update_post_meta($post_id, 'client', sanitize_text_field($_POST['client']));
+    }
+
+    if (isset($_POST['hero_vimeo_id'])) {
+        update_post_meta($post_id, 'hero_vimeo_id', sanitize_text_field($_POST['hero_vimeo_id']));
+    }
+
+    // Lưu giá trị của trường tùy chỉnh cho danh mục "News"
+    if (isset($_POST['date'])) {
+        update_post_meta($post_id, 'date', sanitize_text_field($_POST['date']));
+    }
+
+    if (isset($_POST['location'])) {
+        update_post_meta($post_id, 'location', sanitize_text_field($_POST['location']));
+    }
+}
+add_action('save_post', 'save_custom_meta_box_values');
+
+function custom_featured_image_text($content)
+{
+    // Thay đổi văn bản của nút "Set featured image"
+    $content = str_replace('Set featured image', 'Đặt hình đại diện', $content);
+    $content = str_replace('Remove featured image', 'Đặt hình đại diện', $content);
+
+    return $content;
+}
+add_filter('admin_post_thumbnail_html', 'custom_featured_image_text');
