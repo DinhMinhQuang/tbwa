@@ -49,6 +49,8 @@ function hide_post_meta_boxes()
     remove_meta_box('commentsdiv', 'page', 'normal');
     remove_meta_box('postcustom', 'page', 'normal');
     remove_meta_box('commentstatusdiv', 'page', 'normal');
+
+    remove_meta_box('postimagediv', 'page', 'side');
 }
 add_action('do_meta_boxes', 'hide_post_meta_boxes');
 
@@ -1543,7 +1545,7 @@ function render_content_methods_meta_box($post)
     $methods_title = get_post_meta($post->ID, 'methods_title', true);
     $methods_content = get_post_meta($post->ID, 'methods_content', true);
     $methods_video = get_post_meta($post->ID, 'methods_video', true);
-    
+
     ?>
     <div><b>Content</b></div>
     <p>
@@ -1918,14 +1920,21 @@ function render_custom_meta_box_for_news_category($post)
 {
     $date_value = get_post_meta($post->ID, 'date', true);
     ?>
-    <label for="date">Choose your date:</label>
+    <label for="date">Choose your date</label>
     <input style="width: 100%" type="text" name="date" id="date" value="<?php echo esc_attr($date_value); ?>">
     <?php
 
     $location = get_post_meta($post->ID, 'location', true);
     ?>
-    <label for="location">Choose your location:</label>
+    <label for="location">Choose your location</label>
     <input style="width: 100%" type="text" name="location" id="location" value="<?php echo esc_attr($location); ?>">
+    <?php
+
+    $redirectUrl = get_post_meta($post->ID, 'redirectUrl', true);
+    ?>
+    <label for="redirectUrl">Direct URL (if any)</label>
+    <input style="width: 100%" type="text" name="redirectUrl" id="redirectUrl"
+        value="<?php echo esc_attr($redirectUrl); ?>">
     <?php
 }
 
@@ -1953,6 +1962,9 @@ function save_custom_meta_box_values($post_id)
     if (isset($_POST['location'])) {
         update_post_meta($post_id, 'location', sanitize_text_field($_POST['location']));
     }
+    if (isset($_POST['redirectUrl'])) {
+        update_post_meta($post_id, 'redirectUrl', sanitize_text_field($_POST['redirectUrl']));
+    }
 }
 add_action('save_post', 'save_custom_meta_box_values');
 
@@ -1965,3 +1977,72 @@ function custom_featured_image_text($content)
     return $content;
 }
 add_filter('admin_post_thumbnail_html', 'custom_featured_image_text');
+
+
+// Xử lý dữ liệu khi nhận request AJAX
+function handle_sortable_items()
+{
+    if (isset($_POST['item_ids']) && isset($_POST['new_order'])) {
+        $item_ids = $_POST['item_ids'];
+        $new_order = $_POST['new_order'];
+
+        // Cập nhật thứ tự mới của các mục trong cơ sở dữ liệu
+        foreach ($item_ids as $index => $item_id) {
+            // Update the position/order of the item in the database
+            // Example: Update the 'menu_order' field for posts or custom post types
+            wp_update_post(
+                array(
+                    'ID' => $item_id,
+                    'menu_order' => $new_order[$index]
+                )
+            );
+        }
+
+        // Phản hồi về thành công hoặc lỗi
+        wp_send_json_success('Sort order updated successfully.');
+    } else {
+        wp_send_json_error('Invalid request.');
+    }
+}
+add_action('wp_ajax_handle_sortable_items', 'handle_sortable_items');
+
+add_action('admin_footer', function () {
+    global $pagenow;
+    if ($pagenow == 'edit.php' && isset ($_GET['post_type']) && $_GET['post_type'] == 'post' && isset ($_GET['category_name'])) {
+        ?>
+        <script>
+            jQuery(function ($) {
+                $('#the-list').sortable({
+                    update: function (event, ui) {
+                        var itemIds = $(this).sortable('toArray');
+                        const postId = []
+                        var newOrder = {};
+                        $.each(itemIds, function (index, itemId) {
+                            postId.push(itemId.replace('post-', ''));
+                            newOrder[itemId] = index + 1;
+                        });
+                        console.log(postId)
+                        console.log(newOrder)
+
+                        $.ajax({
+                            url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                            type: 'POST',
+                            data: {
+                                action: 'handle_sortable_items',
+                                item_ids: itemIds,
+                                new_order: newOrder
+                            },
+                            success: function (response) {
+                                console.log(response.data);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+        <?php
+    }
+});
