@@ -6,6 +6,13 @@ function theme_supports()
     add_theme_support('post-thumbnails');
 }
 add_action('after_setup_theme', 'theme_supports');
+function remove_home_page_settings($wp_customize)
+{
+    $wp_customize->remove_section('static_front_page');
+    $wp_customize->remove_section('custom_css');
+}
+add_action('customize_register', 'remove_home_page_settings');
+
 
 function tbwa_menus($locations = array())
 {
@@ -348,6 +355,11 @@ function theme_customizer_settings($wp_customize)
             )
         )
     );
+
+    $wp_customize->remove_control('custom_logo');
+
+    // Xóa phần tagline
+    $wp_customize->remove_control('blogdescription');
 
 }
 add_action('customize_register', 'theme_customizer_settings');
@@ -703,7 +715,7 @@ function customizer_settings_disruption($wp_customize)
     $wp_customize->add_section(
         'home_disruption_section',
         array(
-            'title' => 'Home Disruption', // Title của section
+            'title' => 'Disruption Section', // Title của section
             'priority' => 30,
         )
     );
@@ -721,7 +733,7 @@ function customizer_settings_disruption($wp_customize)
     $wp_customize->add_control(
         'home_disruption_first_title',
         array(
-            'label' => 'Home Disruption First Title',
+            'label' => 'First Title',
             'section' => 'home_disruption_section', // Chọn section mới
             'type' => 'text',
         )
@@ -739,7 +751,7 @@ function customizer_settings_disruption($wp_customize)
     $wp_customize->add_control(
         'home_disruption_first_content',
         array(
-            'label' => 'Home Disruption First Content',
+            'label' => 'First Content',
             'section' => 'home_disruption_section', // Chọn section mới
             'type' => 'text',
         )
@@ -750,7 +762,7 @@ function customizer_settings_disruption($wp_customize)
         'home_disruption_first_link',
         array(
             'default' => '',
-            'sanitize_callback' => 'wp_kses_post',
+            'sanitize_callback' => 'sanitize_text_field',
         )
     );
 
@@ -758,9 +770,9 @@ function customizer_settings_disruption($wp_customize)
     $wp_customize->add_control(
         'home_disruption_first_link',
         array(
-            'label' => 'Home Disruption First Link',
+            'label' => 'First Button Name',
             'section' => 'home_disruption_section', // Chọn section mới
-            'type' => 'textarea',
+            'type' => 'text',
         )
     );
 
@@ -777,7 +789,7 @@ function customizer_settings_disruption($wp_customize)
     $wp_customize->add_control(
         'home_disruption_second_title',
         array(
-            'label' => 'Home Disruption Second Title',
+            'label' => 'Second Title',
             'section' => 'home_disruption_section', // Chọn section mới
             'type' => 'text',
         )
@@ -795,7 +807,7 @@ function customizer_settings_disruption($wp_customize)
     $wp_customize->add_control(
         'home_disruption_second_content',
         array(
-            'label' => 'Home Disruption Second Content',
+            'label' => 'Second Content',
             'section' => 'home_disruption_section', // Chọn section mới
             'type' => 'text',
         )
@@ -806,7 +818,7 @@ function customizer_settings_disruption($wp_customize)
         'home_disruption_second_link',
         array(
             'default' => '',
-            'sanitize_callback' => 'wp_kses_post',
+            'sanitize_callback' => 'sanitize_text_field',
         )
     );
 
@@ -814,9 +826,9 @@ function customizer_settings_disruption($wp_customize)
     $wp_customize->add_control(
         'home_disruption_second_link',
         array(
-            'label' => 'Home Disruption Second Link',
+            'label' => 'Second Button Name',
             'section' => 'home_disruption_section', // Chọn section mới
-            'type' => 'textarea',
+            'type' => 'text',
         )
     );
 }
@@ -828,8 +840,8 @@ function customizer_settings_pirates($wp_customize)
     $wp_customize->add_section(
         'home_pirates_section',
         array(
-            'title' => 'Home Pirates', // Title của section
-            'priority' => 30,
+            'title' => 'Pirates Section', // Title của section
+            'priority' => 32,
         )
     );
 
@@ -846,7 +858,7 @@ function customizer_settings_pirates($wp_customize)
     $wp_customize->add_control(
         'home_pirates_title',
         array(
-            'label' => 'Home Disruption First Title',
+            'label' => 'Title',
             'section' => 'home_pirates_section', // Chọn section mới
             'type' => 'text',
         )
@@ -863,7 +875,7 @@ function customizer_settings_pirates($wp_customize)
     $wp_customize->add_control(
         'home_pirates_content',
         array(
-            'label' => 'Home Disruption First Content',
+            'label' => 'Content',
             'section' => 'home_pirates_section', // Chọn section mới
             'type' => 'text',
         )
@@ -874,7 +886,7 @@ function customizer_settings_pirates($wp_customize)
         'home_pirates_link',
         array(
             'default' => '',
-            'sanitize_callback' => 'wp_kses_post',
+            'sanitize_callback' => 'sanitize_text_field',
         )
     );
 
@@ -882,9 +894,9 @@ function customizer_settings_pirates($wp_customize)
     $wp_customize->add_control(
         'home_pirates_link',
         array(
-            'label' => 'Home Pirates Link',
+            'label' => 'Pirates Link',
             'section' => 'home_pirates_section', // Chọn section mới
-            'type' => 'textarea',
+            'type' => 'text',
         )
     );
 
@@ -916,8 +928,8 @@ function customizer_settings_work($wp_customize)
     $wp_customize->add_section(
         'home_work_section',
         array(
-            'title' => 'Home Work', // Title của section
-            'priority' => 30,
+            'title' => 'Work Section', // Title của section
+            'priority' => 31,
         )
     );
 
@@ -934,7 +946,7 @@ function customizer_settings_work($wp_customize)
     $wp_customize->add_control(
         'home_work_title',
         array(
-            'label' => 'Home Work Title',
+            'label' => 'Title',
             'section' => 'home_work_section', // Chọn section mới
             'type' => 'text',
         )
@@ -953,7 +965,25 @@ function customizer_settings_work($wp_customize)
     $wp_customize->add_control(
         'home_work_content',
         array(
-            'label' => 'Home Work Content',
+            'label' => 'Content',
+            'section' => 'home_work_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'home_work_link_name',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_pirates_section'
+    $wp_customize->add_control(
+        'home_work_link_name',
+        array(
+            'label' => 'Button Name',
             'section' => 'home_work_section', // Chọn section mới
             'type' => 'text',
         )
@@ -967,7 +997,7 @@ function custom_extra_information($wp_customize)
     $wp_customize->add_section(
         'extra_data',
         array(
-            'title' => __('Footer', 'textdomain'),
+            'title' => __('Contact & Address', 'textdomain'),
             'priority' => 200,
         )
     );
@@ -1267,7 +1297,7 @@ function home_slider_customize($wp_customize)
     $wp_customize->add_section(
         'slider_video_section',
         array(
-            'title' => __('Home Slider', 'theme'),
+            'title' => __('Banner Videos', 'theme'),
             'capability' => 'edit_theme_options'
         )
     );
@@ -1303,7 +1333,7 @@ function home_slider_customize($wp_customize)
     $wp_customize->add_control(
         'slider_video_culture_url',
         array(
-            'label' => 'Slider Video Our Work Url',
+            'label' => 'Video Url - Our Culture',
             'section' => 'slider_video_section',
             'type' => 'text',
         )
@@ -1319,7 +1349,7 @@ function home_slider_customize($wp_customize)
     $wp_customize->add_control(
         'slider_video_culture_button',
         array(
-            'label' => 'Text Button Slider Video Our Work',
+            'label' => 'Button name - Our Culture',
             'section' => 'slider_video_section',
             'type' => 'text',
         )
@@ -1335,7 +1365,7 @@ function home_slider_customize($wp_customize)
     $wp_customize->add_control(
         'slider_video_disruption_url',
         array(
-            'label' => 'Slider Video Disruption Url',
+            'label' => 'Video Url - Disruption',
             'section' => 'slider_video_section',
             'type' => 'text',
         )
@@ -1351,7 +1381,7 @@ function home_slider_customize($wp_customize)
     $wp_customize->add_control(
         'slider_video_disruption_button',
         array(
-            'label' => 'Text Button Slider Video Disruption',
+            'label' => 'Button name - Disruption',
             'section' => 'slider_video_section',
             'type' => 'text',
         )
@@ -1367,7 +1397,7 @@ function home_slider_customize($wp_customize)
     $wp_customize->add_control(
         'slider_video_software_url',
         array(
-            'label' => 'Slider Video Our Software Url',
+            'label' => 'Video Url - Our Software',
             'section' => 'slider_video_section',
             'type' => 'text',
         )
@@ -1383,7 +1413,7 @@ function home_slider_customize($wp_customize)
     $wp_customize->add_control(
         'slider_video_software_button',
         array(
-            'label' => 'Text Button Slider Video Our Software',
+            'label' => 'Button name - Our Software',
             'section' => 'slider_video_section',
             'type' => 'text',
         )
@@ -1399,7 +1429,7 @@ function home_slider_customize($wp_customize)
     $wp_customize->add_control(
         'slider_video_work_url',
         array(
-            'label' => 'Slider Video Our Work Url',
+            'label' => 'Video Url - Our Work',
             'section' => 'slider_video_section',
             'type' => 'text',
         )
@@ -1415,7 +1445,7 @@ function home_slider_customize($wp_customize)
     $wp_customize->add_control(
         'slider_video_work_button',
         array(
-            'label' => 'Text Button Slider Video Our Work',
+            'label' => 'Button name - Our Work',
             'section' => 'slider_video_section',
             'type' => 'text',
         )
@@ -1431,7 +1461,7 @@ function home_slider_customize($wp_customize)
     $wp_customize->add_control(
         'slider_video_pirate_url',
         array(
-            'label' => 'Slider Video Our Pirate Url',
+            'label' => 'Video Url - Pirates',
             'section' => 'slider_video_section',
             'type' => 'text',
         )
@@ -1447,7 +1477,7 @@ function home_slider_customize($wp_customize)
     $wp_customize->add_control(
         'slider_video_pirate_button',
         array(
-            'label' => 'Text Button Slider Video Our Pirate',
+            'label' => 'Button name - Pirates',
             'section' => 'slider_video_section',
             'type' => 'text',
         )
@@ -1918,12 +1948,6 @@ function render_custom_meta_box_for_word_category($post)
 
 function render_custom_meta_box_for_news_category($post)
 {
-    $date_value = get_post_meta($post->ID, 'date', true);
-    ?>
-    <label for="date">Choose your date</label>
-    <input style="width: 100%" type="text" name="date" id="date" value="<?php echo esc_attr($date_value); ?>">
-    <?php
-
     $location = get_post_meta($post->ID, 'location', true);
     ?>
     <label for="location">Choose your location</label>
@@ -1952,11 +1976,6 @@ function save_custom_meta_box_values($post_id)
 
     if (isset($_POST['hero_vimeo_id'])) {
         update_post_meta($post_id, 'hero_vimeo_id', sanitize_text_field($_POST['hero_vimeo_id']));
-    }
-
-    // Lưu giá trị của trường tùy chỉnh cho danh mục "News"
-    if (isset($_POST['date'])) {
-        update_post_meta($post_id, 'date', sanitize_text_field($_POST['date']));
     }
 
     if (isset($_POST['location'])) {

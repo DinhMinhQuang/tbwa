@@ -16,7 +16,7 @@
 
 <body class="light ">
     <?php get_header(); ?>
-    <?php get_template_part( 'cookie-notice' ); ?>
+    <?php get_template_part('cookie-notice'); ?>
     <?php
     $post_slug = get_post_field('post_name', get_post());
     $post = get_page_by_path($post_slug, OBJECT, 'post');
@@ -37,7 +37,7 @@
                         <?php echo get_post_meta($post->ID, 'location', true); ?>
                     </h2>
                     <h3 class="date">
-                        <?php echo get_post_meta($post->ID, 'date', true); ?>
+                        <?php echo get_the_time('F d, Y'); ?>
                     </h3>
                 </div>
             </div>

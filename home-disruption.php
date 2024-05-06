@@ -8,7 +8,9 @@
                 <div class="slanted-block">
                     <?php echo get_theme_mod('home_disruption_first_content', ''); ?>
                 </div>
-                <?php echo wp_kses_post(get_theme_mod('home_disruption_first_link', '')); ?>
+                <a href="https://www.tbwa.com.vn/disruption">
+                    <?php echo get_theme_mod('home_disruption_first_link', ''); ?>
+                </a>
             </div>
         </div>
         <!--/.columns-->
@@ -45,7 +47,8 @@
                         <div class="small-offset-1 small-10 large-7 columns">
                             <div class="darken-image">
                                 <a href="<?php the_permalink(); ?>" class="scale">
-                                    <img src="<?php echo wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_front_field', true)); ?>">
+                                    <img
+                                        src="<?php echo wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_front_field', true)); ?>">
                                 </a>
                             </div>
                         </div>
@@ -61,8 +64,7 @@
                                     <h4 class="client">
                                         <?php echo get_post_meta(get_the_ID(), 'client', true); ?>
                                         <h5 class="agency"></h5>
-                                        <img src="/wp-content/themes/tbwa/assets/images/arrow_white.svg"
-                                            class="arrow">
+                                        <img src="/wp-content/themes/tbwa/assets/images/arrow_white.svg" class="arrow">
                                 </a>
                             </div>
                         </div>
@@ -87,7 +89,8 @@
                 <div class="slanted-block">
                     <?php echo get_theme_mod('home_disruption_second_content', ''); ?>
                 </div>
-                <?php echo wp_kses_post(get_theme_mod('home_disruption_second_link', '')); ?>
+                <a href="https://www.tbwa.com.vn/disruption#methods">
+                    <?php echo get_theme_mod('home_disruption_second_link', ''); ?>
                 </a>
             </div>
         </div>
