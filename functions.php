@@ -894,7 +894,7 @@ function customizer_settings_pirates($wp_customize)
     $wp_customize->add_control(
         'home_pirates_link',
         array(
-            'label' => 'Pirates Link',
+            'label' => 'Button Name',
             'section' => 'home_pirates_section', // Chọn section mới
             'type' => 'text',
         )
