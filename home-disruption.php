@@ -89,9 +89,6 @@
                 <div class="slanted-block">
                     <?php echo get_theme_mod('home_disruption_second_content', ''); ?>
                 </div>
-                <a href="https://www.tbwa.com.vn/disruption#methods">
-                    <?php echo get_theme_mod('home_disruption_second_link', ''); ?>
-                </a>
             </div>
         </div>
         <!--/.columns-->

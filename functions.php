@@ -812,25 +812,6 @@ function customizer_settings_disruption($wp_customize)
             'type' => 'text',
         )
     );
-
-    // Control cho content thứ 2 
-    $wp_customize->add_setting(
-        'home_disruption_second_link',
-        array(
-            'default' => '',
-            'sanitize_callback' => 'sanitize_text_field',
-        )
-    );
-
-    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
-    $wp_customize->add_control(
-        'home_disruption_second_link',
-        array(
-            'label' => 'Second Button Name',
-            'section' => 'home_disruption_section', // Chọn section mới
-            'type' => 'text',
-        )
-    );
 }
 add_action('customize_register', 'customizer_settings_disruption');
 
