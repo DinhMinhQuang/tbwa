@@ -6,10 +6,16 @@
       <article class="video-overlay" id="homepage">
          <div class="vertical-align">
             <h1 class="font-light">
-               <?php $homepage_text_1 = get_theme_mod('homepage_text_line_1', '');
-               $homepage_text_2 = get_theme_mod('homepage_text_line_2', '');
-               $homepage_text_3 = get_theme_mod('homepage_text_line_3', '');
-               $homepage_text_4 = get_theme_mod('homepage_text_line_4', '');
+               <?php
+               $attributes = get_language_attributes('html');
+               preg_match('/lang="([^"]+)"/', $attributes, $matches);
+               $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+               $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : '';
+
+               $homepage_text_1 = get_theme_mod("homepage_text_line_1{$lang_prefix}", '');
+               $homepage_text_2 = get_theme_mod("homepage_text_line_2{$lang_prefix}", '');
+               $homepage_text_3 = get_theme_mod("homepage_text_line_3{$lang_prefix}", '');
+               $homepage_text_4 = get_theme_mod("homepage_text_line_4{$lang_prefix}", '');
 
                echo '<p>' . esc_html($homepage_text_1) . '</p>';
                echo '<p>' . esc_html($homepage_text_2) . '</p>';
@@ -20,8 +26,7 @@
                <h4>Watch</h4>
             </a>
          </div>
-         <img src="/wp-content/themes/tbwa/assets/images/arrow_white.svg" class="down-arrow"
-            alt="Scroll Down">
+         <img src="/wp-content/themes/tbwa/assets/images/arrow_white.svg" class="down-arrow" alt="Scroll Down">
       </article>
       <!--/.video-overlay-->
    </article>

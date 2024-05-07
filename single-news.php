@@ -24,8 +24,7 @@
     <article id="news-article-container" class="bg-light grid-container">
         <div class="row masthead">
             <div class="large-6 columns large-offset-1 medium-offset-1 medium-12">
-                <?php $featured_image_url = get_the_post_thumbnail_url($post->ID, 'full'); ?>
-                <img src="<?php echo esc_url($featured_image_url); ?>" />
+                <img src="<?php echo wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_section_thumbnail_field', true)); ?>" />
             </div>
 
             <div class="large-6 columns end large-offset-0 medium-offset-1 medium-12">

@@ -157,7 +157,19 @@
                 'orderby' => 'date',
                 'order' => 'DESC',
             );
+            if (!empty($lang_prefix)) {
+                $args['meta_query'] = array(
+                    'relation' => 'AND',
+                    array(
+                        'key' => 'language',
+                        'value' => 'vi',
+                        'compare' => '=',
+                        'type' => 'CHAR',
+                    )
+                );
+            }
             $query = new WP_Query($args);
+            var_dump($query);
             $sizes = ["large-6", "large-5", "large-5", "large-6"];
             if ($query->have_posts()) {
                 $totalPosts = $query->found_posts;

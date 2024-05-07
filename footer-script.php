@@ -3,16 +3,22 @@
 </script>
 
 <script>
+  <?php
+  $attributes = get_language_attributes('html');
+  preg_match('/lang="([^"]+)"/', $attributes, $matches);
+  $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+  $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : '';
+  ?>
   var disruptionVideo = "<?php echo get_theme_mod('slider_video_disruption_url'); ?>",
-    disruptionVideoTitle = "<?php echo get_theme_mod('slider_video_disruption_button'); ?>",
+    disruptionVideoTitle = "<?php echo get_theme_mod("slider_video_disruption_button{$lang_prefix}"); ?>",
     softwareVideo = "<?php echo get_theme_mod('slider_video_software_url'); ?>",
-    softwareVideoTitle = "<?php echo get_theme_mod('slider_video_software_button'); ?>",
+    softwareVideoTitle = "<?php echo get_theme_mod("slider_video_software_button{$lang_prefix}"); ?>",
     workVideo = "<?php echo get_theme_mod('slider_video_work_url'); ?>",
-    workVideoTitle = "<?php echo get_theme_mod('slider_video_work_button'); ?>",
+    workVideoTitle = "<?php echo get_theme_mod("slider_video_work_button{$lang_prefix}"); ?>",
     piratesVideo = "<?php echo get_theme_mod('slider_video_pirate_url'); ?>",
-    piratesVideoTitle = "<?php echo get_theme_mod('slider_video_pirate_button'); ?>",
+    piratesVideoTitle = "<?php echo get_theme_mod("slider_video_pirate_button{$lang_prefix}"); ?>",
     peopleAndPlacesVideo = "<?php echo get_theme_mod('slider_video_culture_url'); ?>",
-    peopleAndPlacesVideoTitle = "<?php echo get_theme_mod('slider_video_culture_button'); ?>";
+    peopleAndPlacesVideoTitle = "<?php echo get_theme_mod("slider_video_culture_button{$lang_prefix}"); ?>";
 </script>
 <script type="text/javascript">
   function facebookLogout() {
@@ -55,7 +61,7 @@
     return false
   }
 
-  function cookieIsSet() { 
+  function cookieIsSet() {
     return getCookie('cookieConsent')
   }
   function analyticsIsSet() {
@@ -70,7 +76,8 @@
     elNotice.style.display = 'block'
   }
 
-  function hideNotice() { debugger
+  function hideNotice() {
+    debugger
     elNotice.style.display = 'none'
   }
 

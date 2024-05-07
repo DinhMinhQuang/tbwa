@@ -11,18 +11,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo str_replace(' ##### ', ' ', get_the_title()) ?> - <?php echo get_bloginfo('name'); ?></title>
-	<meta property='og:title' content='<?php echo str_replace(' ##### ', ' ', get_the_title()) ?>'/>
-	<meta property="og:image" content="<?php echo esc_url(get_the_post_thumbnail_url($post->ID, 'full')); ?>" />
+    <meta property='og:title' content='<?php echo str_replace(' ##### ', ' ', get_the_title()) ?>' />
+    <meta property="og:image" content="<?php echo esc_url(get_the_post_thumbnail_url($post->ID, 'full')); ?>" />
     <?php wp_head(); ?>
 </head>
 
 <body class="dark single-article">
     <?php get_header(); ?>
-    <?php get_template_part( 'cookie-notice' ); ?>
-    <?php
-    $post_slug = get_post_field('post_name', get_post());
-    $post = get_page_by_path($post_slug, OBJECT, 'post');
-    ?>
+    <?php get_template_part('cookie-notice'); ?>
     <section id="featured-media">
         <?php $featured_image_url = get_the_post_thumbnail_url($post->ID, 'full'); ?>
         <div class="vid-cover" style="background-image: url('<?php echo esc_url($featured_image_url); ?>');">
@@ -139,7 +135,8 @@
                     <!-- 				<script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
                --> <a target="_blank" href="//www.facebook.com/sharer.php?u=<?php echo get_permalink() ?>"
                         class="fb-share">Share on Facebook</a>
-					<a target="_blank" href="//www.linkedin.com/sharing/share-offsite/?url=<?php echo get_permalink() ?>"
+                    <a target="_blank"
+                        href="//www.linkedin.com/sharing/share-offsite/?url=<?php echo get_permalink() ?>"
                         class="linkedin-share">Share on LinkedIn </a>
                 </div>
             </div>
@@ -159,21 +156,11 @@
                 <div class=" ">
                     <?php
                     // Lấy nội dung của bài viết
-                    $content = get_the_content();
+                    $content = get_post_meta($post->ID, 'custom_editor', true);
 
-                    // Tìm vị trí của dấu '#####'
-                    $start_position = strpos($content, '#####');
+                    // Hiển thị nội dung đã cắt và chỉnh sửa
+                    echo apply_filters('the_content', $content);
 
-                    // Kiểm tra nếu dấu '#####' được tìm thấy
-                    if ($start_position !== false) {
-                        // Cắt chuỗi từ vị trí của dấu '#####' đến cuối chuỗi
-                        $excerpt = substr($content, $start_position + strlen('#####'));
-                        // Hiển thị nội dung đã cắt và chỉnh sửa
-                        echo apply_filters('the_content', $excerpt);
-                    } else {
-                        // Nếu không tìm thấy dấu '#####', hiển thị thông báo
-                        echo "Marker not found in the content";
-                    }
                     ?>
                 </div>
             </div>

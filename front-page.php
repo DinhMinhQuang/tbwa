@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <style class="vjs-styles-defaults">
@@ -24,7 +25,7 @@
   </style>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<title><?php echo get_bloginfo('name'); ?></title>
+  <title><?php echo get_bloginfo('name'); ?></title>
   <meta name="description"
     content="TBWA is The Disruption® Company. Named Adweek’s 2018 Global Agency of the Year, our collective has 11,300 creative minds across 270 offices in 95 countries.">
   <link rel="shortcut icon" href="https://www.tequila.com.vn/img/favicon.ico" type="image/x-icon">
@@ -39,7 +40,6 @@
   <!-- google fonts for language support
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext" rel="stylesheet">
  -->
-
 </head>
 
 <body class="dark homepage">
@@ -56,12 +56,12 @@
     </div>
   </div>
   <?php get_header(); ?>
-  <?php get_template_part( 'index' ); ?>
-  
+  <?php get_template_part('index'); ?>
+
   <!--/#main-container-->
   <?php get_footer(); ?>
 
-  <?php get_template_part( 'footer-script' ); ?>
+  <?php get_template_part('footer-script'); ?>
   <?php
   wp_footer();
   ?>

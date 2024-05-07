@@ -2,11 +2,17 @@
     <div class="row collapse">
         <div class="columns large-7 large-offset-3 medium-8 medium-offset-3 small-12 small-offset-1  end">
             <div class="slanted-container small-no-slant">
+                <?php
+                $attributes = get_language_attributes('html');
+                preg_match('/lang="([^"]+)"/', $attributes, $matches);
+                $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+                $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : '';
+                ?>
                 <h2>
-                    <?php echo get_theme_mod('home_disruption_first_title', ''); ?>
+                    <?php echo get_theme_mod("home_disruption_first_title{$lang_prefix}", ''); ?>
                 </h2>
                 <div class="slanted-block">
-                    <?php echo get_theme_mod('home_disruption_first_content', ''); ?>
+                    <?php echo get_theme_mod("home_disruption_first_content{$lang_prefix}", ''); ?>
                 </div>
                 <a href="https://www.tbwa.com.vn/disruption">
                     <?php echo get_theme_mod('home_disruption_first_link', ''); ?>
@@ -17,11 +23,27 @@
     </div>
     <!--/.row-->
     <?php
+
     $args = array(
         'post_type' => 'post',
         'posts_per_page' => 1,
-        'tag' => 'highlight_home'
+        'category_name' => 'work',
+        'tag' => 'highlight_home',
+        'orderby' => 'modified', 
+        'order' => 'DESC'
     );
+
+    if (!empty($lang_prefix)) {
+        $args['meta_query'] = array(
+            'relation' => 'AND',
+            array(
+                'key' => 'language',
+                'value' => 'vi',
+                'compare' => '=',
+                'type' => 'CHAR',
+            )
+        );
+    }
 
     $highlight_posts = new WP_Query($args);
 
@@ -59,7 +81,7 @@
                             <div class="slanted-container">
                                 <a class="work-title" href="<?php the_permalink(); ?>">
                                     <h3>
-                                        <?php the_title(); ?>
+                                        <?php echo str_replace(' ##### ', ' ', get_the_title()) ?>
                                     </h3>
                                     <h4 class="client">
                                         <?php echo get_post_meta(get_the_ID(), 'client', true); ?>
@@ -84,10 +106,10 @@
             class="columns xlarge-5 xlarge-offset-7 medium-7 large-offset-4 medium-offset-3 small-12 small-offset-1 end">
             <div class="slanted-container small-no-slant">
                 <h2>
-                    <?php echo get_theme_mod('home_disruption_second_title', ''); ?>
+                    <?php echo get_theme_mod("home_disruption_second_title{$lang_prefix}", ''); ?>
                 </h2>
                 <div class="slanted-block">
-                    <?php echo get_theme_mod('home_disruption_second_content', ''); ?>
+                    <?php echo get_theme_mod("home_disruption_second_content{$lang_prefix}", ''); ?>
                 </div>
             </div>
         </div>

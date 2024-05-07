@@ -15,9 +15,15 @@
 
 <body class="dark">
     <?php get_header(); ?>
-	<?php get_template_part('cookie-notice'); ?>
+    <?php get_template_part('cookie-notice'); ?>
 
     <?php
+
+    $attributes = get_language_attributes('html');
+    preg_match('/lang="([^"]+)"/', $attributes, $matches);
+    $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+    $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : '';
+
     $category = get_term_by('slug', 'news', 'category');
     if (!$category)
         echo "Category Not Found";
@@ -30,10 +36,10 @@
                         class="columns xxlarge-offset-5 xlarge-offset-4 xlarge-6 large-offset-3 large-7 medium-offset-2 medium-8 small-offset-1 small-13">
                         <div class="slanted-container small-no-slant">
                             <h1>
-                                <?php echo get_term_meta($category->term_id, 'title_intro', true); ?>
+                                <?php echo get_term_meta($category->term_id, "title_intro{$lang_prefix}", true); ?>
                             </h1>
                             <div class="slanted-block section-intro-copy">
-                                <?php echo get_term_meta($category->term_id, 'description_intro', true); ?>
+                                <?php echo get_term_meta($category->term_id, "description_intro{$lang_prefix}", true); ?>
                             </div>
                         </div>
                     </div>
@@ -49,6 +55,17 @@
                 'orderby' => 'date',
                 'order' => 'DESC',
             );
+            if (!empty($lang_prefix)) {
+                $args['meta_query'] = array(
+                    'relation' => 'AND',
+                    array(
+                        'key' => 'language',
+                        'value' => 'vi',
+                        'compare' => '=',
+                        'type' => 'CHAR',
+                    )
+                );
+            }
             $query = new WP_Query($args);
             $sizes = ["large-6", "large-5", "large-5", "large-6"];
             if ($query->have_posts()) {
@@ -82,14 +99,12 @@
                     }
                     ?>
 
-                    <a href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>"
-					   <?php
+                    <a href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>" <?php
                          $newTab = get_post_meta(get_the_ID(), 'redirectUrl', true);
                          if (!empty($newTab)) {
                              echo "target='_blank'";
                          }
-                         ?>
-					   >
+                         ?>>
                         <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php the_title(); ?>" />
                     </a>
                     <div>

@@ -1,12 +1,18 @@
 <article id="home-work" class="bg-light grid-container">
     <div class="row collapse">
         <div class="columns large-5 large-offset-5 medium-11 small-12 small-offset-1 end">
+            <?php
+            $attributes = get_language_attributes('html');
+            preg_match('/lang="([^"]+)"/', $attributes, $matches);
+            $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+            $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : '';
+            ?>
             <div class="slanted-container small-no-slant">
                 <h2>
-                    <?php echo get_theme_mod('home_work_title', ''); ?>
+                    <?php echo get_theme_mod("home_work_title{$lang_prefix}", ''); ?>
                 </h2>
                 <div class="slanted-block">
-                    <?php echo get_theme_mod('home_work_content', ''); ?>
+                    <?php echo get_theme_mod("home_work_content{$lang_prefix}", ''); ?>
                 </div>
             </div>
             <!--/.slanted-container-->
@@ -16,14 +22,33 @@
     <!--/.row collapse work intro-->
 
     <?php
+
+    $attributes = get_language_attributes('html');
+    preg_match('/lang="([^"]+)"/', $attributes, $matches);
+    $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+    $lang_prefix = ($lang_attribute_value === 'vi_VN') ? 'vietnamese' : '';
+
     $highlight_home = get_term_by('slug', 'highlight_home', 'post_tag')->term_id;
     // WP_Query arguments
     $args = array(
-        'category_name' => 'work', // Replace 'your_category_slug' with the slug of your category
-        'posts_per_page' => -1, // Retrieve all posts in the category
+        'category_name' => 'work',
+        'posts_per_page' => -1,
         'tag' => 'highlight',
-        'tag__not_in' => array($highlight_home) // T
+        'tag__not_in' => array($highlight_home)
     );
+    if (!empty($lang_prefix)) {
+        if (!empty($lang_prefix)) {
+            $args['meta_query'] = array(
+                'relation' => 'AND',
+                array(
+                    'key' => 'language',
+                    'value' => 'vi',
+                    'compare' => '=',
+                    'type' => 'CHAR',
+                )
+            );
+        }
+    }
 
     // The Query
     $the_query = new WP_Query($args);
@@ -94,19 +119,19 @@
                 <?php echo $word ?>
                 <div class="slanted-container">
                     <a class="work-title" href="<?php the_permalink(); ?>">
-                            <?php
-                            $title = get_the_title(get_the_ID());
+                        <?php
+                        $title = get_the_title(get_the_ID());
 
-                            $parts = explode(' ##### ', $title);
-                            foreach ($parts as $part) {
-                                // Loại bỏ các khoảng trắng ở đầu và cuối phần
-                                $part = trim($part);
-                                // Hiển thị thẻ <h1> cho mỗi phần nếu phần không rỗng
-                                if (!empty($part)) {
-                                    echo '<h3>' . $part . '</h3>';
-                                }
+                        $parts = explode(' ##### ', $title);
+                        foreach ($parts as $part) {
+                            // Loại bỏ các khoảng trắng ở đầu và cuối phần
+                            $part = trim($part);
+                            // Hiển thị thẻ <h1> cho mỗi phần nếu phần không rỗng
+                            if (!empty($part)) {
+                                echo '<h3>' . $part . '</h3>';
                             }
-                            ?>
+                        }
+                        ?>
                         <h4 class="client">
                             <?php echo get_post_meta(get_the_ID(), 'client', true); ?>
                         </h4>

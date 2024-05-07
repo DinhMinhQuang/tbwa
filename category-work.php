@@ -20,6 +20,11 @@
     $category = get_term_by('slug', 'work', 'category');
     if (!$category)
         echo "Category Not Found";
+
+    $attributes = get_language_attributes('html');
+    preg_match('/lang="([^"]+)"/', $attributes, $matches);
+    $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+    $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : '';
     ?>
 
     <article id="work-landing" class="bg-light">
@@ -28,8 +33,7 @@
             <div id="work-splash-copy" class="slanted-container small-no-slant">
                 <div id="splash-title" class="slanted-block" style="color:white" ;>
                     <?php
-                    // $category = get_term_by('slug', 'work', 'category');
-                    $banner_title = get_term_meta($category->term_id, 'banner_title', true);
+                    $banner_title = get_term_meta($category->term_id, "banner_title{$lang_prefix}", true);
                     if ($banner_title) {
                         echo $banner_title;
                     } else {
@@ -58,10 +62,10 @@
                     class="columns xxlarge-offset-4 xlarge-offset-3 xlarge-9 large-offset-2 large-10 medium-offset-2 medium-11 small-offset-1 small-13">
                     <div class="slanted-container small-no-slant">
                         <h1>
-                            <?php echo get_term_meta($category->term_id, 'title_intro', true); ?>
+                            <?php echo get_term_meta($category->term_id, "title_intro{$lang_prefix}", true); ?>
                         </h1>
                         <div class="slanted-block section-intro-copy">
-                            <?php echo get_term_meta($category->term_id, 'description_intro', true); ?>
+                            <?php echo get_term_meta($category->term_id, "description_intro{$lang_prefix}", true); ?>
                         </div>
                     </div>
                 </div>
@@ -91,6 +95,18 @@
                 'orderby' => 'date',
                 'order' => 'DESC',
             );
+            if (!empty($lang_prefix)) {
+                $args['meta_query'] = array(
+                    'relation' => 'AND',
+                    array(
+                        'key' => 'language',
+                        'value' => 'vi',
+                        'compare' => '=',
+                        'type' => 'CHAR',
+                    )
+                );
+            }
+
 
 
             $query = new WP_Query($args);

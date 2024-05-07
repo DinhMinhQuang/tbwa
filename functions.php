@@ -40,6 +40,7 @@ function custom_rewrite_rules()
         'index.php?category_name=pirates&paged=$matches[1]',
         'top'
     );
+
 }
 
 // Gọi hàm custom_rewrite_rules khi init
@@ -51,6 +52,8 @@ function hide_post_meta_boxes()
     remove_meta_box('commentsdiv', 'post', 'normal');
     remove_meta_box('postcustom', 'post', 'normal');
     remove_meta_box('commentstatusdiv', 'post', 'normal');
+    remove_meta_box('tagsdiv-post_tag', 'post', 'side');
+    remove_meta_box('postimagediv', 'post', 'side');
 
     remove_meta_box('trackbacksdiv', 'page', 'normal');
     remove_meta_box('commentsdiv', 'page', 'normal');
@@ -287,6 +290,7 @@ class Custom_Walker_Nav_Menu extends Walker_Nav_Menu
         $item_output .= '</a>';
         $item_output .= $args->after;
 
+        // Thêm nội dung của mục menu vào biến $output
         $output .= apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
     }
 }
@@ -389,25 +393,6 @@ function custom_postpage_meta_box()
 
     $post_types = array('post');
     foreach ($post_types as $pt) {
-        add_meta_box(
-            'custom_postpage_meta_box_back',
-            __('Back thumbnail on Homepage (for posts in page Work)', 'textdomain'),
-            'custom_postpage_meta_box_func_1',
-            $pt,
-            'side',
-            'low'
-        );
-
-        // Meta box 2
-        add_meta_box(
-            'custom_postpage_meta_box_front',
-            __('Front thumbnail on Homepage (for posts in page Work)', 'textdomain'),
-            'custom_postpage_meta_box_func_2',
-            $pt,
-            'side',
-            'low'
-        );
-
         // Section Post Thumbnail
         add_meta_box(
             'custom_postpage_meta_box_thumbnail',
@@ -421,9 +406,9 @@ function custom_postpage_meta_box()
     }
 }
 
-function custom_postpage_meta_box_func_1($post, )
+function custom_postpage_meta_box_func_1($post)
 {
-
+    // Hiển thị nội dung của meta box
     $meta_keys = array('meta_box_back_field');
 
     foreach ($meta_keys as $meta_key) {
@@ -487,6 +472,74 @@ function custom_postpage_meta_box_func_1($post, )
     </script>
     <?php wp_nonce_field('custom_postpage_meta_box', 'custom_postpage_meta_box_nonce');
 }
+
+
+function custom_feature_image_box($post)
+{
+    $meta_keys = array('_thumbnail_id');
+
+    foreach ($meta_keys as $meta_key) {
+        $image_meta_val = get_post_thumbnail_id($post->ID);
+        ?>
+        <div class="custom_postpage_wrapper" id="<?php echo $meta_key; ?>_wrapper" style="margin-bottom:20px;">
+            <img onclick="custom_postpage_add_image('<?php echo $meta_key; ?>');"
+                src="<?php echo ($image_meta_val != '' ? wp_get_attachment_image_src($image_meta_val)[0] : ''); ?>"
+                style="width:100%;cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>" alt="">
+            <a class="addimage" style="cursor:pointer;" onclick="custom_postpage_add_image('<?php echo $meta_key; ?>');">
+                <?php _e('Set Banner image', 'textdomain'); ?>
+            </a><br>
+            <a class="removeimage" style="cursor:pointer;display: <?php echo ($image_meta_val != '' ? 'block' : 'none'); ?>"
+                onclick="custom_postpage_remove_image('<?php echo $meta_key; ?>');">
+                <?php _e('Remove Banner image', 'textdomain'); ?>
+            </a>
+            <input type="hidden" name="<?php echo $meta_key; ?>" id="<?php echo $meta_key; ?>"
+                value="<?php echo $image_meta_val; ?>">
+        </div>
+    <?php } ?>
+    <script>
+        function custom_postpage_add_image(key) {
+
+            var $wrapper = jQuery('#' + key + '_wrapper');
+
+            custom_postimage_uploader = wp.media.frames.file_frame = wp.media({
+                title: '<?php _e('select image', 'textdomain'); ?>',
+                button: {
+                    text: '<?php _e('select image', 'textdomain'); ?>'
+                },
+                multiple: false
+            });
+            custom_postimage_uploader.on('select', function () {
+
+                var attachment = custom_postimage_uploader.state().get('selection').first().toJSON();
+                var img_url = attachment['url'];
+                var img_id = attachment['id'];
+                $wrapper.find('input#' + key).val(img_id);
+                $wrapper.find('img').attr('src', img_url);
+                $wrapper.find('img').show();
+                $wrapper.find('a.removeimage').show();
+            });
+            custom_postimage_uploader.on('open', function () {
+                var selection = custom_postimage_uploader.state().get('selection');
+                var selected = $wrapper.find('input#' + key).val();
+                if (selected) {
+                    selection.add(wp.media.attachment(selected));
+                }
+            });
+            custom_postimage_uploader.open();
+            return false;
+        }
+
+        function custom_postpage_remove_image(key) {
+            var $wrapper = jQuery('#' + key + '_wrapper');
+            $wrapper.find('input#' + key).val('');
+            $wrapper.find('img').hide();
+            $wrapper.find('a.removeimage').hide();
+            return false;
+        }
+    </script>
+    <?php wp_nonce_field('custom_postpage_meta_box', 'custom_postpage_meta_box_nonce');
+}
+
 
 function custom_postpage_meta_box_func_2($post)
 {
@@ -631,7 +684,7 @@ function custom_postimage_meta_box_save($post_id)
     }
 
     if (isset($_POST['custom_postpage_meta_box_nonce']) && wp_verify_nonce($_POST['custom_postpage_meta_box_nonce'], 'custom_postpage_meta_box')) {
-        $meta_keys = array('meta_box_back_field', 'meta_box_front_field', 'meta_box_section_thumbnail_field');
+        $meta_keys = array('meta_box_back_field', 'meta_box_front_field', 'meta_box_section_thumbnail_field', '_thumbnail_id');
         foreach ($meta_keys as $meta_key) {
             if (isset($_POST[$meta_key]) && intval($_POST[$meta_key]) != '') {
                 update_post_meta($post_id, $meta_key, intval($_POST[$meta_key]));
@@ -703,6 +756,70 @@ function customizer_settings($wp_customize)
         'homepage_text_line_4',
         array(
             'label' => 'Text on Banner Line 4',
+            'section' => 'title_tagline', // Chọn phần của Customizer để hiển thị control
+            'type' => 'text',
+        )
+    );
+
+    // Phiên bản tiếng việt
+    $wp_customize->add_setting(
+        'homepage_text_line_1_vi',
+        array(
+            'default' => 'We Are',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Hiển thị control cho đoạn văn bản trên trang chủ
+    $wp_customize->add_control(
+        'homepage_text_line_1_vi',
+        array(
+            'label' => 'Text on Banner Line 1 Vietnamese',
+            'section' => 'title_tagline', // Chọn phần của Customizer để hiển thị control
+            'type' => 'text',
+        )
+    );
+    $wp_customize->add_setting(
+        'homepage_text_line_2_vi',
+        array(
+            'default' => 'The',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'homepage_text_line_2_vi',
+        array(
+            'label' => 'Text on Banner Line 2 Vietnamese',
+            'section' => 'title_tagline', // Chọn phần của Customizer để hiển thị control
+            'type' => 'text',
+        )
+    );
+    $wp_customize->add_setting(
+        'homepage_text_line_3_vi',
+        array(
+            'default' => 'Disruption®',
+            'sanitize_callback' => 'wp_kses_post',
+        )
+    );
+    $wp_customize->add_control(
+        'homepage_text_line_3_vi',
+        array(
+            'label' => 'Text on Banner Line 3 Vietnamese',
+            'section' => 'title_tagline', // Chọn phần của Customizer để hiển thị control
+            'type' => 'text',
+        )
+    );
+    $wp_customize->add_setting(
+        'homepage_text_line_4_vi',
+        array(
+            'default' => 'Company',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'homepage_text_line_4_vi',
+        array(
+            'label' => 'Text on Banner Line 4 Vietnamese',
             'section' => 'title_tagline', // Chọn phần của Customizer để hiển thị control
             'type' => 'text',
         )
@@ -812,8 +929,141 @@ function customizer_settings_disruption($wp_customize)
             'type' => 'text',
         )
     );
+
+    // Control cho content thứ 2 
+    $wp_customize->add_setting(
+        'home_disruption_second_link',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'wp_kses_post',
+        )
+    );
+
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_disruption_second_link',
+        array(
+            'label' => 'Home Disruption Second Link',
+            'section' => 'home_disruption_section', // Chọn section mới
+            'type' => 'textarea',
+        )
+    );
+
+
+    $wp_customize->add_setting(
+        'home_disruption_first_title_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_disruption_first_title_vi',
+        array(
+            'label' => 'Home Disruption First Title Vietnamese',
+            'section' => 'home_disruption_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'home_disruption_first_content_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_disruption_first_content_vi',
+        array(
+            'label' => 'Home Disruption First Content Vietnamese',
+            'section' => 'home_disruption_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+
+    $wp_customize->add_setting(
+        'home_disruption_first_link_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'wp_kses_post',
+        )
+    );
+
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_disruption_first_link_vi',
+        array(
+            'label' => 'Home Disruption First Link Vietnamese',
+            'section' => 'home_disruption_section', // Chọn section mới
+            'type' => 'textarea',
+        )
+    );
+
+
+    $wp_customize->add_setting(
+        'home_disruption_second_title_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_disruption_second_title_vi',
+        array(
+            'label' => 'Home Disruption Second Title Vietnamese',
+            'section' => 'home_disruption_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'home_disruption_second_content_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_disruption_second_content_vi',
+        array(
+            'label' => 'Home Disruption Second Content Vietnamese',
+            'section' => 'home_disruption_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+    // Control cho content thứ 2 
+    $wp_customize->add_setting(
+        'home_disruption_second_link_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'wp_kses_post',
+        )
+    );
+
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_disruption_second_link_vi',
+        array(
+            'label' => 'Home Disruption Second Link Vietnamese',
+            'section' => 'home_disruption_section', // Chọn section mới
+            'type' => 'textarea',
+        )
+    );
 }
 add_action('customize_register', 'customizer_settings_disruption');
+
+
 
 function customizer_settings_pirates($wp_customize)
 {
@@ -878,6 +1128,60 @@ function customizer_settings_pirates($wp_customize)
             'label' => 'Button Name',
             'section' => 'home_pirates_section', // Chọn section mới
             'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'home_pirates_title_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_pirates_section'
+    $wp_customize->add_control(
+        'home_pirates_title_vi',
+        array(
+            'label' => 'Home Pirates First Title Vietnamese',
+            'section' => 'home_pirates_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'home_pirates_content_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    $wp_customize->add_control(
+        'home_pirates_content_vi',
+        array(
+            'label' => 'Home Pirates First Content Vietnamese',
+            'section' => 'home_pirates_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+
+    $wp_customize->add_setting(
+        'home_pirates_link_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'wp_kses_post',
+        )
+    );
+
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_disruption_section'
+    $wp_customize->add_control(
+        'home_pirates_link_vi',
+        array(
+            'label' => 'Home Pirates Link Vietnamese',
+            'section' => 'home_pirates_section', // Chọn section mới
+            'type' => 'textarea',
         )
     );
 
@@ -971,6 +1275,49 @@ function customizer_settings_work($wp_customize)
     );
 }
 add_action('customize_register', 'customizer_settings_work');
+
+function customizer_settings_work_vi($wp_customize)
+{
+    // Thiết lập trường tiếng việt cho home work
+    $wp_customize->add_setting(
+        'home_work_title_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_pirates_section'
+    $wp_customize->add_control(
+        'home_work_title_vi',
+        array(
+            'label' => 'Home Work Title Vietnamese',
+            'section' => 'home_work_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+
+    // Thêm thiết lập cho Content "Home Disruption"
+    $wp_customize->add_setting(
+        'home_work_content_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+
+    // Thêm control cho Content "Home Disruption" và đặt trong section 'home_pirates_section'
+    $wp_customize->add_control(
+        'home_work_content_vi',
+        array(
+            'label' => 'Home Work Content Vietnamese',
+            'section' => 'home_work_section', // Chọn section mới
+            'type' => 'text',
+        )
+    );
+}
+add_action('customize_register', 'customizer_settings_work_vi');
+
 
 function custom_extra_information($wp_customize)
 {
@@ -1337,6 +1684,22 @@ function home_slider_customize($wp_customize)
     );
 
     $wp_customize->add_setting(
+        'slider_video_culture_button_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_culture_button_vi',
+        array(
+            'label' => 'Text Button Slider Video Our Work Vietnamese',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
         'slider_video_disruption_url',
         array(
             'default' => '',
@@ -1369,6 +1732,23 @@ function home_slider_customize($wp_customize)
     );
 
     $wp_customize->add_setting(
+        'slider_video_disruption_button_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_disruption_button_vi',
+        array(
+            'label' => 'Text Button Slider Video Disruption Vietnamese',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+
+    $wp_customize->add_setting(
         'slider_video_software_url',
         array(
             'default' => '',
@@ -1395,6 +1775,22 @@ function home_slider_customize($wp_customize)
         'slider_video_software_button',
         array(
             'label' => 'Button name - Our Software',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'slider_video_software_button_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_software_button_vi',
+        array(
+            'label' => 'Text Button Slider Video Our Software Vietnamese',
             'section' => 'slider_video_section',
             'type' => 'text',
         )
@@ -1433,6 +1829,22 @@ function home_slider_customize($wp_customize)
     );
 
     $wp_customize->add_setting(
+        'slider_video_work_button_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_work_button_vi',
+        array(
+            'label' => 'Text Button Slider Video Our Work Vietnamese',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
         'slider_video_pirate_url',
         array(
             'default' => '',
@@ -1459,6 +1871,22 @@ function home_slider_customize($wp_customize)
         'slider_video_pirate_button',
         array(
             'label' => 'Button name - Pirates',
+            'section' => 'slider_video_section',
+            'type' => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'slider_video_pirate_button_vi',
+        array(
+            'default' => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'slider_video_pirate_button_vi',
+        array(
+            'label' => 'Text Button Slider Video Our Pirate Vietnamese',
             'section' => 'slider_video_section',
             'type' => 'text',
         )
@@ -1803,6 +2231,9 @@ function custom_category_fields($term)
     $field1_value = get_term_meta($term->term_id, 'banner_title', true);
     $field2_value = get_term_meta($term->term_id, 'title_intro', true);
     $field3_value = get_term_meta($term->term_id, 'description_intro', true);
+    $banner_title_vi = get_term_meta($term->term_id, 'banner_title_vi', true);
+    $title_intro_vi = get_term_meta($term->term_id, 'title_intro_vi', true);
+    $description_intro_vi = get_term_meta($term->term_id, 'description_intro_vi', true);
     $image_url = get_term_meta($term->term_id, 'banner_image', true);
     ?>
     <tr class="form-field">
@@ -1824,6 +2255,29 @@ function custom_category_fields($term)
         <td>
             <textarea name="description_intro" id="description_intro"
                 rows="5"><?php echo esc_textarea($field3_value); ?></textarea>
+            <p class="description">Enter description intro for work list.</p>
+        </td>
+    </tr>
+    <tr class="form-field">
+        <th scope="row"><label for="banner_title_vi">Banner Title Vietnamese</label></th>
+        <td>
+            <input type="text" name="banner_title_vi" id="banner_title_vi"
+                value="<?php echo esc_attr($banner_title_vi); ?>" />
+            <p class="description">Banner Title.</p>
+        </td>
+    </tr>
+    <tr class="form-field">
+        <th scope="row"><label for="title_intro_vi">Title Intro Vietnamese</label></th>
+        <td>
+            <input type="text" name="title_intro_vi" id="title_intro_vi" value="<?php echo esc_attr($title_intro_vi); ?>" />
+            <p class="description">Enter title intro for work list.</p>
+        </td>
+    </tr>
+    <tr class="form-field">
+        <th scope="row"><label for="description_intro_vi">Description Intro Vietnamese</label></th>
+        <td>
+            <textarea name="description_intro_vi" id="description_intro_vi"
+                rows="5"><?php echo esc_textarea($description_intro_vi); ?></textarea>
             <p class="description">Enter description intro for work list.</p>
         </td>
     </tr>
@@ -1855,24 +2309,28 @@ add_action('edit_category_form_fields', 'custom_category_fields');
 // Hàm sẽ được gọi khi bạn lưu danh mục
 function save_custom_category_fields($term_id)
 {
-    if (isset($_POST['banner_title'])) {
-        // Lưu giá trị của trường 1
-        update_term_meta($term_id, 'banner_title', wp_kses_post($_POST['banner_title']));
-    }
-    if (isset($_POST['title_intro'])) {
-        // Lưu giá trị của trường 2
-        update_term_meta($term_id, 'title_intro', sanitize_text_field($_POST['title_intro']));
-    }
-    if (isset($_POST['description_intro'])) {
-        // Lưu giá trị của trường 3
-        update_term_meta($term_id, 'description_intro', wp_kses_post($_POST['description_intro']));
-    }
-    if (isset($_POST['banner_image'])) {
-        // Lưu URL của ảnh
-        update_term_meta($term_id, 'banner_image', esc_url_raw($_POST['banner_image']));
+    // Mảng chứa tên của các trường và loại dữ liệu tương ứng
+    $fields = array(
+        'banner_title' => 'wp_kses_post',
+        'title_intro' => 'sanitize_text_field',
+        'description_intro' => 'wp_kses_post',
+        'banner_title_vi' => 'wp_kses_post',
+        'title_intro_vi' => 'sanitize_text_field',
+        'description_intro_vi' => 'wp_kses_post',
+        'banner_image' => 'esc_url_raw'
+    );
+
+    // Duyệt qua mảng các trường để lưu dữ liệu
+    foreach ($fields as $field_name => $sanitize_callback) {
+        if (isset($_POST[$field_name])) {
+            // Lưu giá trị của trường
+            $value = call_user_func($sanitize_callback, $_POST[$field_name]);
+            update_term_meta($term_id, $field_name, $value);
+        }
     }
 }
 add_action('edited_category', 'save_custom_category_fields');
+
 /* Classic Editor Pages Posts */
 add_filter('use_block_editor_for_post', '__return_false');
 
@@ -1887,18 +2345,66 @@ function custom_excerpt_label($translated_text, $text, $domain)
 }
 add_filter('gettext', 'custom_excerpt_label', 20, 3);
 
-function custom_admin_featured_image_label()
+function custom_script_for_work()
 {
-    global $post_type;
+    ?>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            // Kiểm tra khi trang được tải
+            checkWorkCategory();
+            checkNewsCategory();
 
-    // Chỉ thực hiện đối với post type là post
-    if ($post_type === 'post') {
-        // Thay đổi label của trường Feature Image
-        remove_meta_box('postimagediv', 'post', 'side');
-        add_meta_box('postimagediv', __('Banner image (for posts in page Work)'), 'post_thumbnail_meta_box', 'post', 'side', 'default');
-    }
+            // Kiểm tra khi category thay đổi
+            $('#category-13 input[type="checkbox"]').change(function () {
+                checkWorkCategory();
+            });
+
+            $('#category-14 input[type="checkbox"]').change(function () {
+                checkNewsCategory();
+            });
+
+            $("input[name='post_category\\[\\]']").on("change", function () {
+                // Bỏ chọn tất cả các checkbox category trừ cái được chọn gần nhất
+                $("input[name='post_category\\[\\]']").not(this).removeAttr("checked");
+
+                checkWorkCategory();
+                checkNewsCategory();
+            });
+
+            function checkWorkCategory() {
+                // Kiểm tra xem category "work" có được chọn không
+                let isWorkSelected = $('#category-all input[value="13"]:checked').length > 0;
+
+                // Nếu category "work" được chọn, render meta box
+                if (isWorkSelected) {
+                    // Render meta box
+                    $('#custom_meta_box_for_word_category').show();
+                    $('#custom_editor_meta_box').show();
+                } else {
+                    // Ẩn meta box nếu không có category "work" được chọn
+                    $('#custom_meta_box_for_word_category').hide();
+                    $('#custom_editor_meta_box').hide();
+                }
+            }
+
+            function checkNewsCategory() {
+                // Kiểm tra xem category "news" có được chọn không
+                let isNewsSelected = $('#category-all input[value="14"]:checked').length > 0;
+
+                // Nếu category "news" được chọn, render meta box
+                if (isNewsSelected) {
+                    // Render meta box
+                    $('#custom_meta_box_for_news_category').show();
+                } else {
+                    // Ẩn meta box nếu không có category "news" được chọn
+                    $('#custom_meta_box_for_news_category').hide();
+                }
+            }
+        });
+    </script>
+    <?php
 }
-add_action('do_meta_boxes', 'custom_admin_featured_image_label');
+add_action('admin_footer', 'custom_script_for_work');
 
 function add_custom_meta_boxes_based_on_category($post_type, $post)
 {
@@ -1925,7 +2431,126 @@ function render_custom_meta_box_for_word_category($post)
     <input style="width: 100%" type="text" name="hero_vimeo_id" id="hero_vimeo_id"
         value="<?php echo esc_attr($heroVimeoId); ?>">
     <?php
+
+    ?>
+    <div id="custom_meta_box_feature_image" class="postbox" style="margin-top: 20px;">
+        <h2 class="hndle">Banner image</h2>
+        <div class="inside">
+            <div class="meta-box-item-content">
+                <?php custom_feature_image_box($post); ?>
+            </div>
+        </div>
+    </div>
+    <?php
+
+    $highlight = ''; // Khởi tạo biến $highlight để lưu giá trị checkbox
+    $highlight_home = '';
+    $tags = get_the_tags($post->ID);
+
+    // Kiểm tra xem tag 'highlight_home' có trong danh sách các tag không
+    if ($tags && is_array($tags)) {
+        foreach ($tags as $tag) {
+            if ($tag->name === 'highlight') {
+                $highlight = 'highlight';
+            }
+            if ($tag->name === 'highlight_home') {
+                $highlight_home = 'highlight_home';
+            }
+        }
+    }
+
+    ?>
+    <fieldset>
+        <div>
+            <input type="checkbox" name="highlight_home" id="highlight_home" value="highlight_home"
+                style="display: inline-block; vertical-align: middle;  margin: 0.1rem;" <?php checked($highlight_home, 'highlight_home') ?>>
+            <label for="highlight_home" style="display: inline-block; vertical-align: middle;">Show first on
+                Homepage</label>
+        </div>
+        <?php
+
+        ?>
+        </br>
+        <div>
+            <input type="checkbox" name="highlight" id="highlight" value="highlight"
+                style="display: inline-block; vertical-align: middle;  margin: 0.1rem;" <?php checked($highlight, 'highlight'); ?>>
+            <label for="highlight" style="display: inline-block; vertical-align: middle;">Show on Homepage</label>
+        </div>
+        <?php
+
+        ?>
+        <div id="custom_meta_box_back_thumbnail" class="postbox"
+            style="margin-top: 20px; <?php echo ($highlight_home == 'highlight_home' ? 'display: block;' : 'display: none;'); ?>">
+            <h2 class="hndle">Back thumbnail on Homepage</h2>
+            <div class="inside">
+                <div class="meta-box-item-content">
+                    <?php custom_postpage_meta_box_func_1($post); ?>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <?php
+
+    ?>
+    <div id="custom_meta_box_front_thumbnail" class="postbox"
+        style="margin-top: 20px; <?php echo ($highlight == 'highlight' ? 'display: block;' : 'display: none;'); ?>">
+        <h2 class="hndle">Front thumbnail on Homepage</h2>
+        <div class="inside">
+            <div class="meta-box-item-content">
+                <?php custom_postpage_meta_box_func_2($post); ?>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        jQuery(document).ready(function ($) {
+            $('#highlight_home, #highlight').change(function () {
+                if (!$('#highlight_home').is(':checked') && !$('#highlight').is(':checked')) {
+                    $('#custom_meta_box_back_thumbnail').hide();
+                    $('#custom_meta_box_front_thumbnail').hide();
+                } else {
+                    $('#custom_meta_box_back_thumbnail').show();
+                    $('#custom_meta_box_front_thumbnail').show();
+                }
+            });
+            $('a[href="#category-pop"]').parent().hide();
+        });
+    </script>
+
+    <?php
 }
+
+// Render second editor on cms
+function render_custom_meta_box_editor($post)
+{
+    // Lấy nội dung từ trình soạn thảo nếu có
+    $content = get_post_meta($post->ID, 'custom_editor', true);
+
+    // Thiết lập ID và các thiết lập cho trình soạn thảo
+    $editor_id = 'custom_editor'; // ID của trình soạn thảo
+    $settings = array(
+        'textarea_name' => 'custom_editor', // Tên của trường dữ liệu sẽ lưu nội dung
+    );
+
+    // Hiển thị trình soạn thảo với nội dung được lấy
+    wp_editor($content, $editor_id, $settings);
+}
+
+add_action('add_meta_boxes', 'custom_meta_boxes_for_work_page');
+
+function custom_meta_boxes_for_work_page()
+{
+    $post_type = 'post'; // Đổi post type nếu cần
+    add_meta_box(
+        'custom_editor_meta_box',
+        __('Custom Editor', 'textdomain'),
+        'render_custom_meta_box_editor',
+        $post_type,
+        'normal',
+        'high'
+    );
+}
+// Render second editor on cms
 
 function render_custom_meta_box_for_news_category($post)
 {
@@ -1965,6 +2590,32 @@ function save_custom_meta_box_values($post_id)
     if (isset($_POST['redirectUrl'])) {
         update_post_meta($post_id, 'redirectUrl', sanitize_text_field($_POST['redirectUrl']));
     }
+    if (isset($_POST['custom_editor'])) {
+        // Lưu nội dung từ trình soạn thảo vào trường dữ liệu custom_editor của bài viết
+        update_post_meta($post_id, 'custom_editor', $_POST['custom_editor']);
+    }
+
+    if (isset($_POST['highlight_home'])) {
+        $checkbox_value = sanitize_text_field($_POST['highlight_home']);
+
+        // Nếu checkbox được chọn, thêm tag vào bài viết
+        if ($checkbox_value === 'highlight_home') {
+            wp_set_post_tags($post_id, 'highlight_home', true); // Thay 'custom_tag' bằng tag bạn muốn thêm
+        }
+    } else {
+        wp_remove_object_terms($post_id, 'highlight_home', 'post_tag');
+    }
+
+    if (isset($_POST['highlight'])) {
+        $checkbox_value = sanitize_text_field($_POST['highlight']);
+        // Nếu checkbox được chọn, thêm tag vào bài viết
+        if ($checkbox_value === 'highlight') {
+            wp_set_post_tags($post_id, 'highlight', true); // Thay 'custom_tag' bằng tag bạn muốn thêm
+        }
+    } else {
+        // Nếu checkbox không được chọn, xóa tag khỏi bài viết
+        wp_remove_object_terms($post_id, 'highlight', 'post_tag'); // Thay 'custom_tag' bằng tag bạn muốn xóa
+    }
 }
 add_action('save_post', 'save_custom_meta_box_values');
 
@@ -1977,7 +2628,6 @@ function custom_featured_image_text($content)
     return $content;
 }
 add_filter('admin_post_thumbnail_html', 'custom_featured_image_text');
-
 
 // Xử lý dữ liệu khi nhận request AJAX
 function handle_sortable_items()
@@ -2006,43 +2656,363 @@ function handle_sortable_items()
 }
 add_action('wp_ajax_handle_sortable_items', 'handle_sortable_items');
 
-add_action('admin_footer', function () {
-    global $pagenow;
-    if ($pagenow == 'edit.php' && isset ($_GET['post_type']) && $_GET['post_type'] == 'post' && isset ($_GET['category_name'])) {
-        ?>
-        <script>
-            jQuery(function ($) {
-                $('#the-list').sortable({
-                    update: function (event, ui) {
-                        var itemIds = $(this).sortable('toArray');
-                        const postId = []
-                        var newOrder = {};
-                        $.each(itemIds, function (index, itemId) {
-                            postId.push(itemId.replace('post-', ''));
-                            newOrder[itemId] = index + 1;
-                        });
-                        console.log(postId)
-                        console.log(newOrder)
+function change_cat_meta_box()
+{
+    global $wp_meta_boxes;
+    unset($wp_meta_boxes['post']['side']['core']['categorydiv']);
+    add_meta_box(
+        'categorydiv',
+        __('*Categories'),
+        'post_categories_meta_box',
+        'post',
+        'side',
+        'low'
+    );
+}
 
-                        $.ajax({
-                            url: '<?php echo admin_url('admin-ajax.php'); ?>',
-                            type: 'POST',
-                            data: {
-                                action: 'handle_sortable_items',
-                                item_ids: itemIds,
-                                new_order: newOrder
-                            },
-                            success: function (response) {
-                                console.log(response.data);
-                            },
-                            error: function (xhr, status, error) {
-                                console.error(error);
-                            }
-                        });
-                    }
-                });
-            });
-        </script>
-        <?php
+add_action('add_meta_boxes', 'change_cat_meta_box', 0);
+
+function custom_category_css()
+{
+    ?>
+    <style>
+        #categorydiv h2 {
+            color: #ff0000;
+            /* Thay đổi màu sắc thành màu đỏ */
+        }
+    </style>
+    <?php
+}
+add_action('admin_head', 'custom_category_css');
+
+function add_language_filter_to_posts()
+{
+    global $typenow;
+    if ($typenow == 'post') {
+        $selected = isset($_GET['language']) ? $_GET['language'] : '';
+        $languages = array('vi' => 'Vietnamese', 'en' => 'English'); // Thay đổi giá trị và nhãn tùy theo ngôn ngữ bạn muốn hỗ trợ
+
+        echo '<select name="language">';
+        echo '<option value="">' . __('All Languages') . '</option>';
+        foreach ($languages as $value => $label) {
+            echo '<option value="' . $value . '" ' . selected($selected, $value, false) . '>' . $label . '</option>';
+        }
+        echo '</select>';
     }
-});
+}
+
+function filter_posts_by_language($query)
+{
+    global $pagenow;
+    if (is_admin() && $pagenow == 'edit.php' && isset($_GET['language']) && $_GET['language'] != '') {
+        if ($query->get('post_type') == 'post' || $query->get('post_type') == 'page') {
+            $query->set('meta_key', 'language');
+            $query->set('meta_value', $_GET['language']);
+        }
+    }
+}
+add_action('restrict_manage_posts', 'add_language_filter_to_posts');
+
+add_filter('parse_query', 'filter_posts_by_language');
+
+function remove_comment_column($columns)
+{
+    unset($columns['comments']);
+    return $columns;
+}
+add_filter('manage_posts_columns', 'remove_comment_column');
+
+// modified field
+function add_modified_date_column($columns)
+{
+    $columns['post_modified'] = 'Modified Date';
+    return $columns;
+}
+add_filter('manage_posts_columns', 'add_modified_date_column');
+
+function display_modified_date_column($column_name, $post_id)
+{
+    if ($column_name == 'post_modified') {
+        echo get_the_modified_date('', $post_id);
+    }
+}
+add_action('manage_posts_custom_column', 'display_modified_date_column', 10, 2);
+
+function make_modified_date_column_sortable($columns)
+{
+    $columns['post_modified'] = 'post_modified';
+    return $columns;
+}
+add_filter('manage_edit-post_sortable_columns', 'make_modified_date_column_sortable');
+
+function modify_post_modified_sorting($vars)
+{
+    if (isset($vars['orderby']) && 'post_modified' == $vars['orderby']) {
+        $vars = array_merge(
+            $vars,
+            array(
+                'orderby' => 'modified',
+            )
+        );
+    }
+    return $vars;
+}
+add_filter('request', 'modify_post_modified_sorting');
+
+// modified field
+
+function add_language_column($columns)
+{
+    $columns['language'] = 'Language';
+    return $columns;
+}
+add_filter('manage_posts_columns', 'add_language_column');
+
+function display_language_column($column, $post_id)
+{
+    if ($column == 'language') {
+        $language = get_post_meta($post_id, 'language', true);
+        if ($language === 'vi') {
+            echo "Vietnamese";
+        } else {
+            echo "English";
+        }
+    }
+}
+add_action('manage_posts_custom_column', 'display_language_column', 10, 2);
+
+// Tạo custom field cho ngôn ngữ
+function custom_language_custom_field()
+{
+    add_meta_box(
+        'language',
+        __('Language'),
+        'custom_language_field_callback',
+        'post',
+        'side',
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'custom_language_custom_field');
+
+function custom_language_field_callback($post)
+{
+    $language = get_post_meta($post->ID, 'language', true);
+    ?>
+    <label for="language"><?php _e('Language'); ?></label>
+    <select name="language" id="language">
+        <option value="en" <?php selected($language, 'en'); ?>>English</option>
+        <option value="vi" <?php selected($language, 'vi'); ?>>Vietnamese</option>
+    </select>
+    <?php
+}
+
+function save_custom_language_field($post_id)
+{
+    if (isset($_POST['language'])) {
+        update_post_meta($post_id, 'language', sanitize_text_field($_POST['language']));
+    }
+}
+add_action('save_post', 'save_custom_language_field');
+
+
+// language for page
+function custom_language_custom_field_page()
+{
+    add_meta_box(
+        'language',
+        __('Language'),
+        'custom_language_field_callback',
+        'page',
+        'side',
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'custom_language_custom_field_page');
+
+function add_language_filter_to_pages()
+{
+    global $typenow;
+    if ($typenow == 'page') {
+        $selected = isset($_GET['language']) ? $_GET['language'] : '';
+        $languages = array('vi' => 'Vietnamese', 'en' => 'English'); // Thay đổi giá trị và nhãn tùy theo ngôn ngữ bạn muốn hỗ trợ
+
+        echo '<select name="language">';
+        echo '<option value="">' . __('All Languages') . '</option>';
+        foreach ($languages as $value => $label) {
+            echo '<option value="' . $value . '" ' . selected($selected, $value, false) . '>' . $label . '</option>';
+        }
+        echo '</select>';
+    }
+}
+add_action('restrict_manage_posts', 'add_language_filter_to_pages');
+
+function custom_language_field_callback_page($post)
+{
+    $language = get_post_meta($post->ID, 'language', true);
+    ?>
+    <label for="language"><?php _e('Language'); ?></label>
+    <select name="language" id="language">
+        <option value="en" <?php selected($language, 'en'); ?>>English</option>
+        <option value="vi" <?php selected($language, 'vi'); ?>>Vietnamese</option>
+    </select>
+    <?php
+}
+
+function save_custom_language_field_page($post_id)
+{
+    if (isset($_POST['language'])) {
+        update_post_meta($post_id, 'language', sanitize_text_field($_POST['language']));
+    }
+}
+add_action('save_post', 'save_custom_language_field_page');
+
+function add_filter_page_url($permalink, $post, $leavename)
+{
+    if (get_post_type($post) !== 'page') {
+        return $permalink;
+    }
+
+    $language = get_post_meta($post->ID, 'language', true);
+    if ($language === 'vi') {
+        $title = get_post_field('post_title', $post->ID);
+
+        // Tạo slug từ tiêu đề
+        $slug = sanitize_title($title);
+
+        // Cập nhật permalink
+        $permalink = home_url('/vi/' . $slug);
+        $post_data = array(
+            'ID' => $post->ID,
+            'post_name' => 'vi/' . $slug,
+            'guid' => $permalink,
+        );
+        wp_update_post($post_data);
+
+    }
+    return $permalink;
+}
+add_filter('post_link', 'add_filter_page_url', 10, 3);
+
+function update_permalink_with_language($post_id, $post, $update)
+{
+    // Kiểm tra xem trang này có phải là trang không
+    if (get_post_type($post_id) !== 'page') {
+        return;
+    }
+
+    if ($post->post_status === 'publish' && $post->post_type === 'page') {
+        $language = get_post_meta($post_id, 'language', true);
+        // Kiểm tra nếu language là 'vi'
+        if ($language === 'vi') {
+            // Lấy tiêu đề của trang
+            $title = get_post_field('post_title', $post_id);
+
+            // Tạo slug từ tiêu đề
+            $slug = sanitize_title($title);
+
+            // Cập nhật permalink
+            $permalink = home_url("/vi/{$slug}");
+            $post_data = array(
+                'ID' => $post_id,
+                'post_name' => "vi/{$slug}",
+                'guid' => $permalink,
+            );
+            wp_update_post($post_data);
+        }
+    }
+}
+add_action('save_post', 'update_permalink_with_language', 10, 3);
+
+function custom_rewrite_rule_vi()
+{
+    // Thêm rewrite rule cho các category có tiền tố /vi
+    add_rewrite_rule('^vi/pirates/?$', 'index.php?category_name=pirates', 'top');
+    add_rewrite_rule('^vi/work/?$', 'index.php?category_name=work', 'top');
+    add_rewrite_rule('^vi/news/?$', 'index.php?category_name=news', 'top');
+
+    // Thêm rewrite rule cho các trang bài viết có tiền tố /vi
+    add_rewrite_rule('^vi/([^/]+)/([^/]+)/?$', 'index.php?category_name=$matches[1]&name=$matches[2]', 'top');
+    add_rewrite_rule('^vi/([^/]+)/?$', 'index.php?name=$matches[1]', 'top');
+
+    // Thêm rewrite rule cho URL có tiền tố /vi
+    add_rewrite_rule('^vi/?$', 'index.php', 'top');
+
+    flush_rewrite_rules(); // Cập nhật lại rewrite rules
+}
+add_action('init', 'custom_rewrite_rule_vi');
+
+
+function add_language_and_category_to_permalink($permalink, $post, $leavename)
+{
+    if (get_post_type($post) !== 'post') {
+        return $permalink;
+    }
+
+    $language = get_post_meta($post->ID, 'language', true);
+    if ($language === 'vi') {
+        $categories = get_the_category($post->ID);
+
+        $category_slugs = array();
+
+        foreach ($categories as $category) {
+            $category_slugs[] = $category->slug;
+        }
+
+        $category_slugs_str = implode('/', $category_slugs);
+        $permalink = home_url('/vi/' . $category_slugs_str . '/' . $post->post_name . '/');
+
+    }
+    return $permalink;
+}
+add_filter('post_link', 'add_language_and_category_to_permalink', 10, 3);
+
+function set_custom_permalink_for_vi_posts($post_id, $post, $update)
+{
+    if (get_post_type($post) !== 'post') {
+        return;
+    }
+
+    if (!$update && $post->post_status === 'publish' && $post->post_type === 'post') {
+        $language = get_post_meta($post_id, 'language', true);
+        if ($language === 'vi') {
+            $categories = get_the_category($post_id);
+
+            $category_slugs = array();
+
+            foreach ($categories as $category) {
+                $category_slugs[] = $category->slug;
+            }
+
+            $category_slugs_str = implode('/', $category_slugs);
+            $permalink = home_url('/vi/' . $category_slugs_str . '/' . $post->post_name . '/');
+
+            wp_update_post(
+                array(
+                    'ID' => $post_id,
+                    'post_name' => $category_slugs_str . '/' . $post->post_name,
+                    'guid' => $permalink
+                )
+            );
+
+        }
+    }
+}
+add_action('save_post', 'set_custom_permalink_for_vi_posts', 10, 3);
+
+
+function set_language_in_html_tag($output)
+{
+    // Kiểm tra ngôn ngữ từ URL
+    $current_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $path_parts = explode('/', trim(parse_url($current_url, PHP_URL_PATH), '/'));
+    $language = isset($path_parts[1]) ? $path_parts[1] : '';
+
+    // Nếu ngôn ngữ là tiếng Việt, thêm lang="vi" vào phần tử <html>
+    if ($language === 'vi') {
+        $output = preg_replace('/lang="en-US"/', 'lang="vi_VN"', $output);
+    }
+
+    return $output;
+}
+add_filter('_attributes', 'set_language_in_html_tag');

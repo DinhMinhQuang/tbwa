@@ -37,10 +37,20 @@
             <!-- main menu -->
             <div id="main-menu">
                 <?php
-                wp_nav_menu(
+                $attributes = get_language_attributes('html');
+                preg_match('/lang="([^"]+)"/', $attributes, $matches);
+                $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+                $lang_prefix = ($lang_attribute_value === 'vi_VN') ? 'vietnamese' : '';
+                $menuPrimary = "primary";
+                $menuSecondary = "secondary";
+                if (!empty($lang_prefix)) {
+                    $menuPrimary .= " " . $lang_prefix;
+                    $menuSecondary .= " " . $lang_prefix;
+                }
+                $menu = wp_nav_menu(
                     array(
-                        'menu' => 'primary',
-                        'theme_location' => 'primary',
+                        'menu' => $menuPrimary,
+                        'theme_location' => "primary",
                         'menu_class' => 'menu',
                         'fallback_cb' => false,
                         'walker' => new Custom_Walker_Nav_Menu()
@@ -58,7 +68,7 @@
                             <?php
                             wp_nav_menu(
                                 array(
-                                    'menu' => 'secondary',
+                                    'menu' => $menuSecondary,
                                     'theme_location' => 'secondary',
                                     'container' => 'container',
                                     'menu_class' => 'menu',
@@ -155,9 +165,16 @@
 
 <div id="menu-language-toggle" class="<?php if (is_page() && get_page_template_slug() == 'pages.php') { ?> black <?php } else { ?> white <?php } ?>">
     <ul>
-        <li class="nav__item current"><a href="https://www.tbwa.com.vn/">EN</a></li>
-        <li class="divider"> \ </li>
-        <li class="nav__item "><a href="https://www.tbwa.com.vn/vi/">VI</a></li>
+        <?php
+        if ($lang_prefix) {
+            echo "<li class='nav__item'><a href='/wordpress/'>EN</a></li>";
+            echo "<li class='divider'> \ </li>";
+            echo "<li class='nav__item current'><a href='/wordpress/vi'>VI</a></li>";
+        } else {
+            echo "<li class='nav__item current'><a href='/wordpress/'>EN</a></li>";
+            echo "<li class='divider'> \ </li>";
+            echo "<li class='nav__item'><a href='/wordpress/vi'>VI</a></li>";
+        } ?>
     </ul>
 </div>
 <!--/#menu-language-toggle-->
