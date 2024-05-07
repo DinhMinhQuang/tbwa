@@ -15,7 +15,7 @@
                     <?php echo get_theme_mod("home_disruption_first_content{$lang_prefix}", ''); ?>
                 </div>
                 <a href="https://www.tbwa.com.vn/disruption">
-                    <?php echo get_theme_mod('home_disruption_first_link', ''); ?>
+                    <?php echo get_theme_mod("home_disruption_first_link{$lang_prefix}", ''); ?>
                 </a>
             </div>
         </div>
@@ -29,7 +29,7 @@
         'posts_per_page' => 1,
         'category_name' => 'work',
         'tag' => 'highlight_home',
-        'orderby' => 'modified', 
+        'orderby' => 'modified',
         'order' => 'DESC'
     );
 

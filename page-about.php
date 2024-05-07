@@ -12,26 +12,27 @@
 
 <body class="dark">
     <?php get_header(); ?>
+    <?php get_template_part('cookie-notice'); ?>
     <section id="about-intro">
         <article id="about-splash">
             <div id="headlines">
                 <h1>
-					<?php
-					$about__title = get_post_meta($post->ID, 'about__title', true);
+                    <?php
+                    $about__title = get_post_meta($post->ID, 'about__title', true);
 
-					if (!empty($about__title)) {
-						$parts = explode(' ##### ', $about__title);
+                    if (!empty($about__title)) {
+                        $parts = explode(' ##### ', $about__title);
 
-						foreach ($parts as $part) {
-							$part = trim($part);
-							if (!empty($part)) {
-								echo '<p>' . $part . '</p>';
-							}
-						}
-					} else {
-						echo '<p>' . get_the_title() . '</p>';
-					}
-					?>
+                        foreach ($parts as $part) {
+                            $part = trim($part);
+                            if (!empty($part)) {
+                                echo '<p>' . $part . '</p>';
+                            }
+                        }
+                    } else {
+                        echo '<p>' . get_the_title() . '</p>';
+                    }
+                    ?>
                 </h1>
                 <div class="slanted-button ">
                     <h4 id="about-video-watch">Watch</h4>
@@ -94,22 +95,23 @@
                     'large-2 medium-2 small-4 medium-offset-0',
                     'large-2 medium-2 small-4 medium-offset-0 small-offset-0 end'
                 );
-                
+
                 // Biến để theo dõi vị trí của mỗi div
                 $div_position = 0;
                 echo '<div class="row">';
-                foreach ($attachments as $attachment) {
-                    $count++;
-					$image_url = wp_get_attachment_url($attachment->ID);
-                    //if (strpos($content, $attachment->guid) !== false) { }
+
+                // Thêm mã để lấy hình ảnh từ nội dung
+                preg_match_all('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/', $content, $matches);
+                if (!empty($matches[1])) {
+                    foreach ($matches[1] as $image_url) {
                         // Lấy class cho div hiện tại
                         $current_class = $div_classes[$div_position];
-                
+
                         // In ra div với class tương ứng
                         echo '<div class="columns client ' . $current_class . '">';
                         echo '<img src="' . $image_url . '">';
                         echo '</div>';
-                
+
                         // Tăng vị trí div lên một đơn vị, và nếu vượt quá số lượng class, quay trở lại vị trí đầu tiên
                         $div_position++;
                         if ($div_position >= count($div_classes)) {
@@ -117,11 +119,15 @@
                             echo '<div class="row">';
                             $div_position = 0;
                         }
+                    }
                 }
+
                 if ($div_position != 0) {
                     echo '</div>';
                 }
                 ?>
+
+
             </div>
         </article>
         <!--/#about-clients-->
@@ -142,13 +148,15 @@
                     <h3 class="section-title">Telephone</h3>
                 </div>
                 <div class="large-3 columns medium-14 medium-offset-0 small-14 small-offset-0">
-                    <a class="phone" href="tel:<?php echo esc_html(get_theme_mod('extra_data_phone', '')) ?>"><?php echo esc_html(get_theme_mod('extra_data_phone', '')) ?></a>
+                    <a class="phone"
+                        href="tel:<?php echo esc_html(get_theme_mod('extra_data_phone', '')) ?>"><?php echo esc_html(get_theme_mod('extra_data_phone', '')) ?></a>
                 </div>
                 <div class="large-1 columns medium-14 medium-offset-0 small-14 small-offset-0">
                     <h3 class="section-title">Email</h3>
                 </div>
                 <div class="large-3 columns end medium-14 medium-offset-0 small-14 small-offset-0">
-                    <a class="email" href="mailto:<?php echo esc_html(get_theme_mod('extra_data_email', '')) ?>"><?php echo esc_html(get_theme_mod('extra_data_email', '')) ?></a>
+                    <a class="email"
+                        href="mailto:<?php echo esc_html(get_theme_mod('extra_data_email', '')) ?>"><?php echo esc_html(get_theme_mod('extra_data_email', '')) ?></a>
                 </div>
             </div>
             <!--/.row-->
