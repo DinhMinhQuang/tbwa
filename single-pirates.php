@@ -27,8 +27,8 @@
                 <img src="<?php echo wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_section_thumbnail_field', true)); ?>" />
             </div>
             <div class="large-5 columns leadership-headline">
-                <h1 class="name"><?php echo get_the_title($post->ID) ?></h1>
-                <h2 class="title"><?php echo trim(get_the_excerpt($post->ID)) ?></h2>
+                <h1 class="name"><?php echo the_title(); ?></h1>
+                <h2 class="title"><?php echo trim(the_excerpt()) ?></h2>
                 <!--/.social-handles-->
             </div>
             <!--/.leadership-headline-->

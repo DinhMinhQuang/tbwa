@@ -52,5 +52,12 @@ function save_disruption_meta_box($post_id)
             update_post_meta($post_id, $field, wp_kses_post($_POST[$field]));
         }
     }
+    $pageTemplate = get_post_meta($post_id, '_wp_page_template', true);
+    if ($pageTemplate == 'page-about.php') {
+        update_post_meta($post_id, 'custom_slug', 'about');
+    }
+    if ($pageTemplate == 'page-disruption.php') {
+        update_post_meta($post_id, 'custom_slug', 'disruption');
+    }
 }
 add_action('save_post', 'save_disruption_meta_box');

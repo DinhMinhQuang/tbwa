@@ -395,17 +395,14 @@ function custom_rewrite_rule_vi()
 
     // Thêm rewrite rule cho các trang bài viết có tiền tố /vi
     add_rewrite_rule('^vi/([^/]+)/([^/]+)/?$', 'index.php?category_name=$matches[1]&name=$matches[2]', 'top');
-    add_rewrite_rule('^vi/([^/]+)/?$', 'index.php?name=$matches[1]', 'top');
-
     // Thêm rewrite rule cho URL có tiền tố /vi
     add_rewrite_rule('^vi/?$', 'index.php', 'top');
 
-    add_rewrite_rule('^vi/([^/]+)/?$', 'index.php?pagename=$matches[1]', 'top');
+    add_rewrite_rule('^vi/([^/]+)/?$', 'index.php?pagename=$matches[1]-vn', 'top');
 
     flush_rewrite_rules(); // Cập nhật lại rewrite rules
 }
 add_action('init', 'custom_rewrite_rule_vi');
-
 
 function add_language_and_category_to_permalink($permalink, $post, $leavename)
 {
@@ -436,14 +433,14 @@ function custom_page_permalink($permalink, $post_id, $leavename)
     $page = get_post($post_id);
 
     $language = get_post_meta($post_id, 'language', true);
+    $custom_slug = get_post_meta($post_id, 'custom_slug', true);
     if ($language === 'vi') {
         // Tạo permalink với tiền tố '/vi'
-        $permalink = home_url('/vi/' . $page->post_name . '/');
+        $permalink = home_url('/vi/' . $custom_slug . '/');
     }
     return $permalink;
 }
 add_filter('page_link', 'custom_page_permalink', 10, 3);
-
 
 function set_language_in_html_tag($output)
 {

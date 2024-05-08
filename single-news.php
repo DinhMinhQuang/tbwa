@@ -30,7 +30,7 @@
             <div class="large-6 columns end large-offset-0 medium-offset-1 medium-12">
                 <div class="news-headline">
                     <h1 class="title">
-                        <?php echo get_the_title($post->ID); ?>
+                        <?php echo the_title(); ?>
                     </h1>
                     <h2 class="location">
                         <?php echo get_post_meta($post->ID, 'location', true); ?>
@@ -46,7 +46,7 @@
         <div class="row">
             <div class="columns medium-offset-1 medium-12">
                 <div class="blurb">
-                    <?php echo trim(get_the_excerpt($post->ID)) ?>
+                    <?php echo trim(the_excerpt()) ?>
                 </div>
                 <p></p>
             </div>
