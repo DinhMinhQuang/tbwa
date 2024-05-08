@@ -456,4 +456,4 @@ function set_language_in_html_tag($output)
 
     return $output;
 }
-add_filter('_attributes', 'set_language_in_html_tag');
+add_filter('language_attributes', 'set_language_in_html_tag');
