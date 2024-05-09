@@ -18,6 +18,11 @@
     <?php get_template_part('cookie-notice'); ?>
     <section id="pirates-intro">
         <?php
+        $attributes = get_language_attributes('html');
+        preg_match('/lang="([^"]+)"/', $attributes, $matches);
+        $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+        $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : '';
+
         // Lấy giá trị của 'banner_image' từ danh mục hiện tại
         $banner_image = get_term_meta(get_queried_object()->term_id, 'banner_image', true);
         ?>
@@ -74,8 +79,19 @@
             $args_total = array(
                 'post_type' => 'post',
                 'category_name' => 'pirates',
-                'posts_per_page' => -1, // Lấy tất cả bài post trong category
+                'posts_per_page' => -1 // Lấy tất cả bài post trong category,
             );
+            if (!empty($lang_prefix)) {
+                $args['meta_query'] = array(
+                    'relation' => 'AND',
+                    array(
+                        'key' => 'language',
+                        'value' => 'vi',
+                        'compare' => '=',
+                        'type' => 'CHAR',
+                    )
+                );
+            }
             $query_total = new WP_Query($args_total);
             $total_posts = $query_total->post_count; // Tổng số bài post trong category
             $total_pages = ceil($total_posts / $posts_per_page); // Tính tổng số trang
@@ -169,7 +185,6 @@
                 );
             }
             $query = new WP_Query($args);
-            var_dump($query);
             $sizes = ["large-6", "large-5", "large-5", "large-6"];
             if ($query->have_posts()) {
                 $totalPosts = $query->found_posts;
@@ -208,7 +223,8 @@
                              echo "target='_blank'";
                          }
                          ?>>
-                        <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php the_title(); ?>" />
+                        <img src="<?php echo wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_section_thumbnail_field', true)); ?>"
+                            alt="<?php the_title(); ?>" />
                     </a>
                     <div>
                         <h3 class="entry-date"><?php echo get_post_meta(get_the_ID(), 'date', true); ?></h3>

@@ -17,6 +17,11 @@
     <?php get_header(); ?>
     <?php get_template_part('cookie-notice'); ?>
     <?php
+    $attributes = get_language_attributes('html');
+    preg_match('/lang="([^"]+)"/', $attributes, $matches);
+    $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+    $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : '';
+
     $category = get_term_by('slug', 'work', 'category');
     if (!$category)
         echo "Category Not Found";

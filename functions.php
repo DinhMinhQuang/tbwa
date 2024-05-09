@@ -237,6 +237,12 @@ function tbwa_scripts()
 }
 add_action('wp_enqueue_scripts', 'tbwa_scripts');
 
+function load_custom_wp_admin_style()
+{
+    wp_enqueue_media();
+}
+add_action('admin_enqueue_scripts', 'load_custom_wp_admin_style');
+
 $roots_includes = array(
     'functions/hide-post-meta-post.php',
     'functions/custom-logo-side-identity.php',
