@@ -14,8 +14,13 @@
                 <div class="slanted-block">
                     <?php echo get_theme_mod("home_pirates_content{$lang_prefix}", ''); ?>
                 </div>
-                <a href="https://www.tbwa.com.vn/pirates">
-                    <?php echo get_theme_mod('home_pirates_link', ''); ?>
+                <a href="<?php if ($lang_prefix) {
+                    echo 'https://www.tbwa.com.vn/vi/pirates';
+                } else {
+                    echo 'https://www.tbwa.com.vn/pirates';
+                }
+                ; ?>">
+                    <?php echo get_theme_mod("home_pirates_link{$lang_prefix}", ''); ?>
                 </a>
             </div>
             <!--/.slanted-container-->

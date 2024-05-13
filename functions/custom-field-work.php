@@ -87,10 +87,10 @@ function render_custom_meta_box_for_word_category($post)
     // Kiểm tra xem tag 'highlight_home' có trong danh sách các tag không
     if ($tags && is_array($tags)) {
         foreach ($tags as $tag) {
-            if ($tag->name === 'highlight') {
+            if ($tag->slug === 'highlight') {
                 $highlight = 'highlight';
             }
-            if ($tag->name === 'highlight_home') {
+            if ($tag->slug === 'highlight_home') {
                 $highlight_home = 'highlight_home';
             }
         }
@@ -167,7 +167,7 @@ function custom_script_for_work()
             checkNewsCategory();
 
             // Kiểm tra khi category thay đổi
-            $('#category-12 input[type="checkbox"]').change(function () {
+            $('#category-22 input[type="checkbox"]').change(function () {
                 checkWorkCategory();
             });
 
@@ -185,7 +185,7 @@ function custom_script_for_work()
 
             function checkWorkCategory() {
                 // Kiểm tra xem category "work" có được chọn không
-                let isWorkSelected = $('#category-all input[value="12"]:checked').length > 0;
+                let isWorkSelected = $('#category-all input[value="22"]:checked').length > 0;
 
                 // Nếu category "work" được chọn, render meta box
                 if (isWorkSelected) {

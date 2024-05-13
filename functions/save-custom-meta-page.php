@@ -59,5 +59,8 @@ function save_disruption_meta_box($post_id)
     if ($pageTemplate == 'page-disruption.php') {
         update_post_meta($post_id, 'custom_slug', 'disruption');
     }
+    if ($pageTemplate == 'default') {
+        update_post_meta($post_id, 'custom_slug', get_post_field('post_name', $post_id));
+    }
 }
 add_action('save_post', 'save_disruption_meta_box');

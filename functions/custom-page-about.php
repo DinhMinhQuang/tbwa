@@ -7,9 +7,9 @@ function add_custom_page_about_meta_boxes()
     if (!empty($post)) {
         $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
         if ($pageTemplate == 'page-about.php') {
-            add_meta_box('featured_image_about_meta_box', 'Title and Video About', 'render_page_about_img_featured_meta_box', 'page', 'side', 'default');
-            add_meta_box('company_about_meta_box', 'Module Company About', 'render_content_company_about_meta_box', 'page', 'side', 'default');
-            add_meta_box('our_clients_meta_box', 'Module Our Clients', 'render_content_our_clients_meta_box', 'page', 'side', 'default');
+            add_meta_box('featured_image_about_meta_box', 'Title and Video About', 'render_page_about_img_featured_meta_box', 'page', 'normal', 'default');
+            add_meta_box('company_about_meta_box', 'Module Company About', 'render_content_company_about_meta_box', 'page', 'normal', 'default');
+            add_meta_box('our_clients_meta_box', 'Module Our Clients', 'render_content_our_clients_meta_box', 'page', 'normal', 'default');
         }
     }
 }

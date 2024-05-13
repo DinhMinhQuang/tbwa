@@ -12,10 +12,10 @@
                $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
                $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : '';
 
-               $homepage_text_1 = get_theme_mod("homepage_text_line_1{$lang_prefix}", '');
-               $homepage_text_2 = get_theme_mod("homepage_text_line_2{$lang_prefix}", '');
-               $homepage_text_3 = get_theme_mod("homepage_text_line_3{$lang_prefix}", '');
-               $homepage_text_4 = get_theme_mod("homepage_text_line_4{$lang_prefix}", '');
+               $homepage_text_1 = get_theme_mod("homepage_text_line_1", '');
+               $homepage_text_2 = get_theme_mod("homepage_text_line_2", '');
+               $homepage_text_3 = get_theme_mod("homepage_text_line_3", '');
+               $homepage_text_4 = get_theme_mod("homepage_text_line_4", '');
 
                echo '<p>' . esc_html($homepage_text_1) . '</p>';
                echo '<p>' . esc_html($homepage_text_2) . '</p>';

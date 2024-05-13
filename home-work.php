@@ -23,11 +23,6 @@
 
     <?php
 
-    $attributes = get_language_attributes('html');
-    preg_match('/lang="([^"]+)"/', $attributes, $matches);
-    $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
-    $lang_prefix = ($lang_attribute_value === 'vi_VN') ? 'vietnamese' : '';
-
     $highlight_home = get_term_by('slug', 'highlight_home', 'post_tag')->term_id;
     // WP_Query arguments
     $args = array(
@@ -170,7 +165,15 @@
     <!-- For loop work tags -->
     <div class="row collapse">
         <div class="columns large-5 large-offset-5 medium-5 medium-offset-4 small-9 small-offset-1 end">
-            <a href="/work" class="font-dark section-link">See more of our work</a>
+            <a href="<?php if ($lang_prefix) {
+                echo 'https://www.tbwa.com.vn/vi/work';
+            } else {
+                echo 'https://www.tbwa.com.vn/work';
+            }
+            ; ?>" class="font-dark section-link">
+                <?php
+                echo get_theme_mod("home_work_button_name{$lang_prefix}", ''); ?>
+            </a>
         </div>
     </div>
     <!--/.row collapse-->

@@ -25,11 +25,6 @@
     $category = get_term_by('slug', 'work', 'category');
     if (!$category)
         echo "Category Not Found";
-
-    $attributes = get_language_attributes('html');
-    preg_match('/lang="([^"]+)"/', $attributes, $matches);
-    $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
-    $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : '';
     ?>
 
     <article id="work-landing" class="bg-light">
@@ -100,12 +95,22 @@
                 'orderby' => 'date',
                 'order' => 'DESC',
             );
-            if (!empty($lang_prefix)) {
+            if ($lang_prefix === '_vi') {
                 $args['meta_query'] = array(
                     'relation' => 'AND',
                     array(
                         'key' => 'language',
                         'value' => 'vi',
+                        'compare' => '=',
+                        'type' => 'CHAR',
+                    )
+                );
+            } else {
+                $args['meta_query'] = array(
+                    'relation' => 'AND',
+                    array(
+                        'key' => 'language',
+                        'value' => 'en',
                         'compare' => '=',
                         'type' => 'CHAR',
                     )

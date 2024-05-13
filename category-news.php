@@ -55,12 +55,22 @@
                 'orderby' => 'date',
                 'order' => 'DESC',
             );
-            if (!empty($lang_prefix)) {
+            if ($lang_prefix === '_vi') {
                 $args['meta_query'] = array(
                     'relation' => 'AND',
                     array(
                         'key' => 'language',
                         'value' => 'vi',
+                        'compare' => '=',
+                        'type' => 'CHAR',
+                    )
+                );
+            } else {
+                $args['meta_query'] = array(
+                    'relation' => 'AND',
+                    array(
+                        'key' => 'language',
+                        'value' => 'en',
                         'compare' => '=',
                         'type' => 'CHAR',
                     )
@@ -105,18 +115,16 @@
                              echo "target='_blank'";
                          }
                          ?>>
-                        <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt="<?php the_title(); ?>" />
+                        <img src="<?php echo wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_section_thumbnail_field', true)); ?>" />
                     </a>
                     <div>
                         <h3 class="entry-date"><?php echo get_the_time('F d, Y'); ?></h3>
-                        <a class="entry-headline" href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>"
-						   <?php
-							 $newTab = get_post_meta(get_the_ID(), 'redirectUrl', true);
-							 if (!empty($newTab)) {
-								 echo "target='_blank'";
-							 }
-							 ?>
-						   >
+                        <a class="entry-headline" href="<?php echo $redirectUrl; ?>" alt="<?php the_title(); ?>" <?php
+                             $newTab = get_post_meta(get_the_ID(), 'redirectUrl', true);
+                             if (!empty($newTab)) {
+                                 echo "target='_blank'";
+                             }
+                             ?>>
                             <?php the_title(); ?>
                             <?php
                             $test = get_post_meta(get_the_ID(), 'redirectUrl', true);

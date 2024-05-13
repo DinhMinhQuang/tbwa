@@ -71,11 +71,12 @@ $lang_prefix = ($lang_attribute_value === 'vi_VN') ? 'vietnamese' : '';
       <div class="row">
         <div class="columns large-7 large-offset-0">
           <span class="block inquiries">
+            <?php $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : ''; ?>
             <h3>
-              <?php echo esc_html(get_theme_mod('business_inquiries_first_title', '')) ?>
+              <?php echo esc_html(get_theme_mod("business_inquiries_first_title{$lang_prefix}", '')) ?>
             </h3>
             <p class="name small">
-              <?php echo esc_html(get_theme_mod('business_inquiries_first_name', '')) ?>
+              <?php echo esc_html(get_theme_mod("business_inquiries_first_name{$lang_prefix}", '')) ?>
             </p>
             <a class="email" href="mailto:<?php echo esc_html(get_theme_mod('business_inquiries_first_email', '')) ?>">
               <?php echo esc_html(get_theme_mod('business_inquiries_first_email', '')) ?>
@@ -84,10 +85,10 @@ $lang_prefix = ($lang_attribute_value === 'vi_VN') ? 'vietnamese' : '';
           <!--/.block-->
           <span class="block inquiries">
             <h3>
-              <?php echo esc_html(get_theme_mod('business_inquiries_second_title', '')) ?>
+              <?php echo esc_html(get_theme_mod("business_inquiries_second_title{$lang_prefix}", '')) ?>
             </h3>
             <p class="name small">
-              <?php echo esc_html(get_theme_mod('business_inquiries_second_name', '')) ?>
+              <?php echo esc_html(get_theme_mod("business_inquiries_second_name{$lang_prefix}", '')) ?>
             </p>
 
             <a class="email" href="mailto:<?php echo esc_html(get_theme_mod('business_inquiries_second_email', '')) ?>">
@@ -103,16 +104,16 @@ $lang_prefix = ($lang_attribute_value === 'vi_VN') ? 'vietnamese' : '';
             <p class="small">
             </p>
             <p>
-              <?php echo esc_html(get_theme_mod('extra_data_address_first_line', '')) ?><br>
+              <?php echo esc_html(get_theme_mod("extra_data_address_first_line{$lang_prefix}", '')) ?>
             </p>
             <p>
-              <?php echo esc_html(get_theme_mod('extra_data_address_second_line', '')) ?>
+              <?php echo esc_html(get_theme_mod("extra_data_address_second_line{$lang_prefix}", '')) ?>
             </p>
             <p>
-              <?php echo esc_html(get_theme_mod('extra_data_address_third_line', '')) ?>
+              <?php echo esc_html(get_theme_mod("extra_data_address_third_line{$lang_prefix}", '')) ?>
             </p>
             <p>
-              <?php echo esc_html(get_theme_mod('extra_data_address_fourth_line', '')) ?>
+              <?php echo esc_html(get_theme_mod("extra_data_address_fourth_line{$lang_prefix}", '')) ?>
             </p>
             <p></p>
             <a class="phone" href="tel:<?php echo esc_html(get_theme_mod('extra_data_phone', '')) ?>">

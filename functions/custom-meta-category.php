@@ -15,14 +15,21 @@ function custom_category_fields($term)
         <th scope="row"><label for="banner_title">Banner Title</label></th>
         <td>
             <input type="text" name="banner_title" id="banner_title" value="<?php echo esc_attr($field1_value); ?>" />
-            <p class="description">Banner Title.</p>
+            <p class="description">English.</p>
+            <br>
+            <input type="text" name="banner_title_vi" id="banner_title_vi"
+                value="<?php echo esc_attr($banner_title_vi); ?>" />
+            <p class="description">Vietnamese.</p>
         </td>
     </tr>
     <tr class="form-field">
         <th scope="row"><label for="title_intro">Title Intro</label></th>
         <td>
             <input type="text" name="title_intro" id="title_intro" value="<?php echo esc_attr($field2_value); ?>" />
-            <p class="description">Enter title intro for work list.</p>
+            <p class="description">English.</p>
+            <br>
+            <input type="text" name="title_intro_vi" id="title_intro_vi" value="<?php echo esc_attr($title_intro_vi); ?>" />
+            <p class="description">Vietnamese.</p>
         </td>
     </tr>
     <tr class="form-field">
@@ -30,30 +37,11 @@ function custom_category_fields($term)
         <td>
             <textarea name="description_intro" id="description_intro"
                 rows="5"><?php echo esc_textarea($field3_value); ?></textarea>
-            <p class="description">Enter description intro for work list.</p>
-        </td>
-    </tr>
-    <tr class="form-field">
-        <th scope="row"><label for="banner_title_vi">Banner Title Vietnamese</label></th>
-        <td>
-            <input type="text" name="banner_title_vi" id="banner_title_vi"
-                value="<?php echo esc_attr($banner_title_vi); ?>" />
-            <p class="description">Banner Title.</p>
-        </td>
-    </tr>
-    <tr class="form-field">
-        <th scope="row"><label for="title_intro_vi">Title Intro Vietnamese</label></th>
-        <td>
-            <input type="text" name="title_intro_vi" id="title_intro_vi" value="<?php echo esc_attr($title_intro_vi); ?>" />
-            <p class="description">Enter title intro for work list.</p>
-        </td>
-    </tr>
-    <tr class="form-field">
-        <th scope="row"><label for="description_intro_vi">Description Intro Vietnamese</label></th>
-        <td>
+            <p class="description">English.</p>
+            <br>
             <textarea name="description_intro_vi" id="description_intro_vi"
                 rows="5"><?php echo esc_textarea($description_intro_vi); ?></textarea>
-            <p class="description">Enter description intro for work list.</p>
+            <p class="description">Vietnamese.</p>
         </td>
     </tr>
     <tr class="form-field">
@@ -105,3 +93,24 @@ function save_custom_category_fields($term_id)
     }
 }
 add_action('edited_category', 'save_custom_category_fields');
+
+add_action('admin_head', 'hide_category_fields');
+
+function hide_category_fields()
+{
+    ?>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var descriptionField = document.querySelector('.form-field.term-description-wrap');
+            var parentField = document.querySelector('.form-field.term-parent-wrap');
+            if (descriptionField) {
+                descriptionField.style.display = 'none';
+            }
+            if (parentField) {
+                parentField.style.display = 'none';
+            }
+        });
+    </script>
+    <?php
+}
+

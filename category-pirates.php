@@ -31,7 +31,7 @@
                 <h1>
                     <?php
                     // Lấy giá trị của 'banner_title' từ danh mục hiện tại
-                    $banner_title = get_term_meta(get_queried_object()->term_id, 'banner_title', true);
+                    $banner_title = get_term_meta(get_queried_object()->term_id, "banner_title{$lang_prefix}", true);
                     ?>
                     <?php echo wp_kses_post($banner_title); ?>
                     <p><br></p>
@@ -59,7 +59,7 @@
                     <div class="large-8 large-offset-5 medium-4 medium-offset-5 columns small-offset-1">
                         <h2 class="section-title">
                             <?php
-                            echo get_term_meta(get_queried_object()->term_id, 'title_intro', true);
+                            echo get_term_meta(get_queried_object()->term_id, "title_intro{$lang_prefix}", true);
                             ?>
                         </h2>
                     </div>
@@ -81,12 +81,22 @@
                 'category_name' => 'pirates',
                 'posts_per_page' => -1 // Lấy tất cả bài post trong category,
             );
-            if (!empty($lang_prefix)) {
-                $args['meta_query'] = array(
+            if ($lang_prefix === '_vi') {
+                $args_total['meta_query'] = array(
                     'relation' => 'AND',
                     array(
                         'key' => 'language',
                         'value' => 'vi',
+                        'compare' => '=',
+                        'type' => 'CHAR',
+                    )
+                );
+            } else {
+                $args_total['meta_query'] = array(
+                    'relation' => 'AND',
+                    array(
+                        'key' => 'language',
+                        'value' => 'en',
                         'compare' => '=',
                         'type' => 'CHAR',
                     )
@@ -124,6 +134,27 @@
                             'order' => 'ASC',
                             'offset' => $offset + $i * count($imgSize[$i]) + $j // Vị trí bắt đầu của bài post
                         );
+                        if ($lang_prefix === '_vi') {
+                            $args['meta_query'] = array(
+                                'relation' => 'AND',
+                                array(
+                                    'key' => 'language',
+                                    'value' => 'vi',
+                                    'compare' => '=',
+                                    'type' => 'CHAR',
+                                )
+                            );
+                        } else {
+                            $args['meta_query'] = array(
+                                'relation' => 'AND',
+                                array(
+                                    'key' => 'language',
+                                    'value' => 'en',
+                                    'compare' => '=',
+                                    'type' => 'CHAR',
+                                )
+                            );
+                        }
                         $query = new WP_Query($args);
                         // Kiểm tra xem có bài post nào không
                         if ($query->have_posts()) {
@@ -160,7 +191,11 @@
         <article id="pirates-news" class="bg-dark">
             <div class="row">
                 <div class="large-8 columns  large-offset-5 small-offset-1">
-                    <h2 class="section-title">In the News</h2>
+                    <h2 class="section-title">
+                        <?php
+                        $category = get_term_by('slug', 'news', 'category');
+                        echo get_term_meta($category->term_id, "title_intro{$lang_prefix}", true); ?>
+                    </h2>
                 </div>
             </div>
             <!--/.row-->
@@ -173,12 +208,22 @@
                 'orderby' => 'date',
                 'order' => 'DESC',
             );
-            if (!empty($lang_prefix)) {
+            if ($lang_prefix === '_vi') {
                 $args['meta_query'] = array(
                     'relation' => 'AND',
                     array(
                         'key' => 'language',
                         'value' => 'vi',
+                        'compare' => '=',
+                        'type' => 'CHAR',
+                    )
+                );
+            } else {
+                $args['meta_query'] = array(
+                    'relation' => 'AND',
+                    array(
+                        'key' => 'language',
+                        'value' => 'en',
                         'compare' => '=',
                         'type' => 'CHAR',
                     )

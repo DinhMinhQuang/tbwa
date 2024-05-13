@@ -13,6 +13,12 @@
 <body class="dark">
     <?php get_header(); ?>
     <?php get_template_part('cookie-notice'); ?>
+    <?php 
+        $attributes = get_language_attributes('html');
+        preg_match('/lang="([^"]+)"/', $attributes, $matches);
+        $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+        $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : '';
+    ?>
     <section id="about-intro">
         <article id="about-splash">
             <div id="headlines">
@@ -138,10 +144,11 @@
                 </div>
                 <div class="large-4 columns  medium-offset-0 medium-14 small-14 small-offset-0">
                     <span class="address">
-                        <p><?php echo esc_html(get_theme_mod('extra_data_address_first_line', '')) ?><br></p>
-                        <p><?php echo esc_html(get_theme_mod('extra_data_address_second_line', '')) ?><br></p>
-                        <p><?php echo esc_html(get_theme_mod('extra_data_address_third_line', '')) ?><br></p>
-                        <p> <?php echo esc_html(get_theme_mod('extra_data_address_fourth_line', '')) ?><br></p>
+                        <p><?php echo esc_html(get_theme_mod("extra_data_address_first_line{$lang_prefix}", '')) ?><br>
+                        </p>
+                        <p><?php echo esc_html(get_theme_mod("extra_data_address_second_line{$lang_prefix}", '')) ?><br></p>
+                        <p><?php echo esc_html(get_theme_mod("extra_data_address_third_line{$lang_prefix}", '')) ?><br></p>
+                        <p><?php echo esc_html(get_theme_mod("extra_data_address_fourth_line{$lang_prefix}", '')) ?><br></p>
                     </span>
                 </div>
                 <div class="large-1 columns medium-14 medium-offset-0 small-14 small-offset-0">

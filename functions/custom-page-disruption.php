@@ -7,9 +7,9 @@ function add_custom_meta_boxes()
     if (!empty($post)) {
         $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
         if ($pageTemplate == 'page-disruption.php') {
-            add_meta_box('featured_image_meta_box', 'Banner, Title, Text and Video Disruption', 'render_featured_image_meta_box', 'page', 'side', 'default');
-            add_meta_box('methods_meta_box', 'Module Methods Disruption', 'render_content_methods_meta_box', 'page', 'side', 'default');
-            add_meta_box('about_meta_box', 'Module About Disruption', 'render_content_about_meta_box', 'page', 'side', 'default');
+            add_meta_box('featured_image_meta_box', 'Banner, Title, Text and Video Disruption', 'render_featured_image_meta_box', 'page', 'normal', 'default');
+            add_meta_box('methods_meta_box', 'Module Methods Disruption', 'render_content_methods_meta_box', 'page', 'normal', 'default');
+            add_meta_box('about_meta_box', 'Module About Disruption', 'render_content_about_meta_box', 'page', 'normal', 'default');
         }
     }
 }

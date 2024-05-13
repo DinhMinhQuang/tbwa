@@ -14,7 +14,12 @@
                 <div class="slanted-block">
                     <?php echo get_theme_mod("home_disruption_first_content{$lang_prefix}", ''); ?>
                 </div>
-                <a href="https://www.tbwa.com.vn/disruption">
+                <a href="<?php if ($lang_prefix) {
+                    echo 'https://www.tbwa.com.vn/vi/disruption';
+                } else {
+                    echo 'https://www.tbwa.com.vn/disruption';
+                }
+                ; ?>">
                     <?php echo get_theme_mod("home_disruption_first_link{$lang_prefix}", ''); ?>
                 </a>
             </div>

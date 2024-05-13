@@ -24,7 +24,8 @@
     <article id="leader-container" class="bg-dark grid-container">
         <div class="row leader">
             <div class="large-6 columns large-offset-1 leader-image">
-                <img src="<?php echo wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_section_thumbnail_field', true)); ?>" />
+                <img
+                    src="<?php echo wp_get_attachment_url(get_post_meta(get_the_ID(), 'meta_box_section_thumbnail_field', true)); ?>" />
             </div>
             <div class="large-5 columns leadership-headline">
                 <h1 class="name"><?php echo the_title(); ?></h1>
@@ -34,7 +35,11 @@
             <!--/.leadership-headline-->
             <div class="large-5 columns large-offset-0 end">
                 <div class=" leadership-bio">
-                    <p><?php echo get_the_content(); ?></p>
+                    <?php
+                    $content = get_the_content();
+                    $content = apply_filters('the_content', $content);
+                    echo $content;
+                    ?>
                 </div>
                 <!--/.leadership-bio-->
             </div>
@@ -44,7 +49,7 @@
     <?php get_template_part('footer-script'); ?>
 
     <?php get_footer(); ?>
-    
+
     <?php
     wp_footer();
     ?>

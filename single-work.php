@@ -33,7 +33,7 @@
             <div class="headline">
                 <h1>
                     <?php
-                    $title = the_title();
+                    $title = get_the_title();
                     $parts = explode(' ##### ', $title);
 
                     // Hiển thị các phần con với mỗi phần bọc trong thẻ <h1>
@@ -52,7 +52,7 @@
             <?php
             $heroVimeoId = get_post_meta($post->ID, 'hero_vimeo_id', true);
             if (!empty($heroVimeoId)) {
-                echo "<a href='#' alt='" . str_replace(' ##### ', ' ', the_title()) . "' class='slanted-button' id='watch-vid-work'>";
+                echo "<a href='#' alt='" . str_replace(' ##### ', ' ', get_the_title()) . "' class='slanted-button' id='watch-vid-work'>";
                 echo "<h4>Watch</h4>";
                 echo "</a>";
             }
@@ -105,20 +105,8 @@
                             <?php
                             // Lấy nội dung của bài viết
                             $content = get_the_content();
-                            // Tìm vị trí của dấu '#####'
-                            $end_position = strpos($content, '#####');
-
-                            // Kiểm tra nếu dấu '#####' được tìm thấy
-                            if ($end_position !== false) {
-                                // Cắt chuỗi từ đầu đến vị trí của dấu '#####'
-                                $excerpt = substr($content, 0, $end_position);
-
-                                // Hiển thị nội dung đã cắt
-                                echo $excerpt;
-                            } else {
-                                // Nếu không tìm thấy dấu '#####', hiển thị toàn bộ nội dung
-                                echo $content;
-                            }
+                            $content = apply_filters('the_content', $content);
+                            echo $content;
                             ?>
                         </div>
                     </div>
