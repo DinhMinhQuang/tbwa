@@ -36,19 +36,28 @@
         'tag' => 'highlight',
         'tag__not_in' => array($highlight_home)
     );
-    if (!empty($lang_prefix)) {
-        if (!empty($lang_prefix)) {
-            $args['meta_query'] = array(
-                'relation' => 'AND',
-                array(
-                    'key' => 'language',
-                    'value' => 'vi',
-                    'compare' => '=',
-                    'type' => 'CHAR',
-                )
-            );
-        }
+    if ($lang_prefix === '_vi') {
+        $args['meta_query'] = array(
+            'relation' => 'AND',
+            array(
+                'key' => 'language',
+                'value' => 'vi',
+                'compare' => '=',
+                'type' => 'CHAR',
+            )
+        );
+    } else {
+        $args['meta_query'] = array(
+            'relation' => 'AND',
+            array(
+                'key' => 'language',
+                'value' => 'en',
+                'compare' => '=',
+                'type' => 'CHAR',
+            )
+        );
     }
+
 
     // The Query
     $the_query = new WP_Query($args);

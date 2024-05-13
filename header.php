@@ -163,32 +163,41 @@
 
 
 
-<div id="menu-language-toggle" class="<?php if (is_page() && get_page_template_slug() == 'pages.php') { ?> black <?php } else { ?> white <?php } ?>">
+<div id="menu-language-toggle"
+    class="<?php if (is_page() && get_page_template_slug() == 'pages.php') { ?> black <?php } else { ?> white <?php } ?>">
     <ul>
         <?php
         if ($lang_prefix) {
-            echo "<li class='nav__item'><a href='/wordpress/'>EN</a></li>";
+            echo "<li class='nav__item'><a href='/'>EN</a></li>";
             echo "<li class='divider'> \ </li>";
-            echo "<li class='nav__item current'><a href='/wordpress/vi'>VI</a></li>";
+            echo "<li class='nav__item current'><a href='/vi'>VI</a></li>";
         } else {
-            echo "<li class='nav__item current'><a href='/wordpress/'>EN</a></li>";
+            echo "<li class='nav__item current'><a href='/'>EN</a></li>";
             echo "<li class='divider'> \ </li>";
-            echo "<li class='nav__item'><a href='/wordpress/vi'>VI</a></li>";
+            echo "<li class='nav__item'><a href='/vi'>VI</a></li>";
         } ?>
     </ul>
 </div>
 <!--/#menu-language-toggle-->
 
 <div id="logo-container">
-	<div id="logo" class="<?php if (is_page() && get_page_template_slug() == 'pages.php') { ?> black-logo <?php } else { ?> white-logo <?php } ?>">
-        <a href="/" class="tbwa-homepage" id="tbwa-logo">
+    <div id="logo"
+        class="<?php if (is_page() && get_page_template_slug() == 'pages.php') { ?> black-logo <?php } else { ?> white-logo <?php } ?>">
+        <a href="<?php if ($lang_prefix) {
+            echo "/vi/";
+        } else {
+            echo "/";
+        }
+        ?>" class="tbwa-homepage" id="tbwa-logo">
             <img src="<?php echo esc_url(get_theme_mod('white_logo_setting')); ?>" alt="White Logo">
         </a>
     </div>
 </div>
 <!--/#logo-container-->
 
-<div id="menu-button" class="<?php if (is_page() && get_page_template_slug() == 'pages.php') { ?> burger-black <?php } else { ?> burger-white <?php } ?>"> <!-- menu button -->
+<div id="menu-button"
+    class="<?php if (is_page() && get_page_template_slug() == 'pages.php') { ?> burger-black <?php } else { ?> burger-white <?php } ?>">
+    <!-- menu button -->
     <svg id="hamburger-top-svg" class="hamburger-svg" viewBox="0 0 40 6" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink">
         <polygon points="0,0 40,0 40,6 0,6"></polygon>

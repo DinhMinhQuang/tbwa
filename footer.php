@@ -1,8 +1,19 @@
+<?php
+$attributes = get_language_attributes('html');
+preg_match('/lang="([^"]+)"/', $attributes, $matches);
+$lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+$lang_prefix = ($lang_attribute_value === 'vi_VN') ? 'vietnamese' : '';
+?>
 <footer>
   <div class="row grid-container" id="footer-menus">
     <div class="columns large-3 large-offset-1 medium-10 medium-offset-2 small-14 small-offset-0 mobile-hide"
       id="footer-logo-container">
-      <a href="/" id="footer-logo">
+      <a href="<?php if ($lang_prefix) {
+        echo "/vi/";
+      } else {
+        echo "/";
+      }
+      ?>" id="footer-logo">
         <img src="<?php echo get_theme_mod('footer_logo_setting'); ?>">
       </a>
     </div>
@@ -11,10 +22,6 @@
         <div id="main-menu">
           <ul>
             <?php
-            $attributes = get_language_attributes('html');
-            preg_match('/lang="([^"]+)"/', $attributes, $matches);
-            $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
-            $lang_prefix = ($lang_attribute_value === 'vi_VN') ? 'vietnamese' : '';
             $menuPrimary = "primary";
             $menuSecondary = "secondary";
             if (!empty($lang_prefix)) {
@@ -144,13 +151,13 @@
       <ul>
         <?php
         if ($lang_prefix) {
-          echo "<li class='nav__item'><a href='/wordpress/'>EN</a></li>";
+          echo "<li class='nav__item'><a href='/'>EN</a></li>";
           echo "<li class='divider'> \ </li>";
-          echo "<li class='nav__item current'><a href='/wordpress/vi'>VI</a></li>";
+          echo "<li class='nav__item current'><a href='/vi'>VI</a></li>";
         } else {
-          echo "<li class='nav__item current'><a href='/wordpress/'>EN</a></li>";
+          echo "<li class='nav__item current'><a href='/'>EN</a></li>";
           echo "<li class='divider'> \ </li>";
-          echo "<li class='nav__item'><a href='/wordpress/vi'>VI</a></li>";
+          echo "<li class='nav__item'><a href='/vi'>VI</a></li>";
         } ?>
       </ul>
     </div>

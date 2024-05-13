@@ -33,7 +33,7 @@
         'order' => 'DESC'
     );
 
-    if (!empty($lang_prefix)) {
+    if ($lang_prefix === '_vi') {
         $args['meta_query'] = array(
             'relation' => 'AND',
             array(
@@ -43,7 +43,18 @@
                 'type' => 'CHAR',
             )
         );
+    } else {
+        $args['meta_query'] = array(
+            'relation' => 'AND',
+            array(
+                'key' => 'language',
+                'value' => 'en',
+                'compare' => '=',
+                'type' => 'CHAR',
+            )
+        );
     }
+
 
     $highlight_posts = new WP_Query($args);
 
