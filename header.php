@@ -170,14 +170,16 @@
     class="<?php if (is_page() && get_page_template_slug() == 'pages.php') { ?> black <?php } else { ?> white <?php } ?>">
     <ul>
         <?php
+        $viUrl =  "test";
+        $enUrl = response_url("_en");
         if ($lang_prefix) {
-            echo "<li class='nav__item'><a href='/'>EN</a></li>";
+            echo "<li class='nav__item'><a href='$enUrl'>EN</a></li>";
             echo "<li class='divider'> \ </li>";
-            echo "<li class='nav__item current'><a href='/vi'>VI</a></li>";
+            echo "<li class='nav__item current'><a href='$viUrl'>VI</a></li>";
         } else {
-            echo "<li class='nav__item current'><a href='/'>EN</a></li>";
+            echo "<li class='nav__item current'><a href='$enUrl'>EN</a></li>";
             echo "<li class='divider'> \ </li>";
-            echo "<li class='nav__item'><a href='/vi'>VI</a></li>";
+            echo "<li class='nav__item'><a href='$viUrl'>VI</a></li>";
         } ?>
     </ul>
 </div>

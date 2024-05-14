@@ -491,8 +491,9 @@ function custom_page_permalink($permalink, $post_id, $leavename)
             $permalink = home_url('/vi/' . $custom_slug . '/');
         }
     } else {
-        // Nếu không phải template 'about' hoặc 'disruption', sử dụng post_name
-        $permalink = home_url('/vi/' . $page->post_name . '/');
+        if ($language === 'vi') {
+            $permalink = home_url('/vi/' . $page->post_name . '/');
+        }
     }
 
     return $permalink;
@@ -514,6 +515,78 @@ function set_language_in_html_tag($output)
     return $output;
 }
 add_filter('language_attributes', 'set_language_in_html_tag');
+
+function response_url($language)
+{
+    $url = ''; // Tạo một biến rỗng để lưu trữ URL
+
+    if (is_front_page()) {
+        if ($language === '_vi') {
+            $url = 'https://tbwa.com.vn/vi/';
+        } else {
+            $url = 'https://tbwa.com.vn/';
+        }
+    }
+    if (is_category()) {
+        $category = get_queried_object();
+        $category_slug = $category->slug;
+        if ($language === '_vi') {
+            $url = "https://tbwa.com.vn/vi/" . $category_slug;
+        } else {
+            $url = "https://tbwa.com.vn/" . $category_slug;
+        }
+    }
+    if (is_page_template('pages.php')) {
+        $page = get_queried_object();
+        $page_slug = $page->post_name;
+        if ($language === '_vi') {
+            $page_slug = $page->post_name;
+            $url = "https://tbwa.com.vn/vi/" . $page_slug;
+        } else {
+            $url = "https://tbwa.com.vn/" . $page_slug;
+        }
+    }
+    if (is_page('about')) {
+        if ($language === '_vi') {
+            $url = "https://tbwa.com.vn/vi/" . "about-vn";
+        } else {
+            $url = "https://tbwa.com.vn/" . "about";
+        }
+    }
+    if (is_page('disruption')) {
+        if ($language === '_vi') {
+            $url = "https://tbwa.com.vn/vi/" . "disruption-vn";
+        } else {
+            $url = "https://tbwa.com.vn/" . "disruption";
+        }
+    }
+    if (is_page('about-vn')) {
+        if ($language === '_vi') {
+            $url = "https://tbwa.com.vn/vi/about";
+        } else {
+            $url = "https://tbwa.com.vn/about";
+        }
+        var_dump($url);
+    }
+    if (is_page('disruption-vn')) {
+        if ($language === '_vi') {
+            $url = "https://tbwa.com.vn/vi/disruption";
+        } else {
+            $url = "https://tbwa.com.vn/disruption";
+        }
+    }
+    if (is_single()) {
+        $page = get_queried_object();
+        $post_slug = $page->post_name;
+        if ($language === '_vi') {
+            $url = "https://tbwa.com.vn/vi/" . $post_slug;
+        } else {
+            $url = "https://tbwa.com.vn/" . $post_slug;
+        }
+    }
+
+    return $url; // Trả về chuỗi URL
+}
 
 // function update_post_order()
 // {
