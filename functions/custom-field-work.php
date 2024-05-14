@@ -116,8 +116,7 @@ function render_custom_meta_box_for_word_category($post)
         <?php
 
         ?>
-        <div id="custom_meta_box_back_thumbnail" class="postbox"
-            style="margin-top: 20px; <?php echo ($highlight_home == 'highlight_home' ? 'display: block;' : 'display: none;'); ?>">
+        <div id="custom_meta_box_back_thumbnail" class="postbox" style="margin-top: 20px; ">
             <h2 class="hndle">Back thumbnail on Homepage</h2>
             <div class="inside">
                 <div class="meta-box-item-content">
@@ -129,8 +128,7 @@ function render_custom_meta_box_for_word_category($post)
     <?php
 
     ?>
-    <div id="custom_meta_box_front_thumbnail" class="postbox"
-        style="margin-top: 20px; <?php echo ($highlight == 'highlight' ? 'display: block;' : 'display: none;'); ?>">
+    <div id="custom_meta_box_front_thumbnail" class="postbox" style="margin-top: 20px;">
         <h2 class="hndle">Front thumbnail on Homepage</h2>
         <div class="inside">
             <div class="meta-box-item-content">

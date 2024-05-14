@@ -335,20 +335,23 @@ function add_language_default_to_query($query)
 {
     if (is_admin() && $query->is_main_query()) {
         global $pagenow;
-        if ('edit.php?post_type=post' === $pagenow && ($query->get('post_type') == 'post' || $query->get('post_type') == 'page')) {
+        if ('edit.php' === $pagenow && ($query->get('post_type') == 'post' || $query->get('post_type') == 'page')) {
             $language = isset($_GET['language']) ? $_GET['language'] : 'en'; // Mặc định là tiếng Anh
-            $meta_query = array(
+            $query->set(
+                'meta_query',
                 array(
-                    'key' => 'language', // Thay 'language_field' bằng tên trường ngôn ngữ thực tế
-                    'value' => $language,
-                    'compare' => '='
+                    array(
+                        'key' => 'language',
+                        'value' => sanitize_text_field($language),
+                        'compare' => '='
+                    )
                 )
             );
-            $query->set('meta_query', $meta_query);
         }
     }
 }
 add_action('pre_get_posts', 'add_language_default_to_query');
+
 
 function filter_posts_by_language($query)
 {
@@ -361,7 +364,9 @@ function filter_posts_by_language($query)
     }
 }
 
+// Hook the function to the 'parse_query' action
 add_filter('parse_query', 'filter_posts_by_language');
+
 
 function add_language_column($columns)
 {
@@ -432,16 +437,18 @@ function custom_rewrite_rule_vi()
     // Thêm rewrite rule cho URL có tiền tố /vi
     add_rewrite_rule('^vi/?$', 'index.php', 'top');
 
-    $template = get_page_template_slug(get_queried_object_id());
-    if ($template === 'about.php' || $template === 'disruption.php') {
-        add_rewrite_rule(
-            '^vi/([^/]+)/?$',
-            'index.php?pagename=$matches[1]-vn',
-            'top'
-        );
-    } else {
-        add_rewrite_rule('^vi/([^/]+)/?$', 'index.php?pagename=$matches[1]', 'top');
-    }
+    add_rewrite_rule(
+        '^vi/about/?$',
+        'index.php?pagename=about-vn',
+        'top'
+    );
+    add_rewrite_rule(
+        '^vi/disruption/?$',
+        'index.php?pagename=disruption-vn',
+        'top'
+    );
+    add_rewrite_rule('^vi/([^/]+)/?$', 'index.php?pagename=$matches[1]', 'top');
+
 
     flush_rewrite_rules(); // Cập nhật lại rewrite rules
 }
@@ -478,10 +485,8 @@ function custom_page_permalink($permalink, $post_id, $leavename)
 
     $language = get_post_meta($post_id, 'language', true);
     $custom_slug = get_post_meta($post_id, 'custom_slug', true);
-
-    // Kiểm tra template có phải là 'about' hoặc 'disruption'
-    if ($template === 'about.php' || $template === 'disruption.php') {
-        if ($language === 'vi' && $custom_slug) {
+    if ($template === 'page-about.php' || $template === 'page-disruption.php') {
+        if ($language === 'vi') {
             // Tạo permalink với tiền tố '/vi'
             $permalink = home_url('/vi/' . $custom_slug . '/');
         }
