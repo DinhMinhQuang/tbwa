@@ -287,34 +287,6 @@ foreach ($roots_includes as $file) {
 }
 unset($file, $filepath);
 
-
-// Xử lý dữ liệu khi nhận request AJAX
-function handle_sortable_items()
-{
-    if (isset($_POST['item_ids']) && isset($_POST['new_order'])) {
-        $item_ids = $_POST['item_ids'];
-        $new_order = $_POST['new_order'];
-
-        // Cập nhật thứ tự mới của các mục trong cơ sở dữ liệu
-        foreach ($item_ids as $index => $item_id) {
-            // Update the position/order of the item in the database
-            // Example: Update the 'menu_order' field for posts or custom post types
-            wp_update_post(
-                array(
-                    'ID' => $item_id,
-                    'menu_order' => $new_order[$index]
-                )
-            );
-        }
-
-        // Phản hồi về thành công hoặc lỗi
-        wp_send_json_success('Sort order updated successfully.');
-    } else {
-        wp_send_json_error('Invalid request.');
-    }
-}
-add_action('wp_ajax_handle_sortable_items', 'handle_sortable_items');
-
 function add_language_filter_to_posts()
 {
     global $typenow;
@@ -536,14 +508,18 @@ function response_url($language)
             $url = "https://tbwa.com.vn/" . $category_slug;
         }
     }
-    if (is_page_template('pages.php')) {
-        $page = get_queried_object();
-        $page_slug = $page->post_name;
+    if (is_page('privacy-policy') || is_page('chinh-sach-bao-mat')) {
         if ($language === '_vi') {
-            $page_slug = $page->post_name;
-            $url = "https://tbwa.com.vn/vi/" . $page_slug;
+            $url = "https://tbwa.com.vn/vi/" . "chinh-sach-bao-mat";
         } else {
-            $url = "https://tbwa.com.vn/" . $page_slug;
+            $url = "https://tbwa.com.vn/" . "privacy-policy";
+        }
+    }
+    if (is_page('terms-of-service') || is_page('dieu-khoan-dich-vu')) {
+        if ($language === '_vi') {
+            $url = "https://tbwa.com.vn/vi/" . "dieu-khoan-dich-vu";
+        } else {
+            $url = "https://tbwa.com.vn/" . "terms-of-service";
         }
     }
     if (is_page('about')) {
@@ -566,7 +542,6 @@ function response_url($language)
         } else {
             $url = "https://tbwa.com.vn/about";
         }
-        var_dump($url);
     }
     if (is_page('disruption-vn')) {
         if ($language === '_vi') {
@@ -576,97 +551,82 @@ function response_url($language)
         }
     }
     if (is_single()) {
-        $page = get_queried_object();
-        $post_slug = $page->post_name;
+        $post = get_queried_object();
+        $categories = get_the_category($post->ID);
+        $category_slug = $categories[0]->slug;
         if ($language === '_vi') {
-            $url = "https://tbwa.com.vn/vi/" . $post_slug;
+            $url = "https://tbwa.com.vn/vi/" . $category_slug;
         } else {
-            $url = "https://tbwa.com.vn/" . $post_slug;
+            $url = "https://tbwa.com.vn/" . $category_slug;
         }
     }
 
-    return $url; // Trả về chuỗi URL
+    return $url;
 }
 
-// function update_post_order()
-// {
-//     global $wpdb;
+function save_post_order()
+{
+    global $wpdb;
 
-//     $postOrder = $_POST['postOrder'];
-//     foreach ($postOrder as $order => $postId) {
-//         $postId = str_replace('post-', '', $postId);
-//         // Check if the post is in the 'news' category and the language is 'vi'
-//         if (in_category('news', $postId) && get_post_meta($postId, 'language', true) == 'vi') {
-//             $wpdb->update($wpdb->posts, array('menu_order' => $order), array('ID' => $postId));
-//         }
-//     }
-// }
-// add_action('wp_ajax_update_post_order', 'update_post_order');
+    $order = explode(',', $_POST['order']);
+    $counter = 0;
 
-// function increase_menu_order_on_publish($new_status, $old_status, $post)
-// {
-//     error_log('$new_status' . $new_status);
-//     error_log('$old_status' . $old_status);
-//     if ($old_status != 'publish' && $new_status == 'publish') {
-//         error_log('this post in category work ?' . in_category('work', $post));
-//         if (in_category('work', $post)) {
-//             error_log('Meta field ? ' . get_post_meta($post->ID, 'language', true));
+    foreach ($order as $post_id) {
+        $wpdb->update($wpdb->posts, array('menu_order' => $counter), array('ID' => $post_id));
+        $counter++;
+    }
+    die(1);
+}
+add_action('wp_ajax_save_post_order', 'save_post_order');
 
-//             if (get_post_meta($post->ID, 'language', true) == 'vi') {
-//                 $highest_menu_order = new WP_Query(
-//                     array(
-//                         'post_type' => 'post',
-//                         'category_name' => 'work',
-//                         'orderby' => 'menu_order',
-//                         'order' => 'DESC',
-//                         'posts_per_page' => 1,
-//                         'meta_query' => array(
-//                             array(
-//                                 'key' => 'language',
-//                                 'value' => 'vi',
-//                             )
-//                         )
-//                     )
-//                 );
-//                 $highest_menu_order = $highest_menu_order->have_posts() ? get_post($highest_menu_order->posts[0])->menu_order : 0;
-//                 global $wpdb;
-//                 $wpdb->update(
-//                     $wpdb->posts,
-//                     array('menu_order' => $highest_menu_order + 1), // data
-//                     array('ID' => $post->ID), // where
-//                     array('%d'), // data format
-//                     array('%d') // where format
-//                 );
-//             }
-//             if (get_post_meta($post->ID, 'language', true) == 'en') {
-//                 error_log('en ?');
-//                 $highest_menu_order = new WP_Query(
-//                     array(
-//                         'post_type' => 'post',
-//                         'category_name' => 'work',
-//                         'orderby' => 'menu_order',
-//                         'order' => 'DESC',
-//                         'posts_per_page' => 1,
-//                         'meta_query' => array(
-//                             array(
-//                                 'key' => 'language',
-//                                 'value' => 'en',
-//                             )
-//                         )
-//                     )
-//                 );
-//                 $highest_menu_order = $highest_menu_order->have_posts() ? get_post($highest_menu_order->posts[0])->menu_order : 0;
-//                 error_log('$highest_menu_order ' . $highest_menu_order + 1);
-//                 global $wpdb;
-//                 $wpdb->update(
-//                     $wpdb->posts,
-//                     array('menu_order' => $highest_menu_order + 1), // data
-//                     array('ID' => $post->ID), // where
-//                     array('%d'), // data format
-//                     array('%d') // where format
-//                 );
-//             }
-//         }
-//     }
-// }
-// add_action('transition_post_status', 'increase_menu_order_on_publish', 10, 3);
+function enqueue_sortable_scripts()
+{
+    $category = isset($_GET['cat']) ? $_GET['cat'] : '';
+    $language = isset($_GET['language']) ? $_GET['language'] : '';
+    if ($category === '22' && ($language === 'en' || $language === 'vi')) {
+        ?>
+        <script type="text/javascript">
+            jQuery(document).ready(function ($) {
+                $('#the-list').sortable({
+                    cursor: 'move',
+                    axis: 'y',
+                    scrollSensitivity: 40,
+                    stop: function (event, ui) {
+                        ui.item.css('background-color', '#0000');
+                    },
+                    update: function (event, ui) {
+                        var order = $('#the-list').sortable('toArray', { attribute: 'id' });
+                        orders = order.map(function (post_id) {
+                            return post_id.replace('post-', '');
+                        });
+                        $.post(ajaxurl, {
+                            action: 'save_post_order',
+                            order: orders.join(',')
+                        });
+                    }
+                });
+            });
+        </script>
+        <?php
+    }
+}
+
+add_action('admin_footer', 'enqueue_sortable_scripts');
+
+function sort_posts_by_menu_order($query)
+{
+    // Check if the query is for an archive
+    if ($query->is_archive()) {
+        $language = isset($_GET['language']) ? $_GET['language'] : '';
+        $cat = isset($_GET['cat']) ? $_GET['cat'] : '';
+
+        // Only sort the posts if the language is 'en' and the category is 'work'
+        if (($language === 'en' || $language === 'vi') && $cat === '22') {
+            // Set the 'orderby' parameter to 'menu_order'
+            $query->set('orderby', 'menu_order');
+            // Set the 'order' parameter to 'ASC'
+            $query->set('order', 'ASC');
+        }
+    }
+}
+add_action('pre_get_posts', 'sort_posts_by_menu_order');

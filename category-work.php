@@ -92,8 +92,8 @@
                 'posts_per_page' => 15,
                 'category_name' => 'work',
                 'paged' => $paged,
-                'orderby' => 'date',
-                'order' => 'DESC',
+                'orderby' => 'menu_order',
+                'order' => 'ASC',
             );
             if ($lang_prefix === '_vi') {
                 $args['meta_query'] = array(
