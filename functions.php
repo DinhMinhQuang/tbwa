@@ -16,7 +16,6 @@ add_action('customize_register', 'remove_home_page_settings');
 /* Classic Editor Pages Posts */
 add_filter('use_block_editor_for_post', '__return_false');
 
-
 function tbwa_menus($locations = array())
 {
     add_theme_support('menus');
@@ -583,7 +582,7 @@ function enqueue_sortable_scripts()
 {
     $category = isset($_GET['cat']) ? $_GET['cat'] : '';
     $language = isset($_GET['language']) ? $_GET['language'] : '';
-    if ($category === '22' && ($language === 'en' || $language === 'vi')) {
+    if (in_array($category, ['8', '12']) && ($language === 'en' || $language === 'vi')) {
         ?>
         <script type="text/javascript">
             jQuery(document).ready(function ($) {
@@ -621,7 +620,7 @@ function sort_posts_by_menu_order($query)
         $cat = isset($_GET['cat']) ? $_GET['cat'] : '';
 
         // Only sort the posts if the language is 'en' and the category is 'work'
-        if (($language === 'en' || $language === 'vi') && $cat === '22') {
+        if (($language === 'en' || $language === 'vi') && in_array($cat, ['8', '12'])) {
             // Set the 'orderby' parameter to 'menu_order'
             $query->set('orderby', 'menu_order');
             // Set the 'order' parameter to 'ASC'
@@ -630,3 +629,25 @@ function sort_posts_by_menu_order($query)
     }
 }
 add_action('pre_get_posts', 'sort_posts_by_menu_order');
+
+function remove_specific_page_templates($page_templates)
+{
+    // Danh sách các template bạn muốn ẩn
+    $templates_to_remove = array(
+        'category-work.php',
+        'category-pirates.php',
+        'category-news.php',
+        'single-news.php',
+        'single-work.php',
+        'single-pirates.php'
+    );
+
+    foreach ($templates_to_remove as $template) {
+        if (isset($page_templates[$template])) {
+            unset($page_templates[$template]);
+        }
+    }
+
+    return $page_templates;
+}
+add_filter('theme_page_templates', 'remove_specific_page_templates');

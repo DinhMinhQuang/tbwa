@@ -1,4 +1,4 @@
-<?php /* Template Name: Page Default */ ?>
+<?php /* Template Name: Legacy Policy */ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,14 +8,17 @@
     <title><?php the_title(); ?> - <?php echo get_bloginfo('name'); ?></title>
     <?php wp_head(); ?>
 </head>
- 
-<body class="dark"> 
+
+<body class="dark">
     <?php get_header(); ?>
-	<?php get_template_part('cookie-notice'); ?>
+    <?php get_template_part('cookie-notice'); ?>
     <section class="single row">
         <div class="columns large-10 large-offset-2 medium-10 medium-offset-2 small-12 small-offset-1 end">
             <h1><?php the_title(); ?></h1>
-            <?php the_content(); ?>
+            <?php
+            $content = apply_filters('the_content', get_the_content());
+            echo $content
+                ?>
         </div>
     </section>
     <!--/.single-->

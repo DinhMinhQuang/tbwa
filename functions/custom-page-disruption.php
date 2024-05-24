@@ -1,5 +1,4 @@
 <?php
-
 /* START PAGE DISRUPTION */
 function add_custom_meta_boxes()
 {
@@ -25,7 +24,7 @@ function render_featured_image_meta_box($post)
     ?>
     <p>
         <label for="custom_title_disruption">
-            <?php _e('Custom Title'); ?>
+            <?php _e('Page’s title'); ?>
         </label><br />
         <input style="width: 100%;" name="custom_title_disruption" id="custom_title_disruption"
             value="<?php echo esc_attr($custom_title_disruption); ?>" />
@@ -45,13 +44,14 @@ function render_featured_image_meta_box($post)
     </p>
     <p>
         <label for="custom_text">
-            <?php _e('Custom Text'); ?>
+            <?php _e('Text'); ?>
         </label><br />
         <textarea style="width: 100%;" name="custom_text" id="custom_text" rows="5"
             cols="50"><?php echo $custom_text; ?></textarea>
     </p>
-    <p><b>The video will be taken from the settings on the home page in the "Home Slider => Slider Video Disruption Url"
-            section.</b></p>
+    <p><b>To change the video on banner: <br />
+            Customize Homepage => Banner videos => Video Url - Disruption
+        </b></p>
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
             $('#featured_image_button').click(function () {
@@ -89,6 +89,8 @@ function render_content_methods_meta_box($post)
     $methods_title = get_post_meta($post->ID, 'methods_title', true);
     $methods_content = get_post_meta($post->ID, 'methods_content', true);
     $methods_video = get_post_meta($post->ID, 'methods_video', true);
+    $methods_image_id = get_post_meta($post->ID, 'methods_image_id', true);
+    $methods_image = wp_get_attachment_image_src($methods_image_id, 'medium');
 
     ?>
     <div><b>Content</b></div>
@@ -107,6 +109,48 @@ function render_content_methods_meta_box($post)
         <input style="width: 100%;" name="methods_video" id="methods_video"
             value="<?php echo esc_attr($methods_video); ?>" />
     </p>
+    <p>
+        <label for="methods_image_id">
+            <?php _e('Upload Video Methods Thumbnail'); ?>
+        </label><br />
+        <input type="hidden" name="methods_image_id" id="methods_image_id" value="<?php echo $methods_image_id; ?>" />
+        <img id="methods_image" src="<?php echo $methods_image ? $methods_image[0] : ''; ?>" style="max-width: 100%;" />
+        <button type="button" id="methods_image_button" class="button-secondary">
+            <?php _e('Select Image'); ?>
+        </button>
+        <button type="button" id="methods_image_remove_button" class="button-secondary">
+            <?php _e('Remove Image'); ?>
+        </button>
+    </p>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('#methods_image_button').click(function () {
+                var frame = wp.media({
+                    title: 'Select or Upload Image',
+                    multiple: false,
+                    library: {
+                        type: 'image'
+                    },
+                    button: {
+                        text: 'Select'
+                    }
+                });
+
+                frame.on('select', function () {
+                    var attachment = frame.state().get('selection').first().toJSON();
+                    $('#methods_image').attr('src', attachment.url);
+                    $('#methods_image_id').val(attachment.id);
+                });
+
+                frame.open();
+            });
+
+            $('#methods_image_remove_button').click(function () {
+                $('#methods_image').attr('src', '');
+                $('#methods_image_id').val('');
+            });
+        });
+    </script>
     <?php
 }
 /* Module About */
@@ -117,7 +161,7 @@ function render_content_about_meta_box($post)
     $text_about_video_disruption = get_post_meta($post->ID, 'text_about_video_disruption', true);
     $about_video_disruption = get_post_meta($post->ID, 'about_video_disruption', true);
     ?>
-    <div><b>Text and Video 1</b></div>
+    <div><b>Text and Video</b></div>
     <p>
         <label for="title_about_video_disruption">Title</label>
         <br><input style="width: 100%" type="text" name="title_about_video_disruption" id="title_about_video_disruption"
@@ -129,7 +173,7 @@ function render_content_about_meta_box($post)
             value="<?php echo $text_about_video_disruption; ?>"></br>
     </p>
     <p>
-        <label for="about_video_disruption">Video Methods (Video upload under 40MB)</label>
+        <label for="about_video_disruption">Video (Video upload under 40MB)</label>
         <br><input style="width: 100%" type="text" name="about_video_disruption" id="about_video_disruption"
             value="<?php echo $about_video_disruption; ?>"></br>
     </p>

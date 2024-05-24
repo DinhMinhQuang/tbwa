@@ -79,6 +79,8 @@
             $args_total = array(
                 'post_type' => 'post',
                 'category_name' => 'pirates',
+                'orderby' => 'menu_order',
+                'order' => 'ASC',
                 'posts_per_page' => -1 // Lấy tất cả bài post trong category,
             );
             if ($lang_prefix === '_vi') {
@@ -130,7 +132,7 @@
                             'category_name' => 'pirates',
                             'posts_per_page' => 1, // Số lượng bài post muốn hiển thị
                             'paged' => $paged,
-                            'orderby' => 'date',
+                            'orderby' => 'menu_order',
                             'order' => 'ASC',
                             'offset' => $offset + $i * count($imgSize[$i]) + $j // Vị trí bắt đầu của bài post
                         );
