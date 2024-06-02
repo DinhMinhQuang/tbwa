@@ -148,7 +148,7 @@
                     } elseif (in_array($post_count % 15, $rightIndices)) {
                         $childString .= "\tentry-right";
                     }
-                    if ($post_count === $totalPosts - 1) {
+                    if ($post_count === 14) {
                         $string .= "\tend";
                     }
 

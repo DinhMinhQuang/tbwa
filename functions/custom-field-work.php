@@ -139,6 +139,13 @@ function render_custom_meta_box_for_word_category($post)
 
     <script>
         jQuery(document).ready(function ($) {
+            if (!$('#highlight_home').is(':checked') && !$('#highlight').is(':checked')) {
+                $('#custom_meta_box_back_thumbnail').hide();
+                $('#custom_meta_box_front_thumbnail').hide();
+            } else {
+                $('#custom_meta_box_back_thumbnail').show();
+                $('#custom_meta_box_front_thumbnail').show();
+            }
             $('#highlight_home, #highlight').change(function () {
                 if (!$('#highlight_home').is(':checked') && !$('#highlight').is(':checked')) {
                     $('#custom_meta_box_back_thumbnail').hide();

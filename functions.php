@@ -275,6 +275,7 @@ $roots_includes = array(
     'functions/custom-field-news.php',
     'functions/custom-category-meta-box.php',
     'functions/render-custom-meta-post.php',
+    'functions/duplicate-post.php',
 );
 
 foreach ($roots_includes as $file) {
@@ -379,10 +380,12 @@ add_action('add_meta_boxes', 'custom_language_custom_field');
 function custom_language_field_callback($post)
 {
     $language = get_post_meta($post->ID, 'language', true);
+
     ?>
     <label for="language"><?php _e('Language'); ?></label>
-    <select name="language" id="language">
-        <option value="en" <?php selected($language, 'en'); ?>>English</option>
+    <select name="language" id="language" <?php if (empty($language) === false)
+        echo 'disabled' ?>>
+            <option value="en" <?php selected($language, 'en'); ?>>English</option>
         <option value="vi" <?php selected($language, 'vi'); ?>>Vietnamese</option>
     </select>
     <?php
@@ -553,10 +556,22 @@ function response_url($language)
         $post = get_queried_object();
         $categories = get_the_category($post->ID);
         $category_slug = $categories[0]->slug;
+        $original_post_id = get_post_meta(get_the_ID(), 'original_post_id', true);
+        $duplicate_post_id = get_post_meta(get_the_ID(), 'duplicate_post_id', true);
+        // var_dump($original_post_id);
+
         if ($language === '_vi') {
-            $url = "https://tbwa.com.vn/vi/" . $category_slug;
+            if ($duplicate_post_id) {
+                $url = get_permalink($duplicate_post_id);
+            } else {
+                $url = "https://tbwa.com.vn/vi/" . $category_slug;
+            }
         } else {
-            $url = "https://tbwa.com.vn/" . $category_slug;
+            if ($original_post_id) {
+                $url = get_permalink($original_post_id);
+            } else {
+                $url = "https://tbwa.com.vn/" . $category_slug;
+            }
         }
     }
 

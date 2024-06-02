@@ -21,7 +21,7 @@ function custom_meta_boxes_for_work_page()
     $post_type = 'post'; // Đổi post type nếu cần
     add_meta_box(
         'custom_editor_meta_box',
-        __('Custom Editor', 'textdomain'),
+        __('Media Content', 'textdomain'),
         'render_custom_meta_box_editor',
         $post_type,
         'normal',
