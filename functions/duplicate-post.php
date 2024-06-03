@@ -7,7 +7,8 @@ function rd_duplicate_post_as_draft()
         wp_die('No post to duplicate has been supplied!');
     }
 
-    if (!isset($_GET['duplicate_nonce']) || !wp_verify_nonce($_GET['duplicate_nonce'], basename(__FILE__)))
+    $nonce_action = 'rd_duplicate_post_nonce_action';
+    if (!isset($_GET['duplicate_nonce']) || !wp_verify_nonce($_GET['duplicate_nonce'], $nonce_action))
         return;
 
     $post_id = (isset($_GET['post']) ? absint($_GET['post']) : absint($_POST['post']));
@@ -16,13 +17,19 @@ function rd_duplicate_post_as_draft()
     $new_post_author = $current_user->ID;
 
     if (isset($post) && $post != null) {
+        $value_post_name = '';
+        if ($post->post_name) {
+            $value_post_name = $post->post_name . '-draft';
+        } else {
+            $value_post_name = $post->post_title . '-draft';
+        }
         $args = array(
             'comment_status' => $post->comment_status,
             'ping_status' => $post->ping_status,
             'post_author' => $new_post_author,
             'post_content' => $post->post_content,
             'post_excerpt' => $post->post_excerpt,
-            'post_name' => $post->post_name . '-draft',
+            'post_name' => $value_post_name,
             'post_parent' => $post->post_parent,
             'post_password' => $post->post_password,
             'post_status' => 'draft',
@@ -83,12 +90,12 @@ add_action('admin_action_rd_duplicate_post_as_draft', 'rd_duplicate_post_as_draf
 
 function rd_duplicate_post_link($actions, $post)
 {
-    $language = isset($_GET['language']) ? $_GET['language'] : '';
     if (current_user_can('edit_posts')) {
         $original_post_id = get_post_meta($post->ID, 'original_post_id', true);
         $duplicate_post_id = get_post_meta($post->ID, 'duplicate_post_id', true);
         if (!$original_post_id && !$duplicate_post_id) {
-            $actions['duplicate'] = '<a href="' . wp_nonce_url('admin.php?action=rd_duplicate_post_as_draft&post=' . $post->ID, basename(__FILE__), 'duplicate_nonce') . '" title="Duplicate this item" rel="permalink">Duplicate</a>';
+            $nonce_action = 'rd_duplicate_post_nonce_action';
+            $actions['duplicate'] = '<a href="' . wp_nonce_url('admin.php?action=rd_duplicate_post_as_draft&post=' . $post->ID, $nonce_action, 'duplicate_nonce') . '" title="Duplicate this item" rel="permalink">Add new language</a>';
         }
     }
 

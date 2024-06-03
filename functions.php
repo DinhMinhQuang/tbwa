@@ -382,13 +382,55 @@ function custom_language_field_callback($post)
     $language = get_post_meta($post->ID, 'language', true);
 
     ?>
-    <label for="language"><?php _e('Language'); ?></label>
-    <select name="language" id="language" <?php if (empty($language) === false)
-        echo 'disabled' ?>>
-            <option value="en" <?php selected($language, 'en'); ?>>English</option>
-        <option value="vi" <?php selected($language, 'vi'); ?>>Vietnamese</option>
-    </select>
+    <div>
+        <label for="language"><?php _e('Language'); ?></label>
+        <select name="language" id="language" <?php if (empty($language) === false)
+            echo 'disabled' ?>>
+                <option value="en" <?php selected($language, 'en'); ?>>English</option>
+            <option value="vi" <?php selected($language, 'vi'); ?>>Vietnamese</option>
+        </select>
+    </div>
     <?php
+
+    $original_post_id = get_post_meta($post->ID, 'original_post_id', true);
+    $duplicate_post_id = get_post_meta($post->ID, 'duplicate_post_id', true);
+    $output = '';
+
+    if ($language == 'vi') {
+        $text = 'English Version';
+    } else {
+        $text = 'Vietnamese Version';
+    }
+
+    if ($original_post_id) {
+        $output .= '<a href="' . admin_url('post.php?action=edit&post=' . $original_post_id) . '"> ' . $text . ' </a>';
+    }
+
+    if ($duplicate_post_id) {
+        if ($original_post_id) {
+            $output .= ' | ';
+        }
+        $output .= '<a href="' . admin_url('post.php?action=edit&post=' . $duplicate_post_id) . '">' . $text . '</a>';
+    }
+
+    if (empty($output)) {
+        $output = '<a>N/A</a>';
+    }
+
+    if (!$original_post_id && !$duplicate_post_id) {
+        $nonce_action = 'rd_duplicate_post_nonce_action';
+
+        echo '<div style="margin-top: 10px; display: flex; align-items: center;">';
+        echo '<a href="' . wp_nonce_url('admin.php?action=rd_duplicate_post_as_draft&post=' . $post->ID, $nonce_action, 'duplicate_nonce') . '" title="Add new language" rel="permalink">Add new language</a>';
+        echo '</div>';
+    } else {
+        ?>
+        <div style="margin-top: 10px; display: flex; align-items: center;">
+            <label style="margin-right: 10px;">Linked Post</label>
+            <?php echo $output; ?>
+        </div>
+        <?php
+    }
 }
 
 function save_custom_language_field($post_id)
@@ -445,7 +487,13 @@ function add_language_and_category_to_permalink($permalink, $post, $leavename)
         }
 
         $category_slugs_str = implode('/', $category_slugs);
-        $permalink = home_url('/vi/' . $category_slugs_str . '/' . $post->post_name . '/');
+        if (empty($post->post_name)) {
+            $post_name = 'draft-' . $post->ID;
+        } else {
+            $post_name = $post->post_name;
+        }
+
+        $permalink = home_url('/vi/' . $category_slugs_str . '/' . $post_name);
 
     }
     return $permalink;

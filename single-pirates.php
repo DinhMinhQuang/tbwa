@@ -17,10 +17,6 @@
 <body class="dark">
     <?php get_header(); ?>
     <?php get_template_part('cookie-notice'); ?>
-    <?php
-    $post_slug = get_post_field('post_name', get_post());
-    $post = get_page_by_path($post_slug, OBJECT, 'post');
-    ?>
     <article id="leader-container" class="bg-dark grid-container">
         <div class="row leader">
             <div class="large-6 columns large-offset-1 leader-image">
