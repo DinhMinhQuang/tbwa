@@ -79,7 +79,7 @@
             $args_total = array(
                 'post_type' => 'post',
                 'category_name' => 'pirates',
-                'orderby' => 'menu_order',
+				                'orderby' => 'menu_order',
                 'order' => 'ASC',
                 'posts_per_page' => -1 // Lấy tất cả bài post trong category,
             );
@@ -132,8 +132,8 @@
                             'category_name' => 'pirates',
                             'posts_per_page' => 1, // Số lượng bài post muốn hiển thị
                             'paged' => $paged,
-                            'orderby' => 'menu_order',
-                            'order' => 'ASC',
+                                            'orderby' => 'menu_order',
+                'order' => 'ASC',
                             'offset' => $offset + $i * count($imgSize[$i]) + $j // Vị trí bắt đầu của bài post
                         );
                         if ($lang_prefix === '_vi') {
@@ -194,10 +194,10 @@
             <div class="row">
                 <div class="large-8 columns  large-offset-5 small-offset-1">
                     <h2 class="section-title">
-                        <?php
+						                        <?php
                         $category = get_term_by('slug', 'news', 'category');
                         echo get_term_meta($category->term_id, "title_intro{$lang_prefix}", true); ?>
-                    </h2>
+					</h2>
                 </div>
             </div>
             <!--/.row-->

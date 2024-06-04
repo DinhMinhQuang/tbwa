@@ -9,11 +9,11 @@ $lang_prefix = ($lang_attribute_value === 'vi_VN') ? 'vietnamese' : '';
     <div class="columns large-3 large-offset-1 medium-10 medium-offset-2 small-14 small-offset-0 mobile-hide"
       id="footer-logo-container">
       <a href="<?php if ($lang_prefix) {
-        echo "/vi/";
-      } else {
-        echo "/";
-      }
-      ?>" id="footer-logo">
+            echo "/vi/";
+        } else {
+            echo "/";
+        }
+        ?>" id="footer-logo">
         <img src="<?php echo get_theme_mod('footer_logo_setting'); ?>">
       </a>
     </div>
@@ -22,6 +22,10 @@ $lang_prefix = ($lang_attribute_value === 'vi_VN') ? 'vietnamese' : '';
         <div id="main-menu">
           <ul>
             <?php
+            $attributes = get_language_attributes('html');
+            preg_match('/lang="([^"]+)"/', $attributes, $matches);
+            $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+            $lang_prefix = ($lang_attribute_value === 'vi_VN') ? 'vietnamese' : '';
             $menuPrimary = "primary";
             $menuSecondary = "secondary";
             if (!empty($lang_prefix)) {
@@ -151,14 +155,16 @@ $lang_prefix = ($lang_attribute_value === 'vi_VN') ? 'vietnamese' : '';
     <div id="footer-language-toggle">
       <ul>
         <?php
+        $viUrl =  response_url('_vi');
+        $enUrl =  response_url(null);
         if ($lang_prefix) {
-          echo "<li class='nav__item'><a href='/'>EN</a></li>";
-          echo "<li class='divider'> \ </li>";
-          echo "<li class='nav__item current'><a href='/vi'>VI</a></li>";
+            echo "<li class='nav__item'><a href='$enUrl'>EN</a></li>";
+            echo "<li class='divider'> \ </li>";
+            echo "<li class='nav__item current'><a href='$viUrl'>VI</a></li>";
         } else {
-          echo "<li class='nav__item current'><a href='/'>EN</a></li>";
-          echo "<li class='divider'> \ </li>";
-          echo "<li class='nav__item'><a href='/vi'>VI</a></li>";
+            echo "<li class='nav__item current'><a href='$enUrl'>EN</a></li>";
+            echo "<li class='divider'> \ </li>";
+            echo "<li class='nav__item'><a href='$viUrl'>VI</a></li>";
         } ?>
       </ul>
     </div>

@@ -10,7 +10,7 @@ function add_custom_page_about_meta_boxes()
             add_meta_box('featured_image_about_meta_box', 'Title and Video About', 'render_page_about_img_featured_meta_box', 'page', 'normal', 'default');
             add_meta_box('company_about_meta_box', 'Module Company About', 'render_content_company_about_meta_box', 'page', 'normal', 'default');
             add_meta_box('our_clients_meta_box', 'Module Our Clients', 'render_content_our_clients_meta_box', 'page', 'normal', 'default');
-            add_meta_box('world_wide', 'Module World Wide', 'render_content_worldwide_about_meta_box', 'page', 'normal', 'default');
+			add_meta_box('worldwide_meta_box', 'Module Worldwide', 'render_content_worldwide_about_meta_box', 'page', 'normal', 'default');
         }
     }
 }

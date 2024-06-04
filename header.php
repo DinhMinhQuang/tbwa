@@ -170,8 +170,8 @@
     class="<?php if (is_page() && get_page_template_slug() == 'pages.php') { ?> black <?php } else { ?> white <?php } ?>">
     <ul>
         <?php
-        $viUrl = response_url('_vi');
-        $enUrl = response_url(null);
+        $viUrl =  response_url('_vi');
+        $enUrl =  response_url(null);
         if ($lang_prefix) {
             echo "<li class='nav__item'><a href='$enUrl'>EN</a></li>";
             echo "<li class='divider'> \ </li>";

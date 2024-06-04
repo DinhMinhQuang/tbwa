@@ -1,7 +1,6 @@
 .cookieNotice {
     background: #000;
     display: none;
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 1em;
     line-height: 120%;
@@ -243,7 +242,6 @@ body {
     margin: 0;
     padding: 0;
     background: #fefefe;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     line-height: 1.5;
     color: #0a0a0a;
@@ -3661,45 +3659,6 @@ input:checked+label>.switch-inactive {
     left: 2.75rem
 }
 
-@font-face {
-    font-family: 'Grotesk';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url(/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-Regular.woff2) format('woff2');
-}
-
-@font-face {
-    font-family: 'Grotesk';
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: url(/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-Medium.woff2) format('woff2');
-}
-
-@font-face {
-    font-family: 'Grotesk';
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-    src: url(/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-SemiBold.woff2) format('woff2');
-}
-
-@font-face {
-    font-family: 'Grotesk';
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: url(/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-Bold.woff2) format('woff2');
-}
-
-@font-face {
-    font-family: 'Grotesk';
-    font-style: normal;
-    font-weight: 900;
-    font-display: swap;
-    src: url(/wp-content/themes/tbwa/assets/fonts/TBWAGrotesk-Black.woff2) format('woff2');
-}
 
 body,
 div,
@@ -3762,7 +3721,6 @@ hr {
 
 .slanted-container a {
     display: block;
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 1.5rem;
     margin: 0 0 20px
@@ -3829,7 +3787,6 @@ screen and (max-width:47.99875em) {
     padding: 0;
     margin: 0;
     font-size: 23px;
-    font-family: "Grotesk", sans-serif;
     font-weight: 700
 }
 
@@ -3971,7 +3928,6 @@ a.share-btn:hover {
 }
 
 .video-overlay h1 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 7.5rem;
     line-height: 100%;
@@ -3994,7 +3950,6 @@ screen and (max-width:47.99875em) {
 }
 
 .video-overlay a h4 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 1.5rem
 }
@@ -4156,7 +4111,6 @@ screen and (max-width:64.06125em) {
 #menu-language-toggle ul li {
     width: auto;
     float: left;
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: .875rem
 }
@@ -4182,7 +4136,6 @@ screen and (max-width:64.06125em) {
 
 #menu-language-toggle ul li a,
 #menu-language-toggle ul li a:visited {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: .875rem;
     color: inherit;
@@ -4262,7 +4215,6 @@ screen and (max-width:47.99875em) {
 }
 
 #menu-container #main-menu ul li {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     position: relative;
     margin: 0
@@ -4356,7 +4308,6 @@ screen and (max-width:47.99875em) {
 }
 
 #menu-container #sub-menu h3 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: .875rem;
     color: #1a1a1a
@@ -4395,7 +4346,6 @@ screen and (max-width:64.06125em) {
 }
 
 #menu-container #sub-menu #secondary-menu ul li a {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     color: #000;
     text-decoration: none;
@@ -4448,7 +4398,6 @@ screen and (max-width:64.06125em) {
 #menu-container #sub-menu #contact-info a,
 #menu-container #sub-menu #contact-info p,
 #menu-container #sub-menu #contact-info span {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: .875rem;
     color: #1a1a1a
@@ -4477,7 +4426,6 @@ screen and (max-width:89.99875em) {
 #menu-container #sub-menu #office-address a,
 #menu-container #sub-menu #office-address p,
 #menu-container #sub-menu #office-address span {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: .875rem;
     color: #1a1a1a
@@ -4650,7 +4598,6 @@ footer #footer-main-menu {
 }
 
 footer #footer-main-menu ul li a {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     color: #000;
     text-decoration: underline;
@@ -4688,7 +4635,6 @@ footer #footer-secondary-menu {
 }
 
 footer #footer-secondary-menu ul li a {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     color: #000;
     text-decoration: underline;
@@ -4750,7 +4696,6 @@ screen and (max-width:64.06125em) {
 footer a,
 footer p {
     font-size: .875rem;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     color: #1a1a1a;
     transition: all .1s
@@ -4761,7 +4706,6 @@ footer a:hover {
 }
 
 footer h3 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     color: #000;
     font-size: .9375rem
@@ -4786,26 +4730,22 @@ screen and (min-width:64.0625em) and (max-width:79.99875em) {
 
 footer a.small {
     font-size: .75rem;
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
 }
 
 footer p.address {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
 }
 
 footer a.phone {
     display: block;
     text-decoration: none;
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     margin: 20px 0
 }
 
 footer a.email {
     display: block;
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     margin: 0 0 20px 0
 }
@@ -4815,7 +4755,6 @@ footer #legal {
 }
 
 footer #legal span {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: .75rem
 }
@@ -4829,7 +4768,6 @@ screen and (max-width:47.99875em) {
 }
 
 footer #legal a {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: .75rem;
     margin-right: 10px
@@ -4866,7 +4804,6 @@ footer #footer-language-toggle ul {
 footer #footer-language-toggle ul li {
     width: auto;
     float: left;
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: .875rem
 }
@@ -4893,7 +4830,6 @@ footer #footer-language-toggle ul li.divider {
 footer #footer-language-toggle ul li a,
 footer #footer-language-toggle ul li a:visited {
     cursor: pointer;
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: .875rem;
     color: inherit;
@@ -5025,7 +4961,6 @@ screen and (max-width:47.99875em) {
 
 #disruption .work-item .work-copy h3,
 #main-container .work-item .work-copy h3 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 4.875rem;
     letter-spacing: -1.5px
@@ -5067,7 +5002,6 @@ screen and (max-width:64.06125em) {
 
 #disruption .work-item .work-copy h4.client,
 #main-container .work-item .work-copy h4.client {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 1.5rem;
     margin: 15px 0
@@ -5085,7 +5019,6 @@ screen and (max-width:64.06125em) {
 
 #disruption .work-item .work-copy h5.agency,
 #main-container .work-item .work-copy h5.agency {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: .875rem;
     margin: 30px 0
@@ -5270,7 +5203,6 @@ screen and (max-width:64.06125em) {
 #landing-container div#main-video-playlist ol li.vjs-playlist-item span {
     font-style: normal;
     display: inline-block;
-    font-family: "Grotesk", sans-serif;
     font-weight: bold;
     font-size: .875rem;
     transform: skewX(-20deg);
@@ -5296,7 +5228,6 @@ screen and (max-width:47.99875em) {
 }
 
 #main-container h1 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 7.5rem
 }
@@ -5309,7 +5240,6 @@ screen and (min-width:48em) and (max-width:64.06125em) {
 }
 
 #main-container h2 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 3rem;
     letter-spacing: -2px;
@@ -5331,19 +5261,16 @@ screen and (max-width:47.99875em) {
 }
 
 #main-container h4 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 1.5rem
 }
 
 #main-container h5 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: .875rem
 }
 
 #main-container p {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.5rem
 }
@@ -5353,7 +5280,6 @@ screen and (max-width:47.99875em) {
 }
 
 #main-container a {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 1.5rem
 }
@@ -5369,7 +5295,6 @@ screen and (max-width:47.99875em) {
 
 #main-container .slanted-container .slanted-block span {
     display: inline-block;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.5rem
 }
@@ -5459,7 +5384,6 @@ section#featured-media {
 }
 
 section#featured-media h1 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 120px;
     color: #fff;
@@ -5484,7 +5408,7 @@ section#featured-media h1 {
 
 @media only screen and (max-width:767px) {
     section#featured-media h1 {
-        font-size: 50px
+        font-size: 38px
     }
 }
 
@@ -5523,7 +5447,9 @@ section#featured-media div.vid-cover img {
 
 section#featured-media div.vid-cover div.featured-media-overlay {
     position: absolute;
-    top: 28vh;
+    /*top: 28vh;*/
+	top: 50%;
+    transform: translateY(-50%);
     left: 20vw;
     z-index: 2;
     color: #fff
@@ -5535,7 +5461,6 @@ section#featured-media div.vid-cover div.featured-media-overlay .headline {
 }
 
 section#featured-media div.vid-cover div.featured-media-overlay .headline p {
-    font-family: "Grotesk", sans-serif;
     font-size: 120px;
     color: #fff;
     letter-spacing: -.05em;
@@ -5559,7 +5484,6 @@ section#featured-media div.vid-cover div.featured-media-overlay .headline-2 {
 }
 
 section#featured-media div.vid-cover div.featured-media-overlay .client-date {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 23px;
     margin-top: 40px;
@@ -5568,13 +5492,11 @@ section#featured-media div.vid-cover div.featured-media-overlay .client-date {
 }
 
 section#featured-media div.vid-cover div.featured-media-overlay .location {
-    font-family: "Grotesk", sans-serif;
     font-size: 13.5px;
     margin-left: 150px
 }
 
 section#featured-media div.vid-cover div.featured-media-overlay .description {
-    font-family: "Grotesk", sans-serif;
     font-size: 17.5px;
     width: 500px;
     margin-top: 16px;
@@ -5810,14 +5732,12 @@ screen and (max-width:79.99875em) {
 }
 
 section#article-content .blurb {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.5em;
     padding-bottom: 65px
 }
 
 section#article-content .article-copy {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.5625rem
@@ -5864,7 +5784,6 @@ section#article-content .video-wrapper iframe {
 }
 
 section#article-content #awards-share {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     margin-bottom: 100px;
     line-height: 1.5rem
@@ -5900,7 +5819,6 @@ screen and (max-width:47.99875em) {
 }
 
 section#article-content #awards-share h2 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: .875rem
 }
@@ -5912,7 +5830,6 @@ section#article-content #awards-share h2.share-title {
 
 section#article-content #awards-share p {
     color: #222;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: .875rem
 }
@@ -5920,9 +5837,8 @@ section#article-content #awards-share p {
 section#article-content #awards-share p.award-desc {
     margin-bottom: 10px
 }
-
-section#article-content #awards-share .article-share>a {
-    display: inline-block;
+section#article-content #awards-share .article-share > a {
+	display: inline-block;
     width: 24px;
     height: 24px;
     text-indent: -999999px;
@@ -5930,11 +5846,9 @@ section#article-content #awards-share .article-share>a {
     cursor: pointer;
     direction: ltr;
 }
-
 section#article-content #awards-share .fb-share {
     background: url(/wp-content/themes/tbwa/assets/images/Facebook.svg) 0 0/contain no-repeat !important;
 }
-
 section#article-content #awards-share .linkedin-share {
     background: url(/wp-content/themes/tbwa/assets/images/LinkedIn.svg) 0 0/contain no-repeat !important;
 }
@@ -5952,7 +5866,6 @@ section#article-content #back-to-parent a,
 section#article-content #back-to-parent a:focus,
 section#article-content #back-to-parent a:visited {
     color: #1a1a1a;
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 1.5rem;
     line-height: 120%;
@@ -6029,7 +5942,7 @@ body.rtl section#article-content #awards-share #awards {
 @media only screen and (max-width:767px) {
     section#featured-media div.vid-cover div.featured-media-overlay {
         width: 90%;
-        left: 5%
+        left: 10px;
     }
 
     section#featured-media div.vid-cover div.featured-media-overlay .client-date {
@@ -6132,7 +6045,6 @@ section#section-landing .section-intro {
 }
 
 section#section-landing .section-intro h1 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 3rem;
     font-size: 2.5vw;
@@ -6160,7 +6072,6 @@ section#section-landing .section-intro h1 {
 }
 
 section#section-landing .section-intro .section-intro-copy {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.5rem;
     font-size: 1.25vw;
@@ -6263,7 +6174,6 @@ section#section-landing .section-item .columns .slanted-copy a {
 }
 
 section#section-landing .section-item .columns .title {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 4.0625rem;
     overflow: hidden;
@@ -6293,7 +6203,6 @@ section#section-landing .section-item .columns .title a {
 
 section#section-landing .section-item .columns .client,
 section#section-landing .section-item .columns .date {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 1.5rem;
     transform: skewX(-20deg);
@@ -6312,7 +6221,6 @@ section#section-landing .section-item .columns .date {
 }
 
 section#section-landing .section-item .columns .agency {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: .875rem;
     letter-spacing: -.3px;
@@ -6336,7 +6244,6 @@ section#section-landing #archives-link {
 }
 
 section#section-landing #archives-link a {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 1.5rem;
     color: #222
@@ -6669,7 +6576,6 @@ section#section-landing.culture-landing .section-item.social-entry .slanted {
 
 section#section-landing.culture-landing .section-item.social-entry .slanted h1 {
     transform: skewX(-20deg);
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 4.0625rem;
     letter-spacing: -1px;
@@ -6691,7 +6597,6 @@ section#section-landing.culture-landing .section-item.social-entry .slanted a {
 section#section-landing.culture-landing .section-item.social-entry .slanted .copy,
 section#section-landing.culture-landing .section-item.social-entry .slanted p {
     transform: skewX(-20deg);
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.125rem;
     margin: 25px 0;
@@ -6700,7 +6605,6 @@ section#section-landing.culture-landing .section-item.social-entry .slanted p {
 
 section#section-landing.culture-landing .section-item.social-entry .slanted .location-date {
     transform: skewX(-20deg);
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: .875rem
 }
@@ -6931,7 +6835,6 @@ article#about-splash #backslash {
     position: fixed;
     width: auto;
     font-size: 63.25rem;
-    font-family: "Grotesk", sans-serif;
     font-weight: 800;
     background: repeating-linear-gradient(0deg, #ee749d, #ee749d 25px, #000 25px, #000 50px);
     -webkit-background-clip: text;
@@ -6981,7 +6884,6 @@ article#about-splash #headlines {
 
 article#about-splash #headlines h1 {
     color: #fff;
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 8.75rem;
     line-height: 120%;
@@ -7038,7 +6940,6 @@ section#about-landing {
 }
 
 section#about-landing h3.section-title {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.125rem
 }
@@ -7074,7 +6975,6 @@ screen and (max-width:64.06125em) {
 
 section#about-landing article#about-intro {
     padding-top: 3rem;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.5rem;
     line-height: 124%;
@@ -7091,7 +6991,6 @@ screen and (max-width:64.06125em) {
 }
 
 section#about-landing article#about-intro h1 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 3rem;
     letter-spacing: -2px;
@@ -7113,7 +7012,6 @@ screen and (max-width:47.99875em) {
 }
 
 section#about-landing article#about-address {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 1.25rem;
     line-height: 105%;
@@ -7161,7 +7059,12 @@ section#about-landing article#about-address span.address {
     font-size: 2.25rem;
     line-height: 100%
 }
-
+section#about-landing article#about-address span.address > p:not(:first-child) {
+	display:inline;
+}
+section#about-landing article#about-address span.address > p {
+	white-space: nowrap;
+}
 @media print,
 screen and (max-width:119.99875em) {
 
@@ -7178,7 +7081,7 @@ screen and (max-width:89.99875em) {
     section#about-landing article#about-address a.email,
     section#about-landing article#about-address a.phone,
     section#about-landing article#about-address span.address {
-        font-size: 1.5rem
+        font-size: 18px;
     }
 }
 
@@ -7188,7 +7091,7 @@ screen and (min-width:48em) and (max-width:64.06125em) {
     section#about-landing article#about-address a.email,
     section#about-landing article#about-address a.phone,
     section#about-landing article#about-address span.address {
-        font-size: 1.25rem
+        font-size: 18px;
     }
 }
 
@@ -7236,7 +7139,6 @@ screen and (max-width:64.06125em) {
 }
 
 section#about-landing article#about-clients h2 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 3rem;
     letter-spacing: -2px;
@@ -7263,7 +7165,10 @@ section#about-landing article#about-clients .client {
 }
 
 section#about-landing article#about-clients .client img {
-    width: 100%
+    width: 100%;
+	height: 100%;
+	aspect-ratio: 1 / 1;
+    object-fit: contain;
 }
 
 @media print,
@@ -7274,7 +7179,6 @@ screen and (max-width:64.06125em) {
 }
 
 section#about-landing article#about-global-network h4 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 2.25rem;
     line-height: 100%;
@@ -7352,7 +7256,6 @@ screen and (max-width:47.99875em) {
 }
 
 section#about-landing article#about-global-network .global-network-copy p {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.125rem;
     line-height: 150%;
@@ -7400,7 +7303,6 @@ section#about-landing article#about-siblings .subsidiary-title:before {
 }
 
 section#about-landing article#about-siblings h3.subsidiary-name {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 4.4375rem;
     position: relative;
@@ -7411,7 +7313,6 @@ section#about-landing article#about-siblings h3.subsidiary-name {
 
 section#about-landing article#about-siblings h3.subsidiary-name:before {
     content: "\\";
-    font-family: "Grotesk", Open Sans Extrabold, Open Sans Hebrew Extrabold, Noto Sans SC Extrabold, Helvetica Neue, sans-serif;
     font-weight: 800;
     font-size: inherit;
     color: #fecc00;
@@ -7492,7 +7393,6 @@ section#about-landing .subsidiary-info.expanded {
 }
 
 section#about-landing .description {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.125rem;
     line-height: 150%;
@@ -7508,7 +7408,6 @@ screen and (max-width:64.06125em) {
 }
 
 section#about-landing .contact-email {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.125rem
 }
@@ -7617,7 +7516,6 @@ article#pirates-quote .content {
 
 article#pirates-quote h1 {
     color: #fff;
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 6rem;
     letter-spacing: -2px;
@@ -7711,7 +7609,6 @@ section#pirates-container {
 }
 
 section#pirates-container h2.section-title {
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 3rem;
     padding: 60px 0
@@ -7738,17 +7635,14 @@ screen and (max-width:64.06125em) {
 }
 
 section#pirates-container .slanted-container h2 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600
 }
 
 section#pirates-container .slanted-container h3 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600
 }
 
 section#pirates-container .slanted-container h4 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600
 }
 
@@ -7888,7 +7782,6 @@ section#pirates-container article#pirates-leadership .leader a {
 }
 
 section#pirates-container article#pirates-leadership .leader .name {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 1.125rem;
     margin: 5px 0 3px 0
@@ -7909,7 +7802,6 @@ screen and (min-width:48em) and (max-width:64.06125em) {
 }
 
 section#pirates-container article#pirates-leadership .leader .title {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1rem
 }
@@ -8125,7 +8017,6 @@ section#pirates-container article#pirates-social .instagram-latest .post-copy-co
 section#pirates-container article#pirates-social .instagram-container .post-copy-container p,
 section#pirates-container article#pirates-social .instagram-latest .post-copy-container p {
     margin: 0 0 0 20px;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.125rem;
     color: #222;
@@ -8143,7 +8034,6 @@ screen and (max-width:47.99875em) {
 }
 
 section#pirates-container article#pirates-social a.title {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 2.875rem;
     text-decoration: none;
@@ -8173,14 +8063,12 @@ screen and (max-width:64.06125em) {
 
 section#pirates-container article#pirates-social .slanted-container p.copy {
     margin: 0 0 0 20px;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     color: #222
 }
 
 section#pirates-container article#pirates-social .slanted-container p.copy a {
     display: initial;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.125rem;
     color: #222;
@@ -8202,7 +8090,6 @@ screen and (max-width:89.99875em) {
 }
 
 section#pirates-container article#pirates-social .slanted-container p.location-date {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: .875rem;
     margin: 15px 0 25px 0
@@ -8245,7 +8132,6 @@ section#pirates-container article#pirates-social .slanted-container svg {
 }
 
 section#pirates-container .anchor-links {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 24px;
     padding: 60px 0
@@ -8304,7 +8190,6 @@ article#leader-container .leadership-headline {
 }
 
 article#leader-container .leadership-headline .name {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 4.375rem;
     letter-spacing: -1.5px
@@ -8332,7 +8217,6 @@ screen and (max-width:47.99875em) {
 }
 
 article#leader-container .leadership-headline .title {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 1.375rem;
     margin: 35px 0 0 0;
@@ -8382,7 +8266,6 @@ article#leader-container .leadership-headline div.social-handles a.social-instag
 
 article#leader-container .leadership-bio {
     margin: 35px 0 60px 0;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.125rem
 }
@@ -8402,7 +8285,6 @@ body.rtl article#leader-container {
     color: #fff;
     background-color: #f2f2f2;
     color: #000;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 24px;
     position: relative;
@@ -8418,7 +8300,6 @@ screen and (max-width:79.99875em) {
 }
 
 #disruption h2 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 96px
 }
@@ -8445,7 +8326,6 @@ screen and (max-width:47.99875em) {
 }
 
 #disruption h3 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 47px
 }
@@ -8519,7 +8399,9 @@ screen and (max-width:47.99875em) {
 @media print,
 screen and (max-width:47.99875em) {
     #disruption #disruption-splash {
-        background-position: 150px center
+        background-position: unset;
+		background: rgb(255,200,9);
+		background: linear-gradient(90deg, rgba(255,200,9,1) 25%, rgba(255,222,107,1) 30%);
     }
 }
 
@@ -8531,7 +8413,6 @@ screen and (max-width:47.99875em) {
 }
 
 #disruption #disruption-splash h1 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 118px;
     line-height: 100%
@@ -8595,7 +8476,6 @@ screen and (max-width:47.99875em) {
 }
 
 #disruption #disruption-splash .slanted-block.headline {
-    font-family: "Grotesk", sans-serif;
     font-size: 118px;
     line-height: 100%;
     width: 100%;
@@ -9068,7 +8948,6 @@ screen and (max-width:47.99875em) {
 }
 
 #work-splash #work-splash-copy #splash-title {
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 120px;
     color: #fff;
@@ -9139,7 +9018,6 @@ screen and (max-width:47.99875em) {
 }
 
 .section-intro h1 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 700;
     font-size: 46px;
     padding-top: 86px
@@ -9153,7 +9031,6 @@ screen and (max-width:64.06125em) {
 }
 
 .section-intro .section-intro-copy {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 24px;
     padding-top: 78px;
@@ -9203,7 +9080,6 @@ screen and (max-width:47.99875em) {
 .work-entry .entry-client,
 .work-entry .entry-date {
     padding-top: 20px;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 14px
 }
@@ -9211,22 +9087,19 @@ screen and (max-width:47.99875em) {
 .work-entry .entry-client a,
 .work-entry .entry-date a {
     font-size: inherit;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400
 }
 
 .work-entry .entry-title,
 .work-entry .entry-title a {
-    padding-top: 5px;
-    font-family: "Grotesk", sans-serif;
+    padding-top: 10px;
     font-weight: 600;
-    font-size: 14px
+    font-size: 18px
 }
 
 .work-entry .entry-agency,
 .work-entry .entry-location {
     padding-top: 7px;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 12px
 }
@@ -9235,13 +9108,11 @@ screen and (max-width:47.99875em) {
 .work-entry .entry-location a {
     font-size: inherit;
     font-weight: 400;
-    font-family: "Grotesk", sans-serif
 }
 
 .work-entry a.entry-headline,
 .work-entry a.entry-headline:visited {
     padding-top: 5px;
-    font-family: "Grotesk", sans-serif;
     font-size: 20px;
     font-weight: 600;
     text-decoration: none;
@@ -9253,7 +9124,6 @@ screen and (max-width:47.99875em) {
 }
 
 .work-entry .entry-body {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 14px;
     padding-top: 20px
@@ -9288,7 +9158,6 @@ body.rtl #news-archive .work-entry {
 article#news-article-container {
     padding-top: 80px;
     padding-bottom: 60px;
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.125rem;
     overflow-x: hidden
@@ -9315,7 +9184,6 @@ article#news-article-container .news-headline {
 }
 
 article#news-article-container .news-headline .title {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     font-size: 4.375rem;
     letter-spacing: -1.5px;
@@ -9352,7 +9220,6 @@ screen and (max-width:64.06125em) {
 
 article#news-article-container .news-headline .date,
 article#news-article-container .news-headline .location {
-    font-family: "Grotesk", sans-serif;
     font-size: 1.375rem;
     font-weight: 600;
     margin: 35px 0 0 0;
@@ -9456,7 +9323,6 @@ article#news-article-container .news-link .link-arrow {
 .pagination {
     text-align: center;
     font-size: 1.5rem;
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     margin: 30px 0 0 0;
     padding: 0 10%;
@@ -9501,14 +9367,12 @@ screen and (max-width:47.99875em) {
 }
 
 section.single {
-    font-family: "Grotesk", sans-serif;
     font-weight: 400;
     font-size: 1.125rem;
     padding-bottom: 100px
 }
 
 section.single .columns h1 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600;
     padding: 55px 0 35px 0
 }
@@ -9517,7 +9381,6 @@ section.single .columns h2,
 section.single .columns h3,
 section.single .columns h4,
 section.single .columns h5 {
-    font-family: "Grotesk", sans-serif;
     font-weight: 600
 }
 
@@ -9720,11 +9583,16 @@ body.rtl footer #legal {
     text-align: left
 }
 
-
+#article-content iframe{ 
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+} 
 /*PAGE DISRUPTION ABOUT*/
 #disruption-content .disruption-about {
     background: #fff;
-    padding: 256px 0 0;
+    padding: 256px 0 0; 
 }
 
 .disruption-about-flex {
@@ -9738,7 +9606,6 @@ body.rtl footer #legal {
     width: 4.9479166667vw;
     padding: 0 0 1.5625vw;
 }
-
 #disruption h3.disruption-about-content-title {
     font-weight: 600;
     padding-bottom: 18px;
@@ -9753,13 +9620,11 @@ body.rtl footer #legal {
     font-weight: 400;
     line-height: 1.5em;
     padding-bottom: 16px;
-}
-
+}  
 .disruption-about-video {
     padding-bottom: 3.125vw;
     margin-top: 40px;
 }
-
 .disruption-about-video video {
     width: 100%;
     height: 100%;
@@ -9767,20 +9632,18 @@ body.rtl footer #legal {
     object-fit: cover;
     object-position: center;
 }
-
 .disruption-about-img img {
     aspect-ratio: 16/9;
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
 .disruption-about-btn {
     display: inline-flex;
     align-items: center;
     vertical-align: middle;
     transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    box-shadow: 0 0 1px rgba(0,0,0,0);
     position: relative;
     transition-property: color;
     transition-duration: .3s;
@@ -9788,8 +9651,7 @@ body.rtl footer #legal {
     color: #0a0a0d;
     line-height: 33px;
 }
-
-.disruption-about-btn::before {
+.disruption-about-btn::before { 
     content: "";
     position: absolute;
     z-index: -1;
@@ -9804,8 +9666,7 @@ body.rtl footer #legal {
     transition-duration: .3s;
     transition-timing-function: ease-out;
 }
-
-.disruption-about-btn svg {
+.disruption-about-btn svg { 
     display: inline;
     vertical-align: text-bottom;
     padding-left: 2px;
@@ -9813,143 +9674,122 @@ body.rtl footer #legal {
     height: 16px;
     fill: #0a0a0d;
 }
-
-.disruption-about-btn:hover::before {
+.disruption-about-btn:hover::before {  
     transform: scaleX(1);
 }
-
 .disruption-about-understanding .width-narrow {
     width: 100%;
 }
-
 #disruption .disruption-about-understanding h3.disruption-about-content-title {
-    font-weight: 400;
+    font-weight: bold;
     font-size: 16px;
     color: #0a0a0d;
     line-height: 20px;
     padding-bottom: 0;
 }
-
 #disruption .disruption-about-understanding h3.disruption-about-desc {
-    font-weight: 600;
+    font-weight: 400;
     font-size: 18px;
     line-height: 32px;
 }
-
 section#about-landing article#about-clients .row .columns:last-child,
 section#pirates-container #pirates-leadership .row .columns:last-child {
     float: left;
-    clear: none;
-}
-
+	clear: none;
+} 
 @media (min-width: 576px) {
     #disruption-content .disruption-about .disruption-about-container {
         max-width: 80vw;
         margin: 0 auto;
     }
-
     .col-lg-5 {
         flex: 0 0 50%;
         max-width: 50%;
     }
-
     .col-lg-4 {
         flex: 0 0 40%;
         max-width: 40%;
     }
-
     .col-lg-2 {
         flex: 0 0 10%;
         max-width: 10%;
     }
-
-    #disruption h3.disruption-about-content-title {
+    #disruption h3.disruption-about-content-title { 
         line-height: 38px;
         font-size: 1.5625vw;
     }
-
-    .disruption-about-content p {
+    .disruption-about-content p { 
         font-size: 1.3020833333vw;
-        line-height: 26px;
+        line-height: 26px; 
     }
-
-    .disruption-about-understanding .col-lg-4 {
-        flex: 0 0 32%;
-        max-width: 32%;
-    }
+	.disruption-about-understanding .col-lg-4 {
+		flex: 0 0 32%;
+    	max-width: 32%;	
+	}
 }
-
 @media (min-width: 992px) {
-    .disruption-about-flex {
+    .disruption-about-flex { 
         padding: 0 0 42px;
     }
-
     .disruption-about-btn {
         font-size: 1.3020833333vw;
         padding-top: .5208333333vw;
         padding-bottom: .5208333333vw;
     }
-
-    .disruption-about-btn svg {
+    .disruption-about-btn svg { 
         padding-left: .3125vw;
         width: 22px;
         height: 18px;
     }
-
     #disruption .disruption-about-understanding h3.disruption-about-content-title {
         font-size: 1.3020833333vw;
         margin-bottom: 4.6875vw;
     }
-
-    #disruption .disruption-about-understanding h3.disruption-about-desc {
+    #disruption .disruption-about-understanding h3.disruption-about-desc { 
         margin-bottom: 4.6875vw;
         font-size: 1.5625vw;
     }
 }
-
 @media (max-width: 991px) {
     #disruption-content .disruption-about {
         padding: 120px 0 30px;
     }
-
     .disruption-about-flex {
         padding: 0 24px 30px;
     }
-
+	.disruption-about-flex:nth-child(even) .col-lg-5 {
+		order: 1;
+	}
+	.disruption-about-flex:nth-child(even) .col-lg-5 {
+		order: 1;
+	}
+	.disruption-about-flex:nth-child(even) .col-lg-5 .disruption-about-img {
+		padding: 25px 0 0;
+	}
     .disruption-about-content .width-narrow {
         width: 95px;
-        padding: 0 0 30px;
+        padding: 0 0 20px;      
     }
-
     .disruption-about-content p {
         padding-bottom: 0;
     }
-
-    .disruption-about-img {
-        padding: 0 0 30px;
-    }
-
+    .disruption-about-img {padding: 0 0 30px;}
     #disruption h3.disruption-about-content-title {
         padding-bottom: 15px;
     }
-
     .disruption-about-btn {
-        padding: 16px 0 30px;
+        padding: 16px 0 30px; 
     }
-
     .disruption-about-flex:nth-child(odd) .disruption-about-img {
-        padding: 0;
-    }
-
+        padding: 25px 0 0;   
+    } 
     #disruption .disruption-about-understanding h3.disruption-about-content-title {
         padding-bottom: 60px;
-    }
-
-    .disruption-about-flex.disruption-about-understanding {
-        flex-flow: column;
-    }
+    } 
+	.disruption-about-flex.disruption-about-understanding {
+		flex-flow: column;
+	}
 }
-
 .wp-block-tbwa-blocks-image-animated-sprite {
     position: relative;
     width: 100%;
@@ -9987,20 +9827,77 @@ section#pirates-container #pirates-leadership .row .columns:last-child {
 .wp-block-tbwa-blocks-image-animated-sprite.border-dark-grey {
     border: 1px solid #4d4d4d
 }
-
 .sprite {
-    width: 100% !important;
+    width: 100%!important;
     height: 0;
     padding-top: 100%;
 }
-
 article#leader-container .leadership-bio p {
-    margin: 0 0 15px;
+	margin: 0 0 15px;	
 }
+.aligncenter {
+	display: block;
+	width: max-content;
+    margin: 0 auto;
+}
+.alignright {
+	display: block;
+	width: max-content;
+    margin-left: auto;
+}
+@media (min-width: 1200px) {
+	.article-content-work-single .grid-container:last-child {
+		padding: 0 8vw;
+	}
+}
+.methods_video {
+	position: relative;
+}
+.methods_video .vid-cover { 
+	position: absolute;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #1a1a1a;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	z-index: 9;
+	cursor: pointer;
+}
+.methods_video .video-js .vjs-big-play-button {
+	background: #000;
+	opacity: 0.6;
+}
+.methods_video .video-js .vjs-big-play-button:before { 
+	color: #fff;
+}
+.methods_video .video-js:hover .vjs-big-play-button, .video-js .vjs-big-play-button:focus {
+	background: #000;
+}
+.methods_video_img_overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 999;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+.pl-0 {padding-left: 0;}
 
-iframe {
-    aspect-ratio: 16 / 9;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+@media (max-width: 767px) { 
+	.video-js .vjs-play-control {
+		margin-right: 15px;
+	}
+	.video-js .vjs-volume-menu-button {
+		margin-right: 6px;
+	}
+	.col-xs-12 {
+		width: 100%;
+		padding: 0;
+	}
+	.article-content-work-single .small-offset-2 {margin-left: 0;}
 }

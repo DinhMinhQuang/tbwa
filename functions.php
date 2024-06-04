@@ -16,6 +16,7 @@ add_action('customize_register', 'remove_home_page_settings');
 /* Classic Editor Pages Posts */
 add_filter('use_block_editor_for_post', '__return_false');
 
+
 function tbwa_menus($locations = array())
 {
     add_theme_support('menus');
@@ -76,8 +77,30 @@ function tbwa_styles()
         get_template_directory_uri() .
         '/assets/css/main.min.css',
         array(),
-        'v1.0.1'
+        'v1.0.14'
     );
+	$attributes = get_language_attributes('html');
+    preg_match('/lang="([^"]+)"/', $attributes, $matches);
+    $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
+    $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : '';
+	if ($lang_prefix !== '_vi') {
+		wp_enqueue_style(
+			'tbwa-font-style-en',
+			get_template_directory_uri() .
+			'/assets/css/font-style-en.css',
+			array(),
+			'v1.0.0'
+		);
+	}
+	if ($lang_prefix === '_vi') {
+		wp_enqueue_style(
+			'tbwa-font-style-vi',
+			get_template_directory_uri() .
+			'/assets/css/font-style-vi.css',
+			array(),
+			'v1.0.1'
+		);
+	}
 }
 add_action('wp_enqueue_scripts', 'tbwa_styles');
 
@@ -136,7 +159,7 @@ function tbwa_scripts()
             get_template_directory_uri() .
             '/assets/js/video.min.js',
             array(),
-            '1.0',
+            '1.2',
             true
         );
     }
@@ -154,7 +177,7 @@ function tbwa_scripts()
         get_template_directory_uri() .
         '/assets/js/videojs-playlist-ui.min.js',
         array(),
-        '1.0',
+        '1.2',
         true
     );
 
@@ -173,17 +196,17 @@ function tbwa_scripts()
             get_template_directory_uri() .
             '/assets/js/homepage.min.js',
             array(),
-            '1.0',
+            '1.1',
             true
         );
     }
-    if (is_page('disruption')) {
+    if (is_page('disruption') || is_page('disruption-vn')) {
         wp_enqueue_script(
             'disruption-min',
             get_template_directory_uri() .
             '/assets/js/disruption.min.js',
             array(),
-            '1.0',
+            'v1.0.0.11',
             true
         );
         wp_enqueue_script(
@@ -201,6 +224,16 @@ function tbwa_scripts()
             get_template_directory_uri() .
             '/assets/js/about.min.js',
             array(),
+            '1.1',
+            true
+        );
+    }
+	if (is_page('about-vn')) {
+        wp_enqueue_script(
+            'disruption-min',
+            get_template_directory_uri() .
+            '/assets/js/about.min.js',
+            array(),
             '1.0',
             true
         );
@@ -211,7 +244,7 @@ function tbwa_scripts()
             get_template_directory_uri() .
             '/assets/js/work.min.js',
             array(),
-            '1.0',
+            '1.1',
             true
         );
     }
@@ -221,7 +254,7 @@ function tbwa_scripts()
             get_template_directory_uri() .
             '/assets/js/pirates.min.js',
             array(),
-            '1.0',
+            '1.1',
             true
         );
     }
@@ -231,7 +264,7 @@ function tbwa_scripts()
             get_template_directory_uri() .
             '/assets/js/article.min.js',
             array(),
-            '1.0',
+            '1.1',
             true
         );
         wp_enqueue_script(
@@ -239,7 +272,7 @@ function tbwa_scripts()
             get_template_directory_uri() .
             '/assets/js/article-video.min.js',
             array(),
-            '1.0',
+            '1.2',
             true
         );
     }
@@ -275,7 +308,7 @@ $roots_includes = array(
     'functions/custom-field-news.php',
     'functions/custom-category-meta-box.php',
     'functions/render-custom-meta-post.php',
-    'functions/duplicate-post.php',
+	'functions/duplicate-post.php',
 );
 
 foreach ($roots_includes as $file) {
@@ -287,15 +320,43 @@ foreach ($roots_includes as $file) {
 }
 unset($file, $filepath);
 
+
+// Xử lý dữ liệu khi nhận request AJAX
+function handle_sortable_items()
+{
+    if (isset($_POST['item_ids']) && isset($_POST['new_order'])) {
+        $item_ids = $_POST['item_ids'];
+        $new_order = $_POST['new_order'];
+
+        // Cập nhật thứ tự mới của các mục trong cơ sở dữ liệu
+        foreach ($item_ids as $index => $item_id) {
+            // Update the position/order of the item in the database
+            // Example: Update the 'menu_order' field for posts or custom post types
+            wp_update_post(
+                array(
+                    'ID' => $item_id,
+                    'menu_order' => $new_order[$index]
+                )
+            );
+        }
+
+        // Phản hồi về thành công hoặc lỗi
+        wp_send_json_success('Sort order updated successfully.');
+    } else {
+        wp_send_json_error('Invalid request.');
+    }
+}
+add_action('wp_ajax_handle_sortable_items', 'handle_sortable_items');
+
 function add_language_filter_to_posts()
 {
     global $typenow;
-    global $pagenow;
-    if ($pagenow === 'edit.php' && ($typenow == 'post' || $typenow == 'page')) {
-        $selected = isset($_GET['language']) ? $_GET['language'] : 'en'; // Đặt mặc định là 'en' cho tiếng Anh
+    if ($typenow == 'post' || $typenow == 'page') {
+        $selected = isset($_GET['language']) ? $_GET['language'] : 'en';
         $languages = array('vi' => 'Vietnamese', 'en' => 'English'); // Thay đổi giá trị và nhãn tùy theo ngôn ngữ bạn muốn hỗ trợ
 
         echo '<select name="language">';
+        // echo '<option value="">' . __('All Languages') . '</option>';
         foreach ($languages as $value => $label) {
             echo '<option value="' . $value . '" ' . selected($selected, $value, false) . '>' . $label . '</option>';
         }
@@ -303,6 +364,20 @@ function add_language_filter_to_posts()
     }
 }
 add_action('restrict_manage_posts', 'add_language_filter_to_posts');
+
+function filter_posts_by_language($query)
+{
+    global $pagenow;
+    if ($pagenow == 'edit.php' && isset($_GET['language']) && $_GET['language'] != '') {
+        if ($query->get('post_type') == 'post' || $query->get('post_type') == 'page') {
+            $query->set('meta_key', 'language');
+            $query->set('meta_value', $_GET['language']);
+        }
+    }
+}
+
+add_filter('parse_query', 'filter_posts_by_language');
+
 function add_language_default_to_query($query)
 {
     if (is_admin() && $query->is_main_query()) {
@@ -324,22 +399,6 @@ function add_language_default_to_query($query)
 }
 add_action('pre_get_posts', 'add_language_default_to_query');
 
-
-function filter_posts_by_language($query)
-{
-    global $pagenow;
-    if (is_admin() && $pagenow == 'edit.php' && isset($_GET['language']) && $_GET['language'] != '') {
-        if ($query->get('post_type') == 'post' || $query->get('post_type') == 'page') {
-            $query->set('meta_key', 'language');
-            $query->set('meta_value', $_GET['language']);
-        }
-    }
-}
-
-// Hook the function to the 'parse_query' action
-add_filter('parse_query', 'filter_posts_by_language');
-
-
 function add_language_column($columns)
 {
     $columns['language'] = 'Language';
@@ -347,6 +406,19 @@ function add_language_column($columns)
 }
 add_filter('manage_posts_columns', 'add_language_column');
 add_filter('manage_pages_columns', 'add_language_column');
+
+function custom_language_custom_field()
+{
+    add_meta_box(
+        'language',
+        '<span style="color:red">' . __('Language') . '</span>',
+        'custom_language_field_callback',
+        array('post', 'page'),
+        'side',
+        'default',
+    );
+}
+add_action('add_meta_boxes', 'custom_language_custom_field');
 
 function display_language_column($column, $post_id)
 {
@@ -361,21 +433,6 @@ function display_language_column($column, $post_id)
 }
 add_action('manage_posts_custom_column', 'display_language_column', 10, 2);
 add_action('manage_pages_custom_column', 'display_language_column', 10, 2);
-
-
-// Tạo custom field cho ngôn ngữ
-function custom_language_custom_field()
-{
-    add_meta_box(
-        'language',
-        '<span style="color:red">' . __('Language') . '</span>',
-        'custom_language_field_callback',
-        array('post', 'page'),
-        'side',
-        'default',
-    );
-}
-add_action('add_meta_boxes', 'custom_language_custom_field');
 
 function custom_language_field_callback($post)
 {
@@ -449,11 +506,13 @@ function custom_rewrite_rule_vi()
     add_rewrite_rule('^vi/news/?$', 'index.php?category_name=news', 'top');
 
     // Thêm rewrite rule cho các trang bài viết có tiền tố /vi
+		    add_rewrite_rule('^vi/([^/]+)/draft-([0-9]+)/?$', 'index.php?category_name=$matches[1]&p=$matches[2]', 'top');
+
     add_rewrite_rule('^vi/([^/]+)/([^/]+)/?$', 'index.php?category_name=$matches[1]&name=$matches[2]', 'top');
     // Thêm rewrite rule cho URL có tiền tố /vi
     add_rewrite_rule('^vi/?$', 'index.php', 'top');
 
-    add_rewrite_rule(
+	add_rewrite_rule(
         '^vi/about/?$',
         'index.php?pagename=about-vn',
         'top'
@@ -464,8 +523,6 @@ function custom_rewrite_rule_vi()
         'top'
     );
     add_rewrite_rule('^vi/([^/]+)/?$', 'index.php?pagename=$matches[1]', 'top');
-
-
     flush_rewrite_rules(); // Cập nhật lại rewrite rules
 }
 add_action('init', 'custom_rewrite_rule_vi');
@@ -487,14 +544,13 @@ function add_language_and_category_to_permalink($permalink, $post, $leavename)
         }
 
         $category_slugs_str = implode('/', $category_slugs);
-        if (empty($post->post_name)) {
-            $post_name = 'draft-' . $post->ID;
+       if (empty($post->post_name)) {
+            $post_name ='draft-'. $post->ID;
         } else {
             $post_name = $post->post_name;
         }
 
         $permalink = home_url('/vi/' . $category_slugs_str . '/' . $post_name);
-
     }
     return $permalink;
 }
@@ -507,8 +563,10 @@ function custom_page_permalink($permalink, $post_id, $leavename)
 
     $language = get_post_meta($post_id, 'language', true);
     $custom_slug = get_post_meta($post_id, 'custom_slug', true);
+
+    // Kiểm tra template có phải là 'about' hoặc 'disruption'
     if ($template === 'page-about.php' || $template === 'page-disruption.php') {
-        if ($language === 'vi') {
+        if ($language === 'vi' && $custom_slug) {
             // Tạo permalink với tiền tố '/vi'
             $permalink = home_url('/vi/' . $custom_slug . '/');
         }
@@ -525,9 +583,9 @@ add_filter('page_link', 'custom_page_permalink', 10, 3);
 function set_language_in_html_tag($output)
 {
     // Kiểm tra ngôn ngữ từ URL
-    $current_url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $current_url = get_site_url() . $_SERVER['REQUEST_URI'];
     $path_parts = explode('/', trim(parse_url($current_url, PHP_URL_PATH), '/'));
-    $language = isset($path_parts[1]) ? $path_parts[1] : '';
+    $language = isset($path_parts[0]) ? $path_parts[0] : '';
 
     // Nếu ngôn ngữ là tiếng Việt, thêm lang="vi" vào phần tử <html>
     if ($language === 'vi') {
@@ -537,6 +595,18 @@ function set_language_in_html_tag($output)
     return $output;
 }
 add_filter('language_attributes', 'set_language_in_html_tag');
+
+function add_custom_js()
+{
+    ?>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('.customize-control').not(':last').append('<hr>');
+        });
+    </script>
+    <?php
+}
+add_action('customize_controls_print_footer_scripts', 'add_custom_js');
 
 function response_url($language)
 {
@@ -626,20 +696,6 @@ function response_url($language)
     return $url;
 }
 
-function save_post_order()
-{
-    global $wpdb;
-
-    $order = explode(',', $_POST['order']);
-    $counter = 0;
-
-    foreach ($order as $post_id) {
-        $wpdb->update($wpdb->posts, array('menu_order' => $counter), array('ID' => $post_id));
-        $counter++;
-    }
-    die(1);
-}
-add_action('wp_ajax_save_post_order', 'save_post_order');
 
 function enqueue_sortable_scripts()
 {
@@ -674,6 +730,21 @@ function enqueue_sortable_scripts()
 }
 
 add_action('admin_footer', 'enqueue_sortable_scripts');
+
+function save_post_order()
+{
+    global $wpdb;
+
+    $order = explode(',', $_POST['order']);
+    $counter = 0;
+
+    foreach ($order as $post_id) {
+        $wpdb->update($wpdb->posts, array('menu_order' => $counter), array('ID' => $post_id));
+        $counter++;
+    }
+    die(1);
+}
+add_action('wp_ajax_save_post_order', 'save_post_order');
 
 function sort_posts_by_menu_order($query)
 {

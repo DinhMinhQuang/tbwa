@@ -5,7 +5,7 @@
         </p>
         <p>
             <a id="js_cookieNotice_accept" href="#">Accept</a>
-            <a href="/wordpress/privacy-policy">Privacy Policy</a>
+            <a href="/privacy-policy">Privacy Policy</a>
         </p>
 
     </div>

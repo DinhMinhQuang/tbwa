@@ -93,10 +93,10 @@
     <!--/#featured-media-->
     <div id="article-slash"></div>
     <!-- end slash -->
-    <section id="article-content">
+    <section id="article-content" class="article-content-work-single">
         <div class="grid-container">
             <div class="row">
-                <div class="small-offset-2 xlarge-5 large-6 medium-8 small-11 columns">
+                <div class="small-offset-2 col-xs-12 xlarge-5 large-6 medium-8 small-11 columns">
                     <div id="main-copy">
                         <div class="blurb">
                             <?php echo trim(the_excerpt()) ?>
@@ -114,7 +114,7 @@
                 </div>
             </div>
             <div class="row" id="awards-share">
-                <div class="large-1 large-offset-1 small-2 small-offset-2 columns article-share" style="display: none;">
+                <div class="pl-0 large-1 large-offset-1 small-2 small-offset-2 columns article-share" style="display: none;">
                     <h2>Share</h2>
                 </div>
                 <div class="large-4 small-8 small-offset-1 medium-offset-0 columns end article-share"

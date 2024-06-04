@@ -32,7 +32,7 @@
    </article>
    <!--/#landing-video-->
    <article id="main-video-player" class="player">
-      <video id="video" class="video-js" height="300" width="300" controls preload="auto">
+      <video id="video" class="video-js">
          <source src="https://d2rijh2vqznvtd.cloudfront.net/assets/videos/peopleandplaces.mp4" type="video/mp4">
       </video>
    </article>

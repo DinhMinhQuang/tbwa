@@ -30,31 +30,30 @@
         'posts_per_page' => -1,
         'tag' => 'highlight',
         'tag__not_in' => array($highlight_home),
-        'orderby' => 'menu_order',
+		'orderby' => 'menu_order',
         'order' => 'ASC',
     );
     if ($lang_prefix === '_vi') {
-        $args['meta_query'] = array(
-            'relation' => 'AND',
-            array(
-                'key' => 'language',
-                'value' => 'vi',
-                'compare' => '=',
-                'type' => 'CHAR',
-            )
-        );
-    } else {
-        $args['meta_query'] = array(
-            'relation' => 'AND',
-            array(
-                'key' => 'language',
-                'value' => 'en',
-                'compare' => '=',
-                'type' => 'CHAR',
-            )
-        );
-    }
-
+                $args['meta_query'] = array(
+                    'relation' => 'AND',
+                    array(
+                        'key' => 'language',
+                        'value' => 'vi',
+                        'compare' => '=',
+                        'type' => 'CHAR',
+                    )
+                );
+            } else {
+                $args['meta_query'] = array(
+                    'relation' => 'AND',
+                    array(
+                        'key' => 'language',
+                        'value' => 'en',
+                        'compare' => '=',
+                        'type' => 'CHAR',
+                    )
+                );
+            }
 
     // The Query
     $the_query = new WP_Query($args);

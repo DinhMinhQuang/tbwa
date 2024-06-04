@@ -39,12 +39,10 @@
 					}
 					?>
                   <div class="slanted-block ">
-                     <span>
                         <?php
                         $custom_text = get_post_meta(get_the_ID(), 'custom_text', true);
                         echo wp_kses_post($custom_text); // Sử dụng wp_kses_post để xử lý văn bản và ngăn chặn các mã độc hại
                         ?>
-                     </span>
 
                   </div>
                   <div class="slanted-button ">
@@ -87,12 +85,25 @@
                </div>
             </div>
             <div class="row">
-               <div class="columns medium-offset-2 medium-10">
-                  <video id="software-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none"
-                     poster='/' data-setup=''>
-                     <source src="<?php echo esc_url(get_post_meta(get_the_ID(), 'methods_video', true)); ?>"
-                        type="video/mp4">
-                  </video>
+               <div class="columns medium-offset-2 medium-10 methods_video">
+	<?php
+      $methods_image_id = get_post_meta(get_the_ID(), 'methods_image_id', true); // Lấy ID của hình ảnh nổi bật
+      $methods_image_url = wp_get_attachment_image_url($methods_image_id, 'full'); // Lấy đường dẫn đến hình ảnh theo kích thước 'full'
+      ?>
+				   <div id="methods_video_parent">
+					   <div class="methods_video_img_overlay"></div>
+					   <div id="methods_video_img" class="vid-cover video-js" style="background-image: url('<?php echo esc_url($methods_image_url); ?>');">
+						   <div class="image-darken" ></div>
+						   <button id="methods_video_play" class="vjs-big-play-button" type="button" aria-live="polite" title="Play Video" aria-disabled="false"><span class="vjs-control-text">Play Video</span></button>
+						</div>
+				   </div>
+				   <div id="methods-video-player">
+					  <video id="software-video" class="video-js vjs-default-skin vjs-fluid" controls preload="none"
+						 poster='/' data-setup=''>
+						 <source src="<?php echo esc_url(get_post_meta(get_the_ID(), 'methods_video', true)); ?>"
+							type="video/mp4">
+					  </video>
+				   </div>
                </div>
             </div>
          </div>
@@ -201,7 +212,7 @@
                      </div>
                   </div>
                </div>
-               <div class="disruption-about-flex disruption-about-understanding ">
+               <div class="disruption-about-flex disruption-about-understanding2">
                   <?php
                   $featured_image_about_id4 = get_post_meta($post->ID, 'featured_image_about_id_4', true);
                   $featured_image_about4 = wp_get_attachment_image_src($featured_image_about_id4, 'full');
@@ -213,21 +224,22 @@
                         <div class="width-narrow"></div>
                         <h3 class="disruption-about-content-title"><?php echo esc_html($title_about_disruption4); ?>
                         </h3>
-                        <h3 class="disruption-about-desc">
+						 <p><?php echo esc_html($text_about_disruption4); ?></p>
+                        <h3 class="disruption-about-desc hide">
                            <?php echo esc_html($text_about_disruption4); ?>
                         </h3>
                      </div>
                   </div>
                   <div class="col-lg-2"></div>
                   <div class="col-lg-4">
-					  <div class="wp-block-tbwa-blocks-image-animated-sprite proportion-original media-type-image"
-						   data-sprite-url="<?php echo esc_url($featured_image_about4[0]); ?>">
+					  <!--<div class="wp-block-tbwa-blocks-image-animated-sprite proportion-original media-type-image"
+						   data-sprite-url="<?php echo str_replace('-scaled.jpg', '.jpg', $featured_image_about4[0]) ; ?>">
 						  <div class="sprite"></div>
-					  </div>
-                     <!--<div class="disruption-about-img">
-                        <img decoding="async" src="" alt=""
+					  </div>-->
+                     <div class="disruption-about-img">
+                        <img decoding="async" src="<?php echo esc_url($featured_image_about4[0]); ?>" alt=""
                            title="diversity-people" loading="eager" width="960" height="540">
-                     </div>-->
+                     </div>
                   </div>
                </div>
             </div>
