@@ -79,28 +79,28 @@ function tbwa_styles()
         array(),
         'v1.0.14'
     );
-	$attributes = get_language_attributes('html');
+    $attributes = get_language_attributes('html');
     preg_match('/lang="([^"]+)"/', $attributes, $matches);
     $lang_attribute_value = isset($matches[1]) ? $matches[1] : '';
     $lang_prefix = ($lang_attribute_value === 'vi_VN') ? '_vi' : '';
-	if ($lang_prefix !== '_vi') {
-		wp_enqueue_style(
-			'tbwa-font-style-en',
-			get_template_directory_uri() .
-			'/assets/css/font-style-en.css',
-			array(),
-			'v1.0.0'
-		);
-	}
-	if ($lang_prefix === '_vi') {
-		wp_enqueue_style(
-			'tbwa-font-style-vi',
-			get_template_directory_uri() .
-			'/assets/css/font-style-vi.css',
-			array(),
-			'v1.0.1'
-		);
-	}
+    if ($lang_prefix !== '_vi') {
+        wp_enqueue_style(
+            'tbwa-font-style-en',
+            get_template_directory_uri() .
+            '/assets/css/font-style-en.css',
+            array(),
+            'v1.0.0'
+        );
+    }
+    if ($lang_prefix === '_vi') {
+        wp_enqueue_style(
+            'tbwa-font-style-vi',
+            get_template_directory_uri() .
+            '/assets/css/font-style-vi.css',
+            array(),
+            'v1.0.1'
+        );
+    }
 }
 add_action('wp_enqueue_scripts', 'tbwa_styles');
 
@@ -228,7 +228,7 @@ function tbwa_scripts()
             true
         );
     }
-	if (is_page('about-vn')) {
+    if (is_page('about-vn')) {
         wp_enqueue_script(
             'disruption-min',
             get_template_directory_uri() .
@@ -308,7 +308,7 @@ $roots_includes = array(
     'functions/custom-field-news.php',
     'functions/custom-category-meta-box.php',
     'functions/render-custom-meta-post.php',
-	'functions/duplicate-post.php',
+    'functions/duplicate-post.php',
 );
 
 foreach ($roots_includes as $file) {
@@ -506,13 +506,14 @@ function custom_rewrite_rule_vi()
     add_rewrite_rule('^vi/news/?$', 'index.php?category_name=news', 'top');
 
     // Thêm rewrite rule cho các trang bài viết có tiền tố /vi
-		    add_rewrite_rule('^vi/([^/]+)/draft-([0-9]+)/?$', 'index.php?category_name=$matches[1]&p=$matches[2]', 'top');
+    add_rewrite_rule('^vi/([^/]+)/draft-([0-9]+)/?$', 'index.php?category_name=$matches[1]&p=$matches[2]', 'top');
 
     add_rewrite_rule('^vi/([^/]+)/([^/]+)/?$', 'index.php?category_name=$matches[1]&name=$matches[2]', 'top');
+
     // Thêm rewrite rule cho URL có tiền tố /vi
     add_rewrite_rule('^vi/?$', 'index.php', 'top');
 
-	add_rewrite_rule(
+    add_rewrite_rule(
         '^vi/about/?$',
         'index.php?pagename=about-vn',
         'top'
@@ -544,8 +545,8 @@ function add_language_and_category_to_permalink($permalink, $post, $leavename)
         }
 
         $category_slugs_str = implode('/', $category_slugs);
-       if (empty($post->post_name)) {
-            $post_name ='draft-'. $post->ID;
+        if (empty($post->post_name)) {
+            $post_name = 'draft-' . $post->ID;
         } else {
             $post_name = $post->post_name;
         }
