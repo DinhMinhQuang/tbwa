@@ -507,7 +507,6 @@ function custom_rewrite_rule_vi()
 
     // Thêm rewrite rule cho các trang bài viết có tiền tố /vi
     add_rewrite_rule('^vi/([^/]+)/draft-([0-9]+)/?$', 'index.php?category_name=$matches[1]&p=$matches[2]', 'top');
-
     add_rewrite_rule('^vi/([^/]+)/([^/]+)/?$', 'index.php?category_name=$matches[1]&name=$matches[2]', 'top');
 
     // Thêm rewrite rule cho URL có tiền tố /vi
